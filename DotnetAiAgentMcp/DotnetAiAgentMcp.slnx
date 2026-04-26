@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HrMcp.Agent/HrMcp.Agent.csproj" />
+    <Project Path="src/HrMcp.Application/HrMcp.Application.csproj" />
+    <Project Path="src/HrMcp.Core/HrMcp.Core.csproj" />
+    <Project Path="src/HrMcp.Infrastructure.Persistence/HrMcp.Infrastructure.Persistence.csproj" />
+    <Project Path="src/HrMcp.McpServer/HrMcp.McpServer.csproj" />
+  </Folder>
+</Solution>
