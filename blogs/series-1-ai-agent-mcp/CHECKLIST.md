@@ -59,15 +59,15 @@ Complete all items in a part's checklist before starting the next part.
 **Code:** None (concepts-only post)
 
 ### Blog Content
-- [ ] N×M integration problem explained with diagram
-- [ ] MCP primitives defined: Tools, Resources, Prompts
-- [ ] Architecture diagram present (Host → Client → Server)
-- [ ] stdio vs HTTP/SSE transports explained
-- [ ] MCP vs other patterns comparison table present
-- [ ] .NET NuGet package (`ModelContextProtocol`) mentioned
-- [ ] Preview of Part 3 tools listed: `GetOpenPositions`, `GetHiringOrganizations`, `GetPositionsByOrganization`, `WriteJobDescription`
-- [ ] "Next Up" footer links to Part 3
-- [ ] No code blocks (this is a concepts post — verify none crept in)
+- [x] N×M integration problem explained with diagram
+- [x] MCP primitives defined: Tools, Resources, Prompts
+- [x] Architecture diagram present (Host → Client → Server)
+- [x] stdio vs HTTP/SSE transports explained
+- [x] MCP vs other patterns comparison present (as prose sections — no table, Medium-compatible)
+- [x] .NET NuGet package (`ModelContextProtocol`) mentioned
+- [x] Preview of Part 3 tools listed: `GetOpenPositions`, `GetHiringOrganizations`, `GetPositionsByOrganization`, `WriteJobDescription`
+- [x] "Next Up" footer links to Part 3
+- [x] No code blocks (verified — 0 code fences)
 
 ### Code
 - [ ] N/A — no code deliverable for this part
