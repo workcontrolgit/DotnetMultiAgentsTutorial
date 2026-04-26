@@ -93,10 +93,10 @@ Complete all items in a part's checklist before starting the next part.
 - [ ] `WriteJobDescription` clearly marked as a stub (LLM added in Part 4)
 - [ ] Both transports explained: stdio and HTTP/SSE
 - [ ] `Program.cs` updated version shown (with `--stdio` flag detection)
-- [ ] MCP Inspector test walkthrough included with expected output for all 4 tools
+- [ ] **MCP Inspector section** — full named section "Testing with MCP Inspector — Your MCP Postman + Swagger"; includes: Swagger UI + Postman analogy, Node.js 22.7.5+ prerequisite, `npx @modelcontextprotocol/inspector http://localhost:5100/mcp` run command, walkthrough calling all 4 tools with expected output
 - [ ] **Alternative callout**: `DotnetFastMCP` (community package, `tekspry/DotnetFastMCP`) mentioned as attribute-based alternative — 1 paragraph, link to repo, note it targets net8.0 and uses static methods (less Clean Architecture-friendly), recommended for production scenarios needing OAuth/observability
 - [ ] "Next Up" footer links to Part 4
-- [ ] Sources section complete
+- [ ] Sources section complete (include MCP Inspector GitHub link)
 
 ### Code
 - [ ] `dotnet build DotnetAiAgentMcp.sln` → 0 errors
@@ -170,6 +170,7 @@ Complete all items in a part's checklist before starting the next part.
 - [ ] VS Code Copilot section present with `.vscode/mcp.json` snippet
 - [ ] Debugging table present (5 common problems with causes and fixes)
 - [ ] stdout contamination pitfall explicitly called out
+- [ ] **Inspector as first debugging step** — "Tools not showing in Claude Desktop? Test with MCP Inspector in HTTP mode first to isolate server vs transport issues"
 - [ ] Series recap "What was built" summary present
 - [ ] "Next Steps" section lists future topics
 - [ ] No "Next Up" footer (this is the final part)
