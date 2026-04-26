@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "hr-mcp": {
+      "type": "http",
+      "url": "http://localhost:5100/mcp"
+    }
+  }
+}

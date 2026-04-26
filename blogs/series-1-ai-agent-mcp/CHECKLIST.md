@@ -162,21 +162,21 @@ Complete all items in a part's checklist before starting the next part.
 **Code:** `publish/McpServer/` (release build), `.vscode/mcp.json`
 
 ### Blog Content
-- [ ] How stdio transport works with Claude Desktop explained (diagram present)
-- [ ] `dotnet publish` command for self-contained win-x64 executable included
-- [ ] `claude_desktop_config.json` location shown for both Windows and macOS
-- [ ] Full `claude_desktop_config.json` snippet shown
-- [ ] "Restart Claude Desktop" step and hammer icon confirmation mentioned
-- [ ] Live demo walkthrough table present (prompt → tools called → result)
-- [ ] VS Code Copilot section present with `.vscode/mcp.json` snippet
-- [ ] Debugging table present (5 common problems with causes and fixes)
-- [ ] stdout contamination pitfall explicitly called out
-- [ ] **Inspector as first debugging step** — "Tools not showing in Claude Desktop? Test with MCP Inspector in HTTP mode first to isolate server vs transport issues"
-- [ ] Series recap "What was built" summary present
-- [ ] "Next Steps" section lists future topics
-- [ ] No "Next Up" footer (this is the final part)
-- [ ] **Tease Part 6** — "Next Steps" section mentions adding OIDC security as the next evolution
-- [ ] Sources section complete
+- [x] How stdio transport works with Claude Desktop explained (diagram present)
+- [x] `dotnet publish` command for self-contained win-x64 executable included
+- [x] `claude_desktop_config.json` location shown for both Windows and macOS
+- [x] Full `claude_desktop_config.json` snippet shown
+- [x] "Restart Claude Desktop" step and hammer icon confirmation mentioned
+- [x] Live demo walkthrough present as prose sections (prompt → tools called → result; no markdown table — Medium-compatible)
+- [x] VS Code Copilot section present with `.vscode/mcp.json` snippet
+- [x] Debugging section present (5 common problems with causes and fixes; bullet list — no markdown table)
+- [x] stdout contamination pitfall explicitly called out
+- [x] **Inspector as first debugging step** — "Tools not showing in Claude Desktop? Test with MCP Inspector in HTTP mode first to isolate server vs transport issues"
+- [x] Series recap "What was built" summary present
+- [x] "Next Steps" section lists future topics
+- [x] No "Next Up" footer (this is the final part)
+- [x] **Tease Part 6** — "Next Steps" section mentions adding OIDC security as the next evolution
+- [x] Sources section complete
 
 ### Code
 - [ ] `dotnet publish` produces a runnable `HrMcp.McpServer.exe`

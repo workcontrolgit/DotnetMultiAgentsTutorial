@@ -4,7 +4,8 @@ obj/
 *.user
 .vs/
 *.suo
-.vscode/
+.vscode/*
+!.vscode/mcp.json
 *.swp
 
 ## Secrets & environment
