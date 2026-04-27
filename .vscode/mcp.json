@@ -3,6 +3,11 @@
     "hr-mcp": {
       "type": "http",
       "url": "http://localhost:5100/mcp"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
     }
   }
 }

@@ -17,23 +17,7 @@ By the end you will have a running AI agent that answers HR questions by calling
 
 ## The Architecture
 
-```
-You (console)
-    │
-    ▼
-HrMcp.Agent  ──── IChatClient (Ollama / llama3.2)
-    │                   │
-    │          UseFunctionInvocation middleware
-    │                   │ (auto tool dispatch)
-    ▼                   ▼
-McpClient ──── HTTP/SSE ──── HrMcp.McpServer
-                                    │
-                           MCP Tools (GetOpenPositions,
-                           GetHiringOrganizations,
-                           WriteJobDescription, …)
-                                    │
-                               SQL Server DB
-```
+![MCP Tool Architecture — Agent, IChatClient, McpClient, and MCP Server](diagrams/part-4-diagram-1-mcp-tool-architecture.png)
 
 `Microsoft.Extensions.AI` is the abstraction layer. Ollama is the provider — swap it for Azure OpenAI or any other provider without touching `HrAgent.cs`.
 
