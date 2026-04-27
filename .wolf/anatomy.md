@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-04-27T01:40:27.736Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-04-27T02:07:16.262Z
 > Files: 207 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../Users/Fuji Nguyen/.claude/plans/
@@ -229,12 +229,12 @@
 
 ## DotnetAiAgentMcp/src/HrMcp.McpServer/
 
-- `appsettings.Development.json` (~62 tok)
-- `appsettings.json` (~125 tok)
+- `appsettings.Development.json` (~96 tok)
+- `appsettings.json` (~346 tok)
 - `HrMcp.McpServer.csproj` (~281 tok)
 - `HrMcp.McpServer.csproj.user` (~63 tok)
 - `HrMcp.McpServer.http` (~39 tok)
-- `Program.cs` — src/HrMcp.McpServer/Program.cs (~717 tok)
+- `Program.cs` — src/HrMcp.McpServer/Program.cs (~1313 tok)
 
 ## DotnetAiAgentMcp/src/HrMcp.McpServer/Properties/
 

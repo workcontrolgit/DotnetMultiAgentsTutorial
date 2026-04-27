@@ -105,6 +105,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-27T01:32:26.906Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-04-27T02:07:05.704Z",
+      "error_message": "Significant refactor of ",
+      "file": "DotnetAiAgentMcp/src/HrMcp.McpServer/Program.cs",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 18→22 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T02:07:05.704Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-04-27T02:07:11.546Z",
+      "error_message": "Incorrect value in code",
+      "file": "DotnetAiAgentMcp/src/HrMcp.McpServer/appsettings.json",
+      "root_cause": "Had \"logs/info-.log\"",
+      "fix": "Changed to \"logs/info/info-.log\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-27T02:07:16.272Z"
     }
   ]
 }
