@@ -110,3 +110,25 @@
 | 22:09 | Session end: 4 writes across 2 files (Program.cs, appsettings.json) | 1 reads | ~735 tok |
 | 22:09 | Session end: 4 writes across 2 files (Program.cs, appsettings.json) | 3 reads | ~735 tok |
 | 22:10 | Session end: 4 writes across 2 files (Program.cs, appsettings.json) | 3 reads | ~735 tok |
+| 22:13 | Edited ../../Users/Fuji Nguyen/.claude/plans/breezy-waddling-valiant.md | inline fix | ~13 |
+| 22:14 | Created ../../Users/Fuji Nguyen/.claude/plans/breezy-waddling-valiant.md | — | ~477 |
+| 22:14 | Edited .vscode/mcp.json | 8→13 lines | ~64 |
+| 22:14 | Session end: 7 writes across 4 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json) | 6 reads | ~1324 tok |
+| 22:22 | Session end: 7 writes across 4 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json) | 6 reads | ~1324 tok |
+| 22:27 | Session end: 7 writes across 4 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json) | 6 reads | ~1324 tok |
+| 22:27 | Edited blogs/series-1-ai-agent-mcp/part-4-ai-agent-extensions-ai.md | reduced (-16 lines) | ~34 |
+| 22:28 | Session end: 8 writes across 5 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json, part-4-ai-agent-extensions-ai.md) | 7 reads | ~1360 tok |
+| 22:35 | Replaced ASCII stdio diagram with PNG in Part 5 | blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md | Diagram now references part-5-diagram-1-claude-mcp-tool-integration.png | ~120 |
+| 22:39 | Switched Part 5 diagram link to absolute raw GitHub URL for blog rendering | blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md | Fixes platforms that do not resolve relative local image paths | ~80 |
+| 22:44 | Reverted Part 5 diagram link back to relative path per user feedback | blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md | Restored working convention used by other parts | ~60 |
+| 22:50 | Replaced Part 6 ASCII architecture diagram with PNG image | blogs/series-1-ai-agent-mcp/part-6-mcp-security-oidc.md | Uses diagrams/part-6-diagram-1-identityserver-oidc-integration.png | ~80 |
+| 23:02 | Removed DotnetFastMCP references from blog series content and checklist | blogs/series-1-ai-agent-mcp/part-2-intro-to-mcp.md, blogs/series-1-ai-agent-mcp/part-3-mcp-server-dotnet.md, blogs/series-1-ai-agent-mcp/part-6-mcp-security-oidc.md, blogs/series-1-ai-agent-mcp/CHECKLIST.md | No remaining DotnetFastMCP mentions in series | ~260 |
+| 22:28 | Session end: 8 writes across 5 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json, part-4-ai-agent-extensions-ai.md) | 7 reads | ~1360 tok |
+| 22:29 | Edited .gitignore | 3→6 lines | ~13 |
+| 22:29 | Session end: 9 writes across 6 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json, part-4-ai-agent-extensions-ai.md) | 8 reads | ~1374 tok |
+| 22:31 | Edited .mcp.json | 13→14 lines | ~66 |
+
+## Session: 2026-04-27 22:33
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

@@ -22,24 +22,7 @@ By the end you will have:
 
 When Claude Desktop launches an MCP server it does not connect over HTTP. It spawns the server as a child process and communicates over stdin/stdout using JSON-RPC 2.0. This is the stdio transport.
 
-```
-Claude Desktop (host)
-    │
-    │  spawns child process
-    ▼
-HrMcp.McpServer.exe --stdio
-    │
-    │  stdin ← JSON-RPC requests
-    │  stdout → JSON-RPC responses
-    │
-    ▼
-MCP Tools (GetOpenPositions, GetHiringOrganizations,
-           GetPositionsByOrganization, GetPositionById,
-           WriteJobDescription)
-    │
-    ▼
-SQL Server DB
-```
+![Claude Desktop stdio transport to MCP tools and SQL Server](diagrams/part-5-diagram-1-claude-mcp-tool-integration.png)
 
 Two rules follow from this architecture:
 

@@ -421,14 +421,6 @@ No ASP.NET Core startup output appears on stdout. The process blocks waiting for
 
 ---
 
-## Alternative: DotnetFastMCP
-
-If you prefer an attribute-first approach with built-in OAuth and OpenTelemetry, the community package [DotnetFastMCP](https://github.com/tekspry/DotnetFastMCP) offers `[McpTool]` decorators and assembly-scanning auto-discovery. Setup reduces to a few lines and no explicit `WithTools<T>()` registrations. It targets .NET 8+ and favors static methods over constructor injection, which is less natural with Clean Architecture's scoped services but requires less boilerplate for simple servers. Worth evaluating for production scenarios that need auth and observability without custom middleware.
-
-This series uses the official SDK to stay on the primary learning path and to keep tool classes as first-class DI citizens.
-
----
-
 ## What We Built
 
 - **`ModelContextProtocol.AspNetCore` 1.2.0** installed in `HrMcp.McpServer`
@@ -455,5 +447,4 @@ We build the `HrMcp.Agent` console app: connect it to the MCP server, register O
 - [ModelContextProtocol NuGet Package](https://www.nuget.org/packages/ModelContextProtocol)
 - [ModelContextProtocol.AspNetCore NuGet Package](https://www.nuget.org/packages/ModelContextProtocol.AspNetCore)
 - [MCP Inspector — GitHub](https://github.com/modelcontextprotocol/inspector)
-- [DotnetFastMCP — Community Alternative](https://github.com/tekspry/DotnetFastMCP)
 - [MCP Specification — Transports](https://spec.modelcontextprotocol.io/specification/basic/transports/)

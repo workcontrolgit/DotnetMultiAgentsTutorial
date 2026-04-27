@@ -137,6 +137,23 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-04-27T02:07:16.272Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-04-26T22:44:00Z",
+      "error_message": "Part 5 blog image did not show after switching link style",
+      "file": "blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md",
+      "root_cause": "Changed image link format away from the established working convention used in other series parts.",
+      "fix": "Reverted image markdown to the original relative path format used by the rest of the series.",
+      "tags": [
+        "blog",
+        "markdown",
+        "image-link",
+        "regression"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T22:44:00Z"
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "name": "dotnetmcptutorial",
+  "version": "1.0.0",
+  "description": "A tutorial repository demonstrating **AI Agents** and the **Model Context Protocol (MCP)** using .NET 10 and Clean Architecture.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/workcontrolgit/DotnetAiAgentMcp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/workcontrolgit/DotnetAiAgentMcp/issues"
+  },
+  "homepage": "https://github.com/workcontrolgit/DotnetAiAgentMcp#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

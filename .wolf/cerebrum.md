@@ -8,12 +8,16 @@
 
 - **No markdown tables in blog posts.** Convert to bullet lists or prose sections for Medium.com compatibility. When checklist items say "table", write a bullet list instead and update the checklist item to say "bullet list — no markdown table".
 - **Blog post structure:** Use numbered steps, prose explanations, and code blocks with language tags. No tables anywhere.
+- **Blog images must render outside local repo previews.** Prefer absolute hosted image URLs for post content intended for Medium/remote platforms, not relative local file paths.
+- **When a pattern works in existing parts, keep consistency.** Do not switch image link style globally based on one failed render; follow the already-working convention unless asked.
+- **Blog series content direction:** Remove DotnetFastMCP mentions/callouts from the series when requested; keep the narrative focused on the official MCP SDK path.
 
 ## Key Learnings
 
 - **Project:** DotnetMcpTutorial
 - **Description:** A tutorial repository demonstrating **AI Agents** and the **Model Context Protocol (MCP)** using .NET 10 and Clean Architecture.
 - **Blog series location:** `blogs/series-1-ai-agent-mcp/` — 6 parts; checklist at `CHECKLIST.md`
+- **Blog diagram convention:** Place diagram/image assets under `blogs/series-1-ai-agent-mcp/diagrams/` and reference them from each part using relative paths like `diagrams/<filename>.png`.
 - **Solution file:** `DotnetAiAgentMcp/DotnetAiAgentMcp.slnx` (not `.sln`)
 - **OllamaSharp vs deprecated package:** `Microsoft.Extensions.AI.Ollama` is deprecated in the GA release. Use `OllamaSharp` (`OllamaApiClient`) instead. `OllamaApiClient` implements `IChatClient` natively.
 - **OllamaApiClient implements both IChatClient and IEmbeddingGenerator.** Calling `.AsBuilder()` directly on `new OllamaApiClient(...)` is ambiguous. Must cast first: `((IChatClient)new OllamaApiClient(...)).AsBuilder()...`

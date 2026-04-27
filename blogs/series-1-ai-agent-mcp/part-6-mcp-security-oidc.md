@@ -23,26 +23,7 @@ The surface area of change is small: four lines in `Program.cs`, two values in `
 
 ## Architecture
 
-```
-┌─────────────────────────────┐
-│   Duende IdentityServer      │
-│   (Docker container)         │
-│                             │
-│   /connect/token             │
-│   /.well-known/openid-config │
-│   /connect/keys (JWKS)       │
-└────────────┬────────────────┘
-             │  issues JWT (client credentials)
-             ▼
-┌─────────────────────────┐         ┌─────────────────────────┐
-│      HrMcp.Agent         │         │    HrMcp.McpServer       │
-│                         │         │                         │
-│  1. POST /connect/token  │  Bearer │  2. validate JWT        │
-│     client_id + secret  │────────►│     (Authority / JWKS)  │
-│                         │         │  3. authorize endpoint  │
-│  4. call MCP tools       │◄────────│  4. return tools/data   │
-└─────────────────────────┘         └─────────────────────────┘
-```
+![OIDC integration between HrMcp.Agent, Duende IdentityServer, and HrMcp.McpServer](diagrams/part-6-diagram-1-identityserver-oidc-integration.png)
 
 The OIDC provider is the only component that changes between deployments. The server and agent code are provider-agnostic — they speak standard JWT Bearer and OAuth2 client credentials.
 
@@ -56,7 +37,6 @@ Any standards-compliant OIDC provider works. This part uses Duende IdentityServe
 - **Okta** — free developer account supports up to 1,000 monthly active users; well-documented client credentials setup; hosted, no infrastructure required.
 - **Azure Entra ID (formerly Azure AD)** — use App Registrations with a client secret; integrates with MSAL and Azure RBAC; free tier available in Azure portal.
 - **Google Cloud Identity Platform** — OAuth2 service accounts support client credentials; configure via Google Cloud Console.
-- **DotnetFastMCP** — community MCP package (`tekspry/DotnetFastMCP`) with OAuth support built in as an attribute. If you are starting a new project and want OAuth handled at the framework level rather than as ASP.NET Core middleware, this is worth evaluating.
 
 ---
 
@@ -450,14 +430,6 @@ For Duende IdentityServer, add a `role` claim to the client token by including `
 
 ---
 
-## DotnetFastMCP — Built-In OAuth Alternative
-
-[DotnetFastMCP](https://github.com/tekspry/DotnetFastMCP) is a community MCP package that wraps the Microsoft MCP SDK with attribute-based tooling and has OAuth support as a first-class feature. If you are starting a new MCP server project and want OAuth handled at the framework level without writing middleware directly, it is worth evaluating.
-
-The trade-off: DotnetFastMCP uses static methods and targets `net8.0`, which is less idiomatic for Clean Architecture projects (DI, scoped services, etc.) than the approach used in this series. For those requirements, the middleware approach in Step 3 remains the better fit.
-
----
-
 ## Step 5 — Build
 
 ```bash
@@ -505,5 +477,4 @@ Across the six parts of this series you have built a complete, production-shaped
 - [ModelContextProtocol C# SDK — GitHub](https://github.com/modelcontextprotocol/csharp-sdk)
 - [Okta Developer — Client Credentials](https://developer.okta.com/docs/guides/implement-grant-type/clientcreds/main/)
 - [Azure Entra ID — App Registrations](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
-- [DotnetFastMCP — GitHub](https://github.com/tekspry/DotnetFastMCP)
 - [Microsoft.AspNetCore.Authentication.JwtBearer — NuGet](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)

@@ -95,7 +95,6 @@ Complete all items in a part's checklist before starting the next part.
 - [x] Both transports explained: stdio and HTTP/SSE
 - [x] `Program.cs` updated version shown (with `--stdio` flag detection)
 - [x] **MCP Inspector section** — full named section "Testing with MCP Inspector — Your MCP Postman + Swagger"; includes: Swagger UI + Postman analogy, Node.js 22.7.5+ prerequisite, `npx @modelcontextprotocol/inspector http://localhost:5100/mcp` run command, walkthrough calling all 4 tools with expected output
-- [x] **Alternative callout**: `DotnetFastMCP` (community package, `tekspry/DotnetFastMCP`) mentioned as attribute-based alternative — 1 paragraph, link to repo, note it targets net8.0 and uses static methods (less Clean Architecture-friendly), recommended for production scenarios needing OAuth/observability
 - [x] "Next Up" footer links to Part 4
 - [x] Sources section complete (include MCP Inspector GitHub link)
 
@@ -206,14 +205,13 @@ Complete all items in a part's checklist before starting the next part.
 ### Blog Content
 - [x] Problem framing: why unauthenticated MCP servers are a risk in real deployments
 - [x] Architecture diagram: OIDC provider → Agent (client credentials) → McpServer (resource server)
-- [x] Provider options compared (Okta, Duende IdentityServer, Azure AD/Entra, DotnetFastMCP built-in) — as bullet list, not table
+- [x] Provider options compared (Okta, Duende IdentityServer, Azure AD/Entra, Google Cloud Identity Platform) — as bullet list, not table
 - [x] JWT Bearer middleware added to `HrMcp.McpServer/Program.cs` shown
 - [x] `app.MapMcp("/mcp").RequireAuthorization()` change shown
 - [x] `appsettings.json` snippet for `Authority` and `Audience` shown
 - [x] Agent token acquisition shown: client credentials flow against chosen provider
 - [x] `HttpClientTransportOptions.AdditionalHeaders` snippet shown (Authorization: Bearer) — note: `SseClientTransportOptions` renamed to `HttpClientTransportOptions` in ModelContextProtocol 1.x
 - [x] Optional: tool-level role check via `IHttpContextAccessor` shown
-- [x] DotnetFastMCP callout: note it has built-in OAuth support as an alternative
 - [x] Okta free-tier setup walkthrough (or IdentityServer dev license note)
 - [x] "What We Built" summary present
 - [x] No "Next Up" footer (this is the final part)
