@@ -16,6 +16,7 @@
 | 3 | Building an MCP Server in .NET 10 | `part-3-mcp-server-dotnet.md` | Working MCP server with HR tools |
 | 4 | AI Agent with Microsoft.Extensions.AI + Ollama | `part-4-ai-agent-extensions-ai.md` | Console agent using local LLM + MCP tools |
 | 5 | Claude Desktop Integration & End-to-End Demo | `part-5-claude-desktop-integration.md` | Claude Desktop calling HR MCP tools |
+| 6 | Securing the MCP Server with OIDC | `part-6-mcp-security-oidc.md` | JWT/OIDC-protected MCP endpoint with authenticated agent calls |
 
 ---
 
@@ -1241,6 +1242,7 @@ Get-Content "$env:APPDATA\Claude\logs\mcp*.log" -Wait
 3. `blogs/series-1-ai-agent-mcp/part-3-mcp-server-dotnet.md`
 4. `blogs/series-1-ai-agent-mcp/part-4-ai-agent-extensions-ai.md`
 5. `blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md`
+6. `blogs/series-1-ai-agent-mcp/part-6-mcp-security-oidc.md`
 
 ## Verification Checklist
 
@@ -1250,4 +1252,103 @@ Get-Content "$env:APPDATA\Claude\logs\mcp*.log" -Wait
 - [ ] File paths in code match the solution structure exactly
 - [ ] Part 3's `WriteJobDescription` starts as a stub, upgraded in Part 4
 - [ ] Part 5 includes both Claude Desktop (stdio) and VS Code Copilot (HTTP/SSE) instructions
+- [ ] Part 6 includes OIDC/JWT auth flow (resource server + client credentials)
 - [ ] Debugging section covers stdout contamination pitfall
+
+---
+
+# Future Draft — Series 2: Better Job Description Quality
+
+**Working title:** AI Agents & MCP with .NET 10 — Series 2 (Job Description Quality)
+
+**Goal**
+- Improve `WriteJobDescription` quality using richer seed data and example-based grounding.
+- Keep backward compatibility with existing MCP tools while adding an "advanced draft" path.
+
+**High-level outcomes**
+- Larger and cleaner USAJobs seed dataset for stronger retrieval coverage.
+- New reference-selection logic: fetch 3 to 5 similar positions before generating a draft.
+- Prompt template and output format improvements (consistent sections and tone).
+- Evaluation loop for measuring quality improvements over Series 1 baseline.
+
+## Part A — Data Foundation (placeholder)
+
+**Focus:** more representative seed data for retrieval and style grounding.
+
+**Planned topics**
+- Expand `tools/UsaJobsFetcher` to support pagination and configurable query parameters.
+- Build a repeatable data curation flow:
+    - deduplicate by title + organization + grade band
+    - remove low-signal or incomplete records
+    - normalize fields used by prompt templates
+- Create two seed profiles:
+    - **dev-small** (fast local iteration)
+    - **demo-large** (richer generation quality)
+- Add seed metadata file (generated timestamp, source filters, row counts).
+
+**Deliverables (placeholder)**
+- `data/usajobs-seed-dev.json`
+- `data/usajobs-seed-large.json`
+- `docs/seeding-strategy.md`
+
+## Part B — Reference-Aware Draft Generation (placeholder)
+
+**Focus:** before generating a new job description, retrieve a few strong examples.
+
+**Planned workflow**
+1. Load target position by ID.
+2. Retrieve similar positions by weighted match:
+     - occupational series
+     - pay grade band
+     - work schedule / appointment type
+     - organization or department proximity
+3. Pick top 3 to 5 references.
+4. Generate draft with structured prompt sections:
+     - role summary
+     - key duties
+     - qualifications
+     - pay and conditions
+5. Return both the draft and a compact reference summary for traceability.
+
+**Deliverables (placeholder)**
+- `src/HrMcp.Application/Services/PositionSimilarityService.cs`
+- `src/HrMcp.McpServer/Tools/JobDescriptionTools.cs` (new reference-aware path)
+- New MCP tool option: `WriteJobDescriptionAdvanced` (or mode flag on existing tool)
+
+## Part C — Prompting and Output Quality (placeholder)
+
+**Focus:** consistently produce publish-ready, USAJobs-style descriptions.
+
+**Planned topics**
+- Introduce versioned prompt templates.
+- Add domain constraints (federal tone, non-fabrication, no salary guessing).
+- Add style profiles (concise internal posting vs public USAJobs narrative).
+- Add optional post-processing for formatting consistency.
+
+## Part D — Quality Evaluation (placeholder)
+
+**Focus:** measure improvement, not just subjective impression.
+
+**Planned metrics**
+- Structural completeness (required sections present).
+- Factual grounding score (matches source position fields).
+- Consistency score across repeated runs.
+- Human review checklist for recruiter readability.
+
+**Planned assets**
+- `docs/evaluation/job-description-rubric.md`
+- `docs/evaluation/baseline-vs-series2.md`
+
+## Post Ideas (placeholder)
+
+1. **Series 2 Part 1:** Scaling USAJobs seed data for retrieval quality
+2. **Series 2 Part 2:** Similar-position retrieval before draft generation
+3. **Series 2 Part 3:** Reference-aware prompt design for federal job posts
+4. **Series 2 Part 4:** Objective quality scoring and side-by-side evaluation
+5. **Series 2 Part 5:** Hardening for production (latency, caching, guardrails)
+
+## Notes for Future Execution
+
+- Keep Series 1 behavior available as baseline mode for easy comparison.
+- Avoid markdown tables in blog posts; use bullets/prose sections.
+- Prefer incremental rollout: enable advanced generation behind a feature flag first.

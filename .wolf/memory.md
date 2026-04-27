@@ -123,6 +123,8 @@
 | 22:44 | Reverted Part 5 diagram link back to relative path per user feedback | blogs/series-1-ai-agent-mcp/part-5-claude-desktop-integration.md | Restored working convention used by other parts | ~60 |
 | 22:50 | Replaced Part 6 ASCII architecture diagram with PNG image | blogs/series-1-ai-agent-mcp/part-6-mcp-security-oidc.md | Uses diagrams/part-6-diagram-1-identityserver-oidc-integration.png | ~80 |
 | 23:02 | Removed DotnetFastMCP references from blog series content and checklist | blogs/series-1-ai-agent-mcp/part-2-intro-to-mcp.md, blogs/series-1-ai-agent-mcp/part-3-mcp-server-dotnet.md, blogs/series-1-ai-agent-mcp/part-6-mcp-security-oidc.md, blogs/series-1-ai-agent-mcp/CHECKLIST.md | No remaining DotnetFastMCP mentions in series | ~260 |
+| 23:18 | Added Series 2 draft roadmap for better job-description quality | docs/blog-series-plan.md | Includes placeholders for larger seed data and reference-based drafting flow | ~220 |
+| 23:26 | Updated blog plan to explicitly include Series 1 Part 6 | docs/blog-series-plan.md | Added Part 6 to overview, file creation order, and verification checklist | ~80 |
 | 22:28 | Session end: 8 writes across 5 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json, part-4-ai-agent-extensions-ai.md) | 7 reads | ~1360 tok |
 | 22:29 | Edited .gitignore | 3→6 lines | ~13 |
 | 22:29 | Session end: 9 writes across 6 files (Program.cs, appsettings.json, breezy-waddling-valiant.md, mcp.json, part-4-ai-agent-extensions-ai.md) | 8 reads | ~1374 tok |

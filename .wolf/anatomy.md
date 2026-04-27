@@ -150,3 +150,5 @@
 
 ## docs/
 
+- `blog-series-plan.md` — Long-form roadmap for Series 1 (Parts 1–6) plus future Series 2 planning drafts (~12100 tok)
+

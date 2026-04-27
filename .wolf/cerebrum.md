@@ -11,6 +11,7 @@
 - **Blog images must render outside local repo previews.** Prefer absolute hosted image URLs for post content intended for Medium/remote platforms, not relative local file paths.
 - **When a pattern works in existing parts, keep consistency.** Do not switch image link style globally based on one failed render; follow the already-working convention unless asked.
 - **Blog series content direction:** Remove DotnetFastMCP mentions/callouts from the series when requested; keep the narrative focused on the official MCP SDK path.
+- **Future blog planning:** When requesting future-series direction, provide a concrete draft roadmap with placeholders, especially for data scaling and reference-based generation improvements.
 
 ## Key Learnings
 
