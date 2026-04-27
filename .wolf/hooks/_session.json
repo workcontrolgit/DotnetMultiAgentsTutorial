@@ -6,6 +6,16 @@
       "count": 1,
       "tokens": 102,
       "first_read": "2026-04-27T02:05:24.955Z"
+    },
+    "c:/apps/DotnetMcpTutorial/DotnetAiAgentMcp/src/HrMcp.McpServer/appsettings.json": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-04-27T02:09:39.737Z"
+    },
+    "c:/apps/DotnetMcpTutorial/DotnetAiAgentMcp/src/HrMcp.McpServer/appsettings.Development.json": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-04-27T02:09:39.748Z"
     }
   },
   "files_written": [
@@ -39,8 +49,8 @@
     "DotnetAiAgentMcp/src/HrMcp.McpServer/appsettings.json": 2
   },
   "anatomy_hits": 1,
-  "anatomy_misses": 0,
+  "anatomy_misses": 2,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 2
+  "stop_count": 5
 }
