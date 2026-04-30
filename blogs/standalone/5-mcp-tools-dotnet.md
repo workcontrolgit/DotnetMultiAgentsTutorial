@@ -1,4 +1,10 @@
+# 5 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)
 
+I've been building MCP servers in .NET for a while now — agents that query databases, read files, call APIs, and actually *do things* inside a running system. Along the way, I've accumulated a short list of tools I keep coming back to.
+
+MCP is only as good as the ecosystem around it. The spec is the foundation. But the tools — the servers you connect to, the SDKs you build with, the clients that make it click — that's what actually determines whether your agent does anything useful.
+
+Before I get into the list: I run everything locally against **Ollama** during development. If you haven't set that up yet, it's what everything below runs on — worth doing first. Once you have that running, here's what's actually in my MCP stack.
 
 ---
 
@@ -64,7 +70,7 @@ I caught a malformed tool description that would have confused the LLM — spott
 
 These five tools aren't the whole MCP ecosystem — it's growing fast. But they're the ones that made MCP stop feeling like a spec to me and start feeling like a platform. If you're a .NET developer and you haven't wired any of these up yet, now's a good time to start.
 
-If you want to see them in action together, I've been writing a hands-on series building a real AI Agent with MCP in .NET from scratch — starting with Clean Architecture and working up through Claude Desktop integration and OIDC security. [Check out Part 1 here.]
+If you want to see them in action together, I've been writing a hands-on series building a real AI Agent with MCP in .NET from scratch — starting with Clean Architecture and working up through Claude Desktop integration and OIDC security. [Check out Part 1 here.](https://medium.com/scrum-and-coke/part-1-clean-architecture-foundation-with-hr-domain-f43127400757)
 
 ---
 
