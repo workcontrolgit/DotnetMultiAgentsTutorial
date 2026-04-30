@@ -35,3 +35,15 @@ This is an official MCP server from GitHub that exposes repos, issues, PRs, code
 I asked an agent to find all open issues mentioning "performance" in a repo. It returned structured results. No SDK integration, no OAuth dance in my code. Just a tool call.
 
 **Get it:** [github.com/github/github-mcp-server](https://github.com/github/github-mcp-server)
+
+---
+
+## 4. Playwright MCP Server
+
+**Give your agent a real browser.**
+
+Playwright MCP wraps the Playwright browser automation library as an MCP server. Navigation, screenshots, clicking, form filling, DOM inspection — all exposed as MCP tools. Your .NET agent doesn't need to know a thing about browsers.
+
+I used it to have an agent screenshot a competitor's pricing page and summarize the changes. Two MCP tool calls. No Selenium setup, no browser driver config, no headache.
+
+**Get it:** [github.com/microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
