@@ -54,5 +54,16 @@
     "editId": "5ee56af86160",
     "editUrl": "https://medium.com/p/5ee56af86160/edit",
     "draftUrl": "https://medium.com/scrum-and-coke/part-6-securing-the-mcp-server-with-oidc-5ee56af86160"
+  },
+  {
+    "series": "Standalone",
+    "part": "standalone-1",
+    "title": "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)",
+    "editId": "46c20739d9e7",
+    "editUrl": "https://medium.com/p/46c20739d9e7/edit",
+    "draftUrl": "",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
   }
 ]

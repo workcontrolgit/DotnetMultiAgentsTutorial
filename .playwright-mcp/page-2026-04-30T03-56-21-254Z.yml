@@ -1,0 +1,434 @@
+- generic [ref=e4]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - tooltip "Sidebar menu" [ref=e9]:
+        - button "Sidebar menu" [ref=e11] [cursor=pointer]:
+          - generic [ref=e12]: Sidebar menu
+          - img [ref=e13]
+      - link "Homepage" [ref=e15] [cursor=pointer]:
+        - /url: /?source=---top_nav_layout_nav-----------------------------------------
+        - img "Medium Logo" [ref=e16]
+      - generic [ref=e19]:
+        - listbox
+        - img [ref=e21]
+        - combobox "search" [ref=e23]
+    - link "Write" [ref=e25] [cursor=pointer]:
+      - /url: https://medium.com/new-story?source=---top_nav_layout_nav-----------------------------------------
+      - generic [ref=e26]:
+        - img [ref=e27]
+        - text: Write
+    - tooltip "Notifications" [ref=e32]:
+      - link "Notifications" [ref=e34] [cursor=pointer]:
+        - /url: /me/notifications?source=---top_nav_layout_nav-----------------------------------------
+        - generic [ref=e35]:
+          - img [ref=e36]
+          - generic [ref=e39]: Notifications
+    - tooltip "user options menu" [ref=e42]:
+      - button "user options menu" [ref=e44] [cursor=pointer]:
+        - generic [ref=e45]:
+          - img "Fuji Nguyen" [ref=e47]
+          - img [ref=e49]
+  - generic [ref=e52]:
+    - generic [ref=e56]:
+      - generic [ref=e57]:
+        - tooltip "Home" [ref=e60]:
+          - link "Home" [ref=e62] [cursor=pointer]:
+            - /url: /?source=---sidebar_menu-----------------------------------------
+            - img [ref=e63]
+            - generic [ref=e65]: Home
+        - tooltip "Library" [ref=e67]:
+          - link "Library" [ref=e69] [cursor=pointer]:
+            - /url: /me/lists?source=---sidebar_menu-----------------------------------------
+            - img [ref=e70]
+            - generic [ref=e73]: Library
+        - tooltip "Profile" [ref=e75]:
+          - link "Profile" [ref=e77] [cursor=pointer]:
+            - /url: /@fuji-nguyen?source=---sidebar_menu-----------------------------------------
+            - img [ref=e78]
+            - generic [ref=e81]: Profile
+        - tooltip "Stories" [ref=e83]:
+          - button "Stories" [ref=e85] [cursor=pointer]:
+            - img [ref=e87]
+            - generic [ref=e89]: Stories
+        - tooltip "Stats" [ref=e91]:
+          - link "Stats" [ref=e93] [cursor=pointer]:
+            - /url: /me/stats?source=---sidebar_menu-----------------------------------------
+            - img [ref=e94]
+            - generic [ref=e96]: Stats
+      - generic [ref=e98]:
+        - tooltip "Following" [ref=e100]:
+          - link "Following" [ref=e102] [cursor=pointer]:
+            - /url: /me/following-feed/writers?source=---sidebar_menu-----------------------------------------
+            - img [ref=e103]
+            - generic [ref=e105]: Following
+        - tooltip "Kevin Gabeci Kevin Gabeci" [ref=e107]:
+          - link "Kevin Gabeci Kevin Gabeci" [ref=e109] [cursor=pointer]:
+            - /url: /me/following-feed/writers/eafd2a4eaa8d?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Kevin Gabeci" [ref=e112]
+            - generic [ref=e114]: Kevin Gabeci
+        - tooltip "JavaScript in Plain English JavaScript in Plain English" [ref=e117]:
+          - link "JavaScript in Plain English JavaScript in Plain English" [ref=e119] [cursor=pointer]:
+            - /url: /me/following-feed/publications/4b3a1ed4f11c?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "JavaScript in Plain English" [ref=e122]
+            - generic [ref=e124]: JavaScript in Plain English
+        - tooltip "Sébastien Dubois Sébastien Dubois" [ref=e127]:
+          - link "Sébastien Dubois Sébastien Dubois" [ref=e129] [cursor=pointer]:
+            - /url: /me/following-feed/writers/1ea69814e3e1?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Sébastien Dubois" [ref=e132]
+            - generic [ref=e134]: Sébastien Dubois
+        - tooltip "Dev Genius Dev Genius" [ref=e137]:
+          - link "Dev Genius Dev Genius" [ref=e139] [cursor=pointer]:
+            - /url: /me/following-feed/publications/4e2c1156667e?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Dev Genius" [ref=e142]
+            - generic [ref=e144]: Dev Genius
+        - tooltip "John Au-Yeung John Au-Yeung" [ref=e147]:
+          - link "John Au-Yeung John Au-Yeung" [ref=e149] [cursor=pointer]:
+            - /url: /me/following-feed/writers/5253c50d76c1?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "John Au-Yeung" [ref=e152]
+            - generic [ref=e154]: John Au-Yeung
+        - tooltip "Dr. Derek Austin 🥳 Dr. Derek Austin 🥳" [ref=e157]:
+          - link "Dr. Derek Austin 🥳 Dr. Derek Austin 🥳" [ref=e159] [cursor=pointer]:
+            - /url: /me/following-feed/writers/e5294c417caf?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Dr. Derek Austin 🥳" [ref=e162]
+            - generic [ref=e164]: Dr. Derek Austin 🥳
+        - tooltip "Darrin Atkins Darrin Atkins" [ref=e167]:
+          - link "Darrin Atkins Darrin Atkins" [ref=e169] [cursor=pointer]:
+            - /url: /me/following-feed/writers/10f581b06f04?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Darrin Atkins" [ref=e172]
+            - generic [ref=e174]: Darrin Atkins
+        - tooltip "Abe Jaber Abe Jaber" [ref=e177]:
+          - link "Abe Jaber Abe Jaber" [ref=e179] [cursor=pointer]:
+            - /url: /me/following-feed/writers/b4529eba4bd0?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Abe Jaber" [ref=e182]
+            - generic [ref=e184]: Abe Jaber
+        - tooltip "CodeX CodeX" [ref=e187]:
+          - link "CodeX CodeX" [ref=e189] [cursor=pointer]:
+            - /url: /me/following-feed/publications/29038077e4c6?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "CodeX" [ref=e192]
+            - generic [ref=e194]: CodeX
+        - tooltip "Pastor Rich Bitterman Pastor Rich Bitterman" [ref=e197]:
+          - link "Pastor Rich Bitterman Pastor Rich Bitterman" [ref=e199] [cursor=pointer]:
+            - /url: /me/following-feed/writers/c787dc83689d?source=---sidebar_menu_following------------------------------following_badge-----------
+            - img "Pastor Rich Bitterman" [ref=e202]
+            - generic [ref=e204]: Pastor Rich Bitterman
+        - tooltip "More" [ref=e207]:
+          - button "More" [ref=e209] [cursor=pointer]:
+            - img [ref=e211]
+            - generic [ref=e214]: More
+    - generic [ref=e217]:
+      - generic [ref=e218]:
+        - generic [ref=e220]:
+          - heading "Stories" [level=1] [ref=e223]
+          - link "Import a story" [ref=e225] [cursor=pointer]:
+            - /url: https://medium.com/p/import?source=your_stories_outbox--------------------------------------------
+        - generic [ref=e227]:
+          - tablist [ref=e228]:
+            - tab "Drafts 12" [ref=e231] [cursor=pointer]:
+              - generic [ref=e233]:
+                - generic [ref=e234]: Drafts
+                - generic [ref=e235]: "12"
+            - tab "Scheduled" [ref=e238] [cursor=pointer]:
+              - generic [ref=e241]: Scheduled
+            - tab "Published 310" [ref=e244] [cursor=pointer]:
+              - generic [ref=e246]:
+                - generic [ref=e247]: Published
+                - generic [ref=e248]: "310"
+            - tab "Unlisted" [ref=e251] [cursor=pointer]:
+              - generic [ref=e254]: Unlisted
+            - tab "Submissions" [ref=e258] [cursor=pointer]:
+              - generic [ref=e260]: Submissions
+          - generic:
+            - button "next sections":
+              - img
+          - generic:
+            - button "previous sections":
+              - img
+      - table [ref=e262]:
+        - rowgroup [ref=e263]:
+          - row "Latest Publication Status" [ref=e264]:
+            - columnheader "Latest" [ref=e265]
+            - columnheader "Publication" [ref=e266]
+            - columnheader "Status" [ref=e267]
+            - columnheader [ref=e268]
+        - rowgroup [ref=e269]:
+          - row "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) 6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) 1 min read (14 words) Updated just now Toggle actions menu" [ref=e270]:
+            - cell "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) 6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) 1 min read (14 words) Updated just now" [ref=e271]:
+              - generic [ref=e275]:
+                - link "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [ref=e277] [cursor=pointer]:
+                  - /url: https://medium.com/p/46c20739d9e7/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [ref=e279]:
+                    - img "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [ref=e281]
+                - generic [ref=e283]:
+                  - link "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [ref=e286] [cursor=pointer]:
+                    - /url: https://medium.com/p/46c20739d9e7/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [level=2] [ref=e288]
+                  - generic [ref=e291]:
+                    - paragraph [ref=e292]: 1 min read (14 words)
+                    - generic [ref=e294]: ·
+                    - paragraph [ref=e295]: Updated just now
+            - cell [ref=e296]
+            - cell [ref=e297]
+            - cell "Toggle actions menu" [ref=e298]:
+              - button "Toggle actions menu" [ref=e302] [cursor=pointer]:
+                - generic [ref=e303]: Toggle actions menu
+                - img [ref=e304]
+          - 'row "Part 5: Claude Desktop Integration & End-to-End Demo Part 5: Claude Desktop Integration & End-to-End Demo 6 min read (1484 words) Updated 1d ago Scrum and Coke Scrum and Coke Pending review Toggle actions menu" [ref=e306]':
+            - 'cell "Part 5: Claude Desktop Integration & End-to-End Demo Part 5: Claude Desktop Integration & End-to-End Demo 6 min read (1484 words) Updated 1d ago" [ref=e307]':
+              - generic [ref=e311]:
+                - 'link "Part 5: Claude Desktop Integration & End-to-End Demo" [ref=e313] [cursor=pointer]':
+                  - /url: https://medium.com/p/fc985ed7cbf5/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - 'generic "Part 5: Claude Desktop Integration & End-to-End Demo" [ref=e315]':
+                    - 'img "Part 5: Claude Desktop Integration & End-to-End Demo" [ref=e317]'
+                - generic [ref=e319]:
+                  - 'link "Part 5: Claude Desktop Integration & End-to-End Demo" [ref=e322] [cursor=pointer]':
+                    - /url: https://medium.com/p/fc985ed7cbf5/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - 'heading "Part 5: Claude Desktop Integration & End-to-End Demo" [level=2] [ref=e324]'
+                  - generic [ref=e327]:
+                    - paragraph [ref=e328]: 6 min read (1484 words)
+                    - generic [ref=e330]: ·
+                    - paragraph [ref=e331]: Updated 1d ago
+            - cell "Scrum and Coke Scrum and Coke" [ref=e332]:
+              - tooltip "Scrum and Coke Scrum and Coke" [ref=e336]:
+                - generic [ref=e338]:
+                  - link "Scrum and Coke" [ref=e339] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - img "Scrum and Coke" [ref=e341]
+                  - link "Scrum and Coke" [ref=e343] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - generic [ref=e344]: Scrum and Coke
+            - cell "Pending review" [ref=e345]:
+              - button "Pending review" [ref=e348] [cursor=pointer]:
+                - generic [ref=e353]: Pending review
+            - cell "Toggle actions menu" [ref=e354]:
+              - button "Toggle actions menu" [ref=e358] [cursor=pointer]:
+                - generic [ref=e359]: Toggle actions menu
+                - img [ref=e360]
+          - 'row "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama Part 4: AI Agent with Microsoft.Extensions.AI + Ollama 9 min read (2188 words) Updated 1d ago Scrum and Coke Scrum and Coke Pending review Toggle actions menu" [ref=e362]':
+            - 'cell "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama Part 4: AI Agent with Microsoft.Extensions.AI + Ollama 9 min read (2188 words) Updated 1d ago" [ref=e363]':
+              - generic [ref=e367]:
+                - 'link "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama" [ref=e369] [cursor=pointer]':
+                  - /url: https://medium.com/p/b41d0b722b90/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - 'generic "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama" [ref=e371]':
+                    - 'img "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama" [ref=e373]'
+                - generic [ref=e375]:
+                  - 'link "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama" [ref=e378] [cursor=pointer]':
+                    - /url: https://medium.com/p/b41d0b722b90/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - 'heading "Part 4: AI Agent with Microsoft.Extensions.AI + Ollama" [level=2] [ref=e380]'
+                  - generic [ref=e383]:
+                    - paragraph [ref=e384]: 9 min read (2188 words)
+                    - generic [ref=e386]: ·
+                    - paragraph [ref=e387]: Updated 1d ago
+            - cell "Scrum and Coke Scrum and Coke" [ref=e388]:
+              - tooltip "Scrum and Coke Scrum and Coke" [ref=e392]:
+                - generic [ref=e394]:
+                  - link "Scrum and Coke" [ref=e395] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - img "Scrum and Coke" [ref=e397]
+                  - link "Scrum and Coke" [ref=e399] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - generic [ref=e400]: Scrum and Coke
+            - cell "Pending review" [ref=e401]:
+              - button "Pending review" [ref=e404] [cursor=pointer]:
+                - generic [ref=e409]: Pending review
+            - cell "Toggle actions menu" [ref=e410]:
+              - button "Toggle actions menu" [ref=e414] [cursor=pointer]:
+                - generic [ref=e415]: Toggle actions menu
+                - img [ref=e416]
+          - 'row "Part 3: Building an MCP Server in .NET 10 Part 3: Building an MCP Server in .NET 10 7 min read (1614 words) Updated 1d ago Scrum and Coke Scrum and Coke Pending review Toggle actions menu" [ref=e418]':
+            - 'cell "Part 3: Building an MCP Server in .NET 10 Part 3: Building an MCP Server in .NET 10 7 min read (1614 words) Updated 1d ago" [ref=e419]':
+              - generic [ref=e423]:
+                - 'link "Part 3: Building an MCP Server in .NET 10" [ref=e425] [cursor=pointer]':
+                  - /url: https://medium.com/p/81964133d3b8/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - 'generic "Part 3: Building an MCP Server in .NET 10" [ref=e427]':
+                    - 'img "Part 3: Building an MCP Server in .NET 10" [ref=e429]'
+                - generic [ref=e431]:
+                  - 'link "Part 3: Building an MCP Server in .NET 10" [ref=e434] [cursor=pointer]':
+                    - /url: https://medium.com/p/81964133d3b8/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - 'heading "Part 3: Building an MCP Server in .NET 10" [level=2] [ref=e436]'
+                  - generic [ref=e439]:
+                    - paragraph [ref=e440]: 7 min read (1614 words)
+                    - generic [ref=e442]: ·
+                    - paragraph [ref=e443]: Updated 1d ago
+            - cell "Scrum and Coke Scrum and Coke" [ref=e444]:
+              - tooltip "Scrum and Coke Scrum and Coke" [ref=e448]:
+                - generic [ref=e450]:
+                  - link "Scrum and Coke" [ref=e451] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - img "Scrum and Coke" [ref=e453]
+                  - link "Scrum and Coke" [ref=e455] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - generic [ref=e456]: Scrum and Coke
+            - cell "Pending review" [ref=e457]:
+              - button "Pending review" [ref=e460] [cursor=pointer]:
+                - generic [ref=e465]: Pending review
+            - cell "Toggle actions menu" [ref=e466]:
+              - button "Toggle actions menu" [ref=e470] [cursor=pointer]:
+                - generic [ref=e471]: Toggle actions menu
+                - img [ref=e472]
+          - 'row "Part 2: Introduction to Model Context Protocol Part 2: Introduction to Model Context Protocol 7 min read (1596 words) Updated 1d ago Scrum and Coke Scrum and Coke Pending review Toggle actions menu" [ref=e474]':
+            - 'cell "Part 2: Introduction to Model Context Protocol Part 2: Introduction to Model Context Protocol 7 min read (1596 words) Updated 1d ago" [ref=e475]':
+              - generic [ref=e479]:
+                - 'link "Part 2: Introduction to Model Context Protocol" [ref=e481] [cursor=pointer]':
+                  - /url: https://medium.com/p/64e70a034ea3/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - 'generic "Part 2: Introduction to Model Context Protocol" [ref=e483]':
+                    - 'img "Part 2: Introduction to Model Context Protocol" [ref=e485]'
+                - generic [ref=e487]:
+                  - 'link "Part 2: Introduction to Model Context Protocol" [ref=e490] [cursor=pointer]':
+                    - /url: https://medium.com/p/64e70a034ea3/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - 'heading "Part 2: Introduction to Model Context Protocol" [level=2] [ref=e492]'
+                  - generic [ref=e495]:
+                    - paragraph [ref=e496]: 7 min read (1596 words)
+                    - generic [ref=e498]: ·
+                    - paragraph [ref=e499]: Updated 1d ago
+            - cell "Scrum and Coke Scrum and Coke" [ref=e500]:
+              - tooltip "Scrum and Coke Scrum and Coke" [ref=e504]:
+                - generic [ref=e506]:
+                  - link "Scrum and Coke" [ref=e507] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - img "Scrum and Coke" [ref=e509]
+                  - link "Scrum and Coke" [ref=e511] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - generic [ref=e512]: Scrum and Coke
+            - cell "Pending review" [ref=e513]:
+              - button "Pending review" [ref=e516] [cursor=pointer]:
+                - generic [ref=e521]: Pending review
+            - cell "Toggle actions menu" [ref=e522]:
+              - button "Toggle actions menu" [ref=e526] [cursor=pointer]:
+                - generic [ref=e527]: Toggle actions menu
+                - img [ref=e528]
+          - 'row "Part 6: Securing the MCP Server with OIDC Part 6: Securing the MCP Server with OIDC 8 min read (1932 words) Updated 1d ago Scrum and Coke Scrum and Coke Pending review Toggle actions menu" [ref=e530]':
+            - 'cell "Part 6: Securing the MCP Server with OIDC Part 6: Securing the MCP Server with OIDC 8 min read (1932 words) Updated 1d ago" [ref=e531]':
+              - generic [ref=e535]:
+                - 'link "Part 6: Securing the MCP Server with OIDC" [ref=e537] [cursor=pointer]':
+                  - /url: https://medium.com/p/5ee56af86160/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - 'generic "Part 6: Securing the MCP Server with OIDC" [ref=e539]':
+                    - 'img "Part 6: Securing the MCP Server with OIDC" [ref=e541]'
+                - generic [ref=e543]:
+                  - 'link "Part 6: Securing the MCP Server with OIDC" [ref=e546] [cursor=pointer]':
+                    - /url: https://medium.com/p/5ee56af86160/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - 'heading "Part 6: Securing the MCP Server with OIDC" [level=2] [ref=e548]'
+                  - generic [ref=e551]:
+                    - paragraph [ref=e552]: 8 min read (1932 words)
+                    - generic [ref=e554]: ·
+                    - paragraph [ref=e555]: Updated 1d ago
+            - cell "Scrum and Coke Scrum and Coke" [ref=e556]:
+              - tooltip "Scrum and Coke Scrum and Coke" [ref=e560]:
+                - generic [ref=e562]:
+                  - link "Scrum and Coke" [ref=e563] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - img "Scrum and Coke" [ref=e565]
+                  - link "Scrum and Coke" [ref=e567] [cursor=pointer]:
+                    - /url: https://medium.com/scrum-and-coke?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - generic [ref=e568]: Scrum and Coke
+            - cell "Pending review" [ref=e569]:
+              - button "Pending review" [ref=e572] [cursor=pointer]:
+                - generic [ref=e577]: Pending review
+            - cell "Toggle actions menu" [ref=e578]:
+              - button "Toggle actions menu" [ref=e582] [cursor=pointer]:
+                - generic [ref=e583]: Toggle actions menu
+                - img [ref=e584]
+          - row "District 3 District 3 1 min read (23 words) Updated Feb 5 Toggle actions menu" [ref=e586]:
+            - cell "District 3 District 3 1 min read (23 words) Updated Feb 5" [ref=e587]:
+              - generic [ref=e591]:
+                - link "District 3" [ref=e593] [cursor=pointer]:
+                  - /url: https://medium.com/p/cdadd8dfabc5/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "District 3" [ref=e595]:
+                    - img "District 3" [ref=e597]
+                - generic [ref=e599]:
+                  - link "District 3" [ref=e602] [cursor=pointer]:
+                    - /url: https://medium.com/p/cdadd8dfabc5/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "District 3" [level=2] [ref=e604]
+                  - generic [ref=e607]:
+                    - paragraph [ref=e608]: 1 min read (23 words)
+                    - generic [ref=e610]: ·
+                    - paragraph [ref=e611]: Updated Feb 5
+            - cell [ref=e612]
+            - cell [ref=e613]
+            - cell "Toggle actions menu" [ref=e614]:
+              - button "Toggle actions menu" [ref=e618] [cursor=pointer]:
+                - generic [ref=e619]: Toggle actions menu
+                - img [ref=e620]
+          - row "Advanced drills you need Advanced drills you need 1 min read (4 words) Updated Jun 22, 2024 Toggle actions menu" [ref=e622]:
+            - cell "Advanced drills you need Advanced drills you need 1 min read (4 words) Updated Jun 22, 2024" [ref=e623]:
+              - generic [ref=e627]:
+                - link "Advanced drills you need" [ref=e629] [cursor=pointer]:
+                  - /url: https://medium.com/p/879bb9f5eb29/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "Advanced drills you need" [ref=e631]:
+                    - img "Advanced drills you need" [ref=e633]
+                - generic [ref=e635]:
+                  - link "Advanced drills you need" [ref=e638] [cursor=pointer]:
+                    - /url: https://medium.com/p/879bb9f5eb29/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "Advanced drills you need" [level=2] [ref=e640]
+                  - generic [ref=e643]:
+                    - paragraph [ref=e644]: 1 min read (4 words)
+                    - generic [ref=e646]: ·
+                    - paragraph [ref=e647]: Updated Jun 22, 2024
+            - cell [ref=e648]
+            - cell [ref=e649]
+            - cell "Toggle actions menu" [ref=e650]:
+              - button "Toggle actions menu" [ref=e654] [cursor=pointer]:
+                - generic [ref=e655]: Toggle actions menu
+                - img [ref=e656]
+          - row "See how to use your body weight to generate more power! See how to use your body weight to generate more power! 1 min read (17 words) Updated Dec 9, 2023 Toggle actions menu" [ref=e658]:
+            - cell "See how to use your body weight to generate more power! See how to use your body weight to generate more power! 1 min read (17 words) Updated Dec 9, 2023" [ref=e659]:
+              - generic [ref=e663]:
+                - link "See how to use your body weight to generate more power!" [ref=e665] [cursor=pointer]:
+                  - /url: https://medium.com/p/1c9d2b3c094a/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "See how to use your body weight to generate more power!" [ref=e667]:
+                    - img "See how to use your body weight to generate more power!" [ref=e669]
+                - generic [ref=e671]:
+                  - link "See how to use your body weight to generate more power!" [ref=e674] [cursor=pointer]:
+                    - /url: https://medium.com/p/1c9d2b3c094a/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "See how to use your body weight to generate more power!" [level=2] [ref=e676]
+                  - generic [ref=e679]:
+                    - paragraph [ref=e680]: 1 min read (17 words)
+                    - generic [ref=e682]: ·
+                    - paragraph [ref=e683]: Updated Dec 9, 2023
+            - cell [ref=e684]
+            - cell [ref=e685]
+            - cell "Toggle actions menu" [ref=e686]:
+              - button "Toggle actions menu" [ref=e690] [cursor=pointer]:
+                - generic [ref=e691]: Toggle actions menu
+                - img [ref=e692]
+          - row "Drill for 3rd shot drop Drill for 3rd shot drop 1 min read (70 words) Updated Oct 31, 2023 Toggle actions menu" [ref=e694]:
+            - cell "Drill for 3rd shot drop Drill for 3rd shot drop 1 min read (70 words) Updated Oct 31, 2023" [ref=e695]:
+              - generic [ref=e699]:
+                - link "Drill for 3rd shot drop" [ref=e701] [cursor=pointer]:
+                  - /url: https://medium.com/p/8b1c49858ce6/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "Drill for 3rd shot drop" [ref=e703]:
+                    - img "Drill for 3rd shot drop" [ref=e705]
+                - generic [ref=e707]:
+                  - link "Drill for 3rd shot drop" [ref=e710] [cursor=pointer]:
+                    - /url: https://medium.com/p/8b1c49858ce6/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "Drill for 3rd shot drop" [level=2] [ref=e712]
+                  - generic [ref=e715]:
+                    - paragraph [ref=e716]: 1 min read (70 words)
+                    - generic [ref=e718]: ·
+                    - paragraph [ref=e719]: Updated Oct 31, 2023
+            - cell [ref=e720]
+            - cell [ref=e721]
+            - cell "Toggle actions menu" [ref=e722]:
+              - button "Toggle actions menu" [ref=e726] [cursor=pointer]:
+                - generic [ref=e727]: Toggle actions menu
+                - img [ref=e728]
+          - row "Links to tools I used at work Links to tools I used at work 1 min read (13 words) Updated Mar 11, 2023 Toggle actions menu" [ref=e730]:
+            - cell "Links to tools I used at work Links to tools I used at work 1 min read (13 words) Updated Mar 11, 2023" [ref=e731]:
+              - generic [ref=e735]:
+                - link "Links to tools I used at work" [ref=e737] [cursor=pointer]:
+                  - /url: https://medium.com/p/5531cbe89714/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                  - generic "Links to tools I used at work" [ref=e739]:
+                    - img "Links to tools I used at work" [ref=e741]
+                - generic [ref=e743]:
+                  - link "Links to tools I used at work" [ref=e746] [cursor=pointer]:
+                    - /url: https://medium.com/p/5531cbe89714/edit?source=your_stories_outbox---writer_outbox_drafts-----------------------------------------
+                    - heading "Links to tools I used at work" [level=2] [ref=e748]
+                  - generic [ref=e751]:
+                    - paragraph [ref=e752]: 1 min read (13 words)
+                    - generic [ref=e754]: ·
+                    - paragraph [ref=e755]: Updated Mar 11, 2023
+            - cell [ref=e756]
+            - cell [ref=e757]
+            - cell "Toggle actions menu" [ref=e758]:
+              - button "Toggle actions menu" [ref=e762] [cursor=pointer]:
+                - generic [ref=e763]: Toggle actions menu
+                - img [ref=e764]

@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-04-26T17:37:09.902Z",
   "lifetime": {
-    "total_tokens_estimated": 223774,
-    "total_reads": 137,
-    "total_writes": 169,
-    "total_sessions": 17,
-    "anatomy_hits": 43,
-    "anatomy_misses": 92,
-    "repeated_reads_blocked": 31,
-    "estimated_savings_vs_bare_cli": 44777
+    "total_tokens_estimated": 305065,
+    "total_reads": 213,
+    "total_writes": 272,
+    "total_sessions": 22,
+    "anatomy_hits": 62,
+    "anatomy_misses": 149,
+    "repeated_reads_blocked": 194,
+    "estimated_savings_vs_bare_cli": 226118
   },
   "sessions": [
     {
@@ -2394,6 +2394,1310 @@
         "writes_count": 6,
         "repeated_reads_blocked": 8,
         "anatomy_lookups": 7
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:15:42.708Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:16:18.806Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:16:53.590Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:17:18.187Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:17:41.485Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:18:06.621Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:19:02.039Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:20:37.550Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 1437,
+        "reads_count": 2,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:25:42.032Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1285,
+        "output_tokens_estimated": 1648,
+        "reads_count": 3,
+        "writes_count": 2,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:26:19.373Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1285,
+        "output_tokens_estimated": 1648,
+        "reads_count": 3,
+        "writes_count": 2,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:27:02.584Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1285,
+        "output_tokens_estimated": 1798,
+        "reads_count": 3,
+        "writes_count": 3,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:28:26.169Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 1285,
+        "output_tokens_estimated": 4395,
+        "reads_count": 3,
+        "writes_count": 4,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:39:53.385Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1133,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3114,
+        "output_tokens_estimated": 5061,
+        "reads_count": 6,
+        "writes_count": 9,
+        "repeated_reads_blocked": 18,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:42:54.753Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1285,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1133,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3114,
+        "output_tokens_estimated": 5061,
+        "reads_count": 6,
+        "writes_count": 9,
+        "repeated_reads_blocked": 18,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:45:45.519Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1333,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1282,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 296,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 248,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3311,
+        "output_tokens_estimated": 5655,
+        "reads_count": 6,
+        "writes_count": 13,
+        "repeated_reads_blocked": 22,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:46:54.104Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1333,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1282,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 296,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 248,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3311,
+        "output_tokens_estimated": 5726,
+        "reads_count": 6,
+        "writes_count": 14,
+        "repeated_reads_blocked": 23,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:58:11.930Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1333,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1303,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 296,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 248,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3332,
+        "output_tokens_estimated": 5726,
+        "reads_count": 7,
+        "writes_count": 14,
+        "repeated_reads_blocked": 24,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T03:59:35.369Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1333,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1303,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 296,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 248,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 849,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3332,
+        "output_tokens_estimated": 6575,
+        "reads_count": 7,
+        "writes_count": 15,
+        "repeated_reads_blocked": 25,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-2312",
+      "started": "2026-04-30T03:12:47.099Z",
+      "ended": "2026-04-30T04:04:25.959Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1333,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 1303,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 1437,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 211,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 150,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/plans/2026-04-29-5-mcp-tools-dotnet.md",
+          "tokens_estimated": 2597,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 72,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 170,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 249,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 104,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+          "tokens_estimated": 296,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 25,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 248,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/blogs/standalone/5-mcp-tools-dotnet.md",
+          "tokens_estimated": 71,
+          "action": "edit"
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 849,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 3332,
+        "output_tokens_estimated": 6575,
+        "reads_count": 7,
+        "writes_count": 15,
+        "repeated_reads_blocked": 25,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-04-30-0008",
+      "started": "2026-04-30T04:08:27.282Z",
+      "ended": "2026-04-30T04:26:37.415Z",
+      "reads": [
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 696,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 1079,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 225,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 696,
+        "output_tokens_estimated": 1304,
+        "reads_count": 3,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
       }
     }
   ],

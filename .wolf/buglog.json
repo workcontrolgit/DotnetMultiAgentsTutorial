@@ -186,6 +186,86 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-29T12:10:40.054Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-04-30T03:26:57.771Z",
+      "error_message": "Incorrect value in code",
+      "file": "docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+      "root_cause": "Had 't a comprehensive list. It'",
+      "fix": "Changed to \"I run everything locally against Ollama during de",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T03:26:57.771Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-04-30T03:34:39.446Z",
+      "error_message": "Incorrect value in code",
+      "file": "blogs/standalone/5-mcp-tools-dotnet.md",
+      "root_cause": "Had 're not already using it, stop here and set it up ",
+      "fix": "Changed to 't set that up yet, it'",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T03:34:39.446Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-04-30T03:44:26.280Z",
+      "error_message": "Incorrect value in code",
+      "file": "docs/superpowers/specs/2026-04-29-5-mcp-tools-dotnet-design.md",
+      "root_cause": "Had \"5 MCP Tools Every .NET Developer Should Know (Fro",
+      "fix": "Changed to \"6 MCP Tools Every .NET Developer Should Know (Fro",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T03:44:26.280Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-04-30T03:59:30.839Z",
+      "error_message": "Missing await",
+      "file": "../../Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+      "root_cause": "Async call without await — returned Promise instead of value",
+      "fix": "Added await to async call",
+      "tags": [
+        "auto-detected",
+        "async-fix",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T03:59:30.839Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-04-30T04:13:32.846Z",
+      "error_message": "Null/undefined access in ",
+      "file": "../../Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T04:13:32.846Z"
     }
   ]
 }

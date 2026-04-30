@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-04-29T12:34:16.537Z
-> Files: 18 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-04-30T04:26:14.099Z
+> Files: 21 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../Users/Fuji Nguyen/.claude/plans/
 
@@ -9,7 +9,7 @@
 
 ## ../../Users/Fuji Nguyen/.claude/skills/
 
-- `medium-editor.md` — medium-editor (~1925 tok)
+- `medium-editor.md` — medium-editor (~3438 tok)
 
 ## ../AngularNetTutotial/TokenService/Duende-IdentityServer/shared/
 
@@ -164,12 +164,24 @@
 ## blogs/series-1-ai-agent-mcp/diagrams/
 
 
+## blogs/standalone/
+
+- `5-mcp-tools-dotnet.md` — 6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) (~1303 tok)
+
 ## docs/
 
 
+## docs/superpowers/plans/
+
+- `2026-04-29-5-mcp-tools-dotnet.md` — 5 MCP Tools Every .NET Developer Should Know — Implementation Plan (~2272 tok)
+
+## docs/superpowers/specs/
+
+- `2026-04-29-5-mcp-tools-dotnet-design.md` — Spec: "5 MCP Tools Every .NET Developer Should Know" (~1519 tok)
+
 ## medium/
 
-- `medium-public-url.json` (~696 tok)
+- `medium-public-url.json` (~824 tok)
 
 ## medium/scripts/
 

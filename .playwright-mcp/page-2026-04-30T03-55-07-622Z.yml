@@ -1,0 +1,124 @@
+- generic [ref=e2]:
+  - generic [ref=e167]:
+    - text: Something is wrong and we cannot save your story.
+    - link "Learn more about how to fix this" [ref=e168] [cursor=pointer]:
+      - /url: https://help.medium.com/hc/en-us/articles/222246047
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - link "Homepage" [ref=e9] [cursor=pointer]:
+        - /url: https://medium.com/
+        - img [ref=e11]
+        - generic: Homepage
+      - generic [ref=e15]:
+        - button "Publish" [ref=e17] [cursor=pointer]
+        - button [ref=e19] [cursor=pointer]:
+          - img [ref=e21]
+        - generic [ref=e23]:
+          - button "Notifications" [ref=e48] [cursor=pointer]:
+            - generic:
+              - generic: "2"
+              - generic: "New notifications: 2"
+          - button "Fuji Nguyen" [ref=e28] [cursor=pointer]:
+            - img "Fuji Nguyen" [ref=e30]
+    - main [ref=e32]:
+      - article [ref=e33]:
+        - textbox [active] [ref=e34]:
+          - generic [ref=e35]:
+            - text: ...
+            - generic [ref=e37]:
+              - heading "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [level=3] [ref=e140]
+              - paragraph [ref=e50]:
+                - text: I've been building MCP servers in .NET for a while now — agents that query databases, read files, call APIs, and actually
+                - emphasis [ref=e51]: do things
+                - text: inside a running system. Along the way, I've accumulated a short list of tools I keep coming back to.
+              - paragraph [ref=e52]: MCP is only as good as the ecosystem around it. The spec is the foundation. But the tools — the servers you connect to, the SDKs you build with, the clients that make it click — that's what actually determines whether your agent does anything useful.
+              - paragraph [ref=e53]:
+                - text: "Before I get into the list: I run everything locally against"
+                - strong [ref=e54]: Ollama
+                - text: during development. If you haven't set that up yet, it's what everything below runs on — worth doing first. Once you have that running, here's what's actually in my MCP stack.
+              - heading "1. ModelContextProtocol NuGet Package" [level=2] [ref=e55]
+              - paragraph [ref=e56]:
+                - strong [ref=e57]: The official .NET MCP server SDK — where everything starts.
+              - paragraph [ref=e58]:
+                - text: This is the Microsoft-maintained NuGet package for building spec-compliant MCP servers in .NET. Attribute-based tool registration, stdio and SSE transports out of the box, and minimal boilerplate. Your tools are just C# methods decorated with
+                - code [ref=e59]: "[McpServerTool]"
+                - text: .
+              - paragraph [ref=e60]: I used this to expose an HR query service as an MCP server. The LLM called it like a function. That moment changed how I think about AI integrations entirely.
+              - paragraph [ref=e61]:
+                - strong [ref=e62]: "Install:"
+                - code [ref=e63]: dotnet add package ModelContextProtocol
+              - heading "2. Claude Desktop" [level=2] [ref=e64]
+              - paragraph [ref=e65]:
+                - strong [ref=e66]: The fastest way to see your MCP server come alive.
+              - paragraph [ref=e67]:
+                - text: Claude Desktop is an MCP host. Point it at your server via
+                - code [ref=e68]: claude_desktop_config.json
+                - text: and it wires up your tools automatically — no agent code, no client boilerplate. It's the fastest feedback loop I've found for MCP development.
+              - paragraph [ref=e69]: I had a Claude Desktop session calling my locally-running .NET MCP server in under 10 minutes. It felt like cheating. If you're building an MCP server and haven't tested it here yet, you're missing out.
+              - paragraph [ref=e70]:
+                - strong [ref=e71]: "Get it:"
+                - link "claude.ai/download" [ref=e72]:
+                  - /url: https://claude.ai/download
+              - heading "3. GitHub MCP Server" [level=2] [ref=e73]
+              - paragraph [ref=e74]:
+                - strong [ref=e75]: Give your agent eyes on your codebase.
+              - paragraph [ref=e76]: This is an official MCP server from GitHub that exposes repos, issues, PRs, code search, and file contents as MCP tools. Your AI agent can search issues, read source code, and summarize PRs — without a single API call baked into your app code. The MCP host handles authentication.
+              - paragraph [ref=e77]: I asked an agent to find all open issues mentioning "performance" in a repo. It returned structured results. No SDK integration, no OAuth dance in my code. Just a tool call.
+              - paragraph [ref=e78]:
+                - strong [ref=e79]: "Get it:"
+                - link "github.com/github/github-mcp-server" [ref=e80]:
+                  - /url: https://github.com/github/github-mcp-server
+              - heading "4. Playwright MCP Server" [level=2] [ref=e81]
+              - paragraph [ref=e82]:
+                - strong [ref=e83]: Give your agent a real browser.
+              - paragraph [ref=e84]: Playwright MCP wraps the Playwright browser automation library as an MCP server. Navigation, screenshots, clicking, form filling, DOM inspection — all exposed as MCP tools. Your .NET agent doesn't need to know a thing about browsers.
+              - paragraph [ref=e85]: I used it to have an agent screenshot a competitor's pricing page and summarize the changes. Two MCP tool calls. No Selenium setup, no browser driver config, no headache.
+              - paragraph [ref=e86]:
+                - strong [ref=e87]: "Get it:"
+                - link "github.com/microsoft/playwright-mcp" [ref=e88]:
+                  - /url: https://github.com/microsoft/playwright-mcp
+              - heading "5. MCP Inspector" [level=2] [ref=e89]
+              - paragraph [ref=e90]:
+                - strong [ref=e91]: See exactly what your MCP server is doing — before your agent does.
+              - paragraph [ref=e92]:
+                - text: MCP Inspector is a browser-based visual debugger for MCP servers. Connect it to any running server and it lists all available tools, lets you invoke them manually, and shows the full JSON-RPC traffic in real time. It's the first thing I open after
+                - code [ref=e93]: dotnet run
+                - text: .
+              - paragraph [ref=e94]: I caught a malformed tool description that would have confused the LLM — spotted it immediately in the Inspector's tool list. Saved me an hour of prompt debugging that I didn't even know I was about to do.
+              - paragraph [ref=e95]:
+                - strong [ref=e96]: "Get it:"
+                - code [ref=e97]: npx @modelcontextprotocol/inspector
+              - heading "6. Docker MCP Toolkit" [level=2] [ref=e98]
+              - paragraph [ref=e99]:
+                - strong [ref=e100]: Run any MCP server as a container — no runtime dependencies required.
+              - paragraph [ref=e101]: Docker's MCP Toolkit lets you run MCP servers as Docker containers. Browse a catalog of pre-built servers, pull one down, and it runs isolated — no Node.js, Python, or other runtimes to install on your machine.
+              - paragraph [ref=e102]: I needed a Slack MCP server for an agent that summarizes team notifications — and the best one in the ecosystem was Python-based. With Docker MCP Toolkit I had it running in two commands. No virtual environments, no version conflicts, no friction.
+              - paragraph [ref=e103]:
+                - strong [ref=e104]: "Get it:"
+                - link "docs.docker.com/ai/mcp-catalog-and-toolkit" [ref=e105]:
+                  - /url: https://docs.docker.com/ai/mcp-catalog-and-toolkit/
+              - paragraph [ref=e106]: These six tools aren't the whole MCP ecosystem — it's growing fast. But they're the ones that made MCP stop feeling like a spec to me and start feeling like a platform. If you're a .NET developer and you haven't wired any of these up yet, now's a good time to start.
+              - paragraph [ref=e39]:
+                - generic [ref=e107]:
+                  - text: If you want to see them in action together, I've been writing a hands-on series building a real AI Agent with MCP in .NET from scratch — starting with Clean Architecture and working up through Claude Desktop integration and OIDC security.
+                  - link "Check out Part 1 here." [ref=e108]:
+                    - /url: https://medium.com/scrum-and-coke/part-1-clean-architecture-foundation-with-hr-domain-f43127400757
+                  - text: Tell your story…
+    - generic [ref=e143]:
+      - button [disabled]:
+        - generic:
+          - img
+      - button [disabled]:
+        - generic:
+          - img
+      - button [disabled]:
+        - generic:
+          - img
+      - button [ref=e145] [cursor=pointer]:
+        - img [ref=e147]
+      - button [ref=e149] [cursor=pointer]:
+        - img [ref=e151]
+      - button [ref=e153] [cursor=pointer]:
+        - img [ref=e155]
+      - button [ref=e159] [cursor=pointer]:
+        - img [ref=e161]

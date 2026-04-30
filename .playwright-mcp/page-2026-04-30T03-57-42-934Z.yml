@@ -1,0 +1,49 @@
+- generic [ref=e4]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - link "Homepage" [ref=e9] [cursor=pointer]:
+        - /url: https://medium.com/
+        - img [ref=e11]
+        - generic: Homepage
+      - generic [ref=e14]: DraftSaved
+    - generic [ref=e15]:
+      - button "Publish" [ref=e17] [cursor=pointer]
+      - button [ref=e19] [cursor=pointer]:
+        - img [ref=e21]
+      - generic [ref=e23]:
+        - button "Notifications" [ref=e46] [cursor=pointer]:
+          - generic:
+            - generic: "2"
+            - generic: "New notifications: 2"
+        - button "Fuji Nguyen" [ref=e28] [cursor=pointer]:
+          - img "Fuji Nguyen" [ref=e30]
+  - main [ref=e32]:
+    - article [ref=e33]:
+      - textbox [active] [ref=e34]:
+        - generic [ref=e35]:
+          - text: ...
+          - generic [ref=e37]:
+            - heading "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)" [level=3] [ref=e38]
+            - paragraph [ref=e39]: Tell your story…
+      - generic [ref=e47]:
+        - button "Add an image, video, embed, or new part" [ref=e48] [cursor=pointer]:
+          - img [ref=e50]
+        - generic [ref=e52]:
+          - button "Add an image":
+            - generic:
+              - img
+          - button "Add an image from Unsplash":
+            - generic:
+              - img
+          - button "Add a video":
+            - generic:
+              - img
+          - button "Add an embed":
+            - generic:
+              - img
+          - button "Add a new code block":
+            - generic:
+              - img
+          - button "Add a new part":
+            - generic:
+              - img

@@ -1,0 +1,85 @@
+- generic [ref=e1]:
+  - generic [ref=e6]:
+    - link "close" [ref=e8] [cursor=pointer]:
+      - /url: https://medium.com/p/46c20739d9e7/edit?source=post_submit_page--------------------------------------------
+      - img [ref=e9]
+    - generic [ref=e12]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - heading "Story preview" [level=2] [ref=e16]
+          - paragraph [ref=e19]: Include a high-quality image in your story to make it more inviting to readers.
+        - generic [ref=e22]:
+          - textbox "Story preview title" [ref=e24]:
+            - /placeholder: Write a preview title
+            - text: 6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)
+          - paragraph [ref=e26]: 84/100
+        - generic [ref=e29]:
+          - textbox "Story preview subtitle" [ref=e31]:
+            - /placeholder: Write a preview subtitle...
+            - text: I’ve been building MCP servers in .NET for a while now — agents that query databases, read files, call APIs, and actually do things inside…
+          - paragraph [ref=e33]: 139/140
+        - paragraph [ref=e35]: "Note: Changes here will affect how your story appears in public places like Medium’s homepage and in subscribers’ inboxes — not the contents of the story itself."
+      - generic [ref=e36]:
+        - generic [ref=e39]:
+          - heading "Topics" [level=2] [ref=e40]
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Add up to five topics to help readers find your story.
+            - generic "Software Engineering (4.1M) Software Engineering Job (41) Software Engineering Team (21) Alx Software Engineering (4) Ai In Softwareengineering (6)" [ref=e169]:
+              - generic [ref=e46]:
+                - generic [ref=e107]:
+                  - paragraph [ref=e108]: Artificial Intelligence
+                  - button "Remove Artificial Intelligence" [ref=e109] [cursor=pointer]:
+                    - img [ref=e110]
+                - generic [ref=e137]:
+                  - paragraph [ref=e138]: Dotnet
+                  - button "Remove Dotnet" [ref=e139] [cursor=pointer]:
+                    - img [ref=e140]
+                - generic [ref=e164]:
+                  - paragraph [ref=e165]: Programming
+                  - button "Remove Programming" [ref=e166] [cursor=pointer]:
+                    - img [ref=e167]
+                - combobox "Add more topics..." [expanded] [active] [ref=e112]: Software Engineering
+        - generic [ref=e50]:
+          - heading "Publication" [level=2] [ref=e51]
+          - paragraph [ref=e52]:
+            - button "Submit" [ref=e53] [cursor=pointer]
+            - text: your story to connect with community.
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - generic [ref=e58]:
+              - checkbox "Paywall this story Your story will earn under the Partner Program when read by Medium members." [checked]
+              - img [ref=e60] [cursor=pointer]
+            - generic [ref=e63]:
+              - paragraph [ref=e64]: Paywall this story
+              - paragraph [ref=e66]: Your story will earn under the Partner Program when read by Medium members.
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - checkbox "Notify your 95 subscribers Subscribers are Medium readers who follow you, and have opted-in to email notifications about your stories." [checked]
+              - img [ref=e70] [cursor=pointer]
+            - generic [ref=e73]:
+              - paragraph [ref=e74]: Notify your 95 subscribers
+              - paragraph [ref=e76]: Subscribers are Medium readers who follow you, and have opted-in to email notifications about your stories.
+        - generic [ref=e78]:
+          - paragraph [ref=e79]:
+            - link "Learn more" [ref=e80] [cursor=pointer]:
+              - /url: https://help.medium.com/hc/en-us/articles/360018677974?source=post_submit_page---post_submit_publishing_post-----------------------------------------
+            - text: about what happens to your post when you publish.
+          - generic [ref=e82]:
+            - button "Publish" [ref=e83]
+            - button "Schedule for later" [ref=e84] [cursor=pointer]
+  - list [ref=e174]:
+    - button "Software Engineering (4.1M)" [ref=e175] [cursor=pointer]:
+      - paragraph [ref=e176]:
+        - generic [ref=e177]: Software Engineering (4.1M)
+    - button "Software Engineering Job (41)" [ref=e178] [cursor=pointer]:
+      - paragraph [ref=e179]:
+        - generic [ref=e180]: Software Engineering Job (41)
+    - button "Software Engineering Team (21)" [ref=e181] [cursor=pointer]:
+      - paragraph [ref=e182]:
+        - generic [ref=e183]: Software Engineering Team (21)
+    - button "Alx Software Engineering (4)" [ref=e184] [cursor=pointer]:
+      - paragraph [ref=e185]:
+        - generic [ref=e186]: Alx Software Engineering (4)
+    - button "Ai In Softwareengineering (6)" [ref=e187] [cursor=pointer]:
+      - paragraph [ref=e188]:
+        - generic [ref=e189]: Ai In Softwareengineering (6)
