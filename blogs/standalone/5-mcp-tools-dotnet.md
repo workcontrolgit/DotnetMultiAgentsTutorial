@@ -74,7 +74,7 @@ I caught a malformed tool description that would have confused the LLM — spott
 
 Docker's MCP Toolkit lets you run MCP servers as Docker containers. Browse a catalog of pre-built servers, pull one down, and it runs isolated — no Node.js, Python, or other runtimes to install on your machine.
 
-I needed a community MCP server built in Python. With Docker MCP Toolkit I had it running in two commands. No virtual environments, no version conflicts, no friction.
+I needed a Slack MCP server for an agent that summarizes team notifications — and the best one in the ecosystem was Python-based. With Docker MCP Toolkit I had it running in two commands. No virtual environments, no version conflicts, no friction.
 
 **Get it:** [docs.docker.com/ai/mcp-catalog-and-toolkit](https://docs.docker.com/ai/mcp-catalog-and-toolkit/)
 
