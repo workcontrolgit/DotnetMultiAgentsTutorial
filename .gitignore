@@ -42,6 +42,10 @@ Thumbs.db
 desktop.ini
 
 # Playwright
+.playwright-mcp/
+
+# OpenWolf
+.wolf/
 /test-results/
 /playwright-report/
 /blob-report/

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T12:21:38.773Z
-> Files: 25 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T13:17:25.711Z
+> Files: 26 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../Users/Fuji Nguyen/.claude/plans/
 
@@ -17,6 +17,7 @@
 
 ## ./
 
+- `.gitignore` — Git ignore rules (~154 tok)
 
 ## .claude/
 

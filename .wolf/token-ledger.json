@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-04-26T17:37:09.902Z",
   "lifetime": {
-    "total_tokens_estimated": 409923,
-    "total_reads": 473,
-    "total_writes": 526,
-    "total_sessions": 45,
-    "anatomy_hits": 107,
-    "anatomy_misses": 364,
-    "repeated_reads_blocked": 298,
-    "estimated_savings_vs_bare_cli": 258710
+    "total_tokens_estimated": 422066,
+    "total_reads": 513,
+    "total_writes": 543,
+    "total_sessions": 48,
+    "anatomy_hits": 118,
+    "anatomy_misses": 393,
+    "repeated_reads_blocked": 315,
+    "estimated_savings_vs_bare_cli": 261064
   },
   "sessions": [
     {
@@ -7372,6 +7372,532 @@
         "reads_count": 2,
         "writes_count": 1,
         "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T13:16:56.279Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 13,
+        "reads_count": 1,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T13:17:29.147Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 27,
+        "reads_count": 1,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:13:28.358Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 27,
+        "reads_count": 2,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:13:57.583Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 27,
+        "reads_count": 2,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:21:12.966Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-published-stories.json",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 955,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/scripts/update-series-links.mjs",
+          "tokens_estimated": 1397,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2352,
+        "output_tokens_estimated": 27,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:25:39.472Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-published-stories.json",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 955,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/scripts/update-series-links.mjs",
+          "tokens_estimated": 1397,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2352,
+        "output_tokens_estimated": 27,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 4,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:34:23.090Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-published-stories.json",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 955,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/scripts/update-series-links.mjs",
+          "tokens_estimated": 1397,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2352,
+        "output_tokens_estimated": 27,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 4,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:42:17.796Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-published-stories.json",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 955,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/scripts/update-series-links.mjs",
+          "tokens_estimated": 1397,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2352,
+        "output_tokens_estimated": 27,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 4,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-04-0914",
+      "started": "2026-05-04T13:14:32.230Z",
+      "ended": "2026-05-04T19:52:46.200Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/AngularNetTutotial/blogs/SERIES-NAVIGATION-TOC.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-published-stories.json",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/medium-public-url.json",
+          "tokens_estimated": 955,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMcpTutorial/medium/scripts/update-series-links.mjs",
+          "tokens_estimated": 1397,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 13,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 14,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2352,
+        "output_tokens_estimated": 27,
+        "reads_count": 6,
+        "writes_count": 2,
+        "repeated_reads_blocked": 4,
+        "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-04-1554",
+      "started": "2026-05-04T19:54:43.014Z",
+      "ended": "2026-05-05T02:18:57.758Z",
+      "reads": [
+        {
+          "file": "c:/apps/AngularNetTutotial/Clients/TalentManagement-Angular-Material/talent-management/src/app/app.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 1,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-06-2355",
+      "started": "2026-05-06T03:55:34.631Z",
+      "ended": "2026-05-07T01:51:09.355Z",
+      "reads": [
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 0,
+        "output_tokens_estimated": 0,
+        "reads_count": 1,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 0
+      }
+    },
+    {
+      "id": "session-2026-05-06-2355",
+      "started": "2026-05-06T03:55:34.631Z",
+      "ended": "2026-05-07T01:51:55.756Z",
+      "reads": [
+        {
+          "file": "C:/Users/Fuji Nguyen/.claude/skills/medium-editor.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMcpTutorial/.gitignore",
+          "tokens_estimated": 154,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 154,
+        "output_tokens_estimated": 0,
+        "reads_count": 2,
+        "writes_count": 0,
+        "repeated_reads_blocked": 1,
         "anatomy_lookups": 1
       }
     }

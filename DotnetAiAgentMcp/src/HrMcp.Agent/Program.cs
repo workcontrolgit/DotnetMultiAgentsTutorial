@@ -6,6 +6,10 @@ using HrMcp.Agent;
 using System.Net.Http.Json;
 using System.Text.Json;
 
+var mcpServerUrl =
+    Environment.GetEnvironmentVariable("HR_MCP_SERVER_URL") ??
+    "http://localhost:5100/mcp";
+
 // --- Token acquisition (client credentials flow) ---
 // Trust self-signed cert used by the local Duende IdentityServer container
 using var tokenHandler = new HttpClientHandler
@@ -34,7 +38,7 @@ Console.WriteLine("Token acquired.\n");
 await using var mcpClient = await McpClient.CreateAsync(
     new HttpClientTransport(new HttpClientTransportOptions
     {
-        Endpoint = new Uri("http://localhost:5100/mcp"),
+        Endpoint = new Uri(mcpServerUrl),
         AdditionalHeaders = new Dictionary<string, string>
         {
             ["Authorization"] = $"Bearer {accessToken}"
