@@ -1,195 +1,97 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-04T13:17:25.711Z
-> Files: 26 tracked | Anatomy hits: 0 | Misses: 0
-
-## ../../Users/Fuji Nguyen/.claude/plans/
-
-- `moonlit-singing-newell.md` — Plan: Medium Article Automation with Claude Skill + Scripts (~1450 tok)
-
-## ../../Users/Fuji Nguyen/.claude/skills/
-
-- `medium-editor.md` — medium-editor (~5428 tok)
-- `screenshot-desktop-window.md` — Screenshot Desktop Window (~805 tok)
-
-## ../AngularNetTutotial/TokenService/Duende-IdentityServer/shared/
-
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T05:28:11.722Z
+> Files: 33 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `.gitignore` — Git ignore rules (~154 tok)
+- `README.md` — Project documentation (~2638 tok)
 
-## .claude/
+## .wolf/
 
 
-## .claude/rules/
+## DotnetMultiAgents/
 
+- `DotnetMultiAgents.slnx` — Solution file referencing all 7 Hr.* projects (~50 tok)
 
-## .playwright-mcp/
+## DotnetMultiAgents/src/Hr.Agent/
 
-- `batch-results-1.json` (~2318 tok)
-- `batch-results-2.json` (~2161 tok)
-- `batch-results-3.json` (~2340 tok)
-- `batch-results-4.json` (~2270 tok)
-- `batch-results-5.json` (~1049 tok)
-- `extract-details.js` — Declares fs (~697 tok)
+- `Hr.Agent.csproj` — Single-agent baseline for comparison (~30 tok)
 
-## .vscode/
+## DotnetMultiAgents/src/Hr.Application/
 
-- `settings.json` (~30 tok)
+- `Hr.Application.csproj` — References Hr.Core (~30 tok)
 
-## DotnetAiAgentMcp/
+## DotnetMultiAgents/src/Hr.Application/Services/
 
+- `JobAnnouncementService.cs` — src/Hr.Application/Services/JobAnnouncementService.cs (~297 tok)
+- `PositionService.cs` — src/Hr.Application/Services/PositionService.cs (~260 tok)
 
-## DotnetAiAgentMcp/.vs/DotnetAiAgentMcp.slnx/DesignTimeBuild/
+## DotnetMultiAgents/src/Hr.Compliance.Mcp/
 
+- `Hr.Compliance.Mcp.csproj` — MCP server, port 5200; references Hr.Core + Hr.Infrastructure (~50 tok)
 
-## DotnetAiAgentMcp/.vs/DotnetAiAgentMcp.slnx/FileContentIndex/
+## DotnetMultiAgents/src/Hr.Core/
 
+- `Hr.Core.csproj` — Domain layer, no dependencies (~30 tok)
 
-## DotnetAiAgentMcp/.vs/DotnetAiAgentMcp.slnx/v18/
+## DotnetMultiAgents/src/Hr.Core/Entities/
 
+- `JobAnnouncement.cs` — A generated job announcement draft for a Position. A position can have multiple drafts over time; on (~304 tok)
 
-## DotnetAiAgentMcp/data/
+## DotnetMultiAgents/src/Hr.Core/Enums/
 
+- `AnnouncementStatus.cs` — Generated but not yet compliance-checked. (~120 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Agent/
+## DotnetMultiAgents/src/Hr.Core/Interfaces/
 
+- `IJobAnnouncementRepository.cs` — src/Hr.Core/Interfaces/IJobAnnouncementRepository.cs (~163 tok)
+- `IPositionRepository.cs` — src/Hr.Core/Interfaces/IPositionRepository.cs (~164 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Agent/bin/Debug/net10.0/
+## DotnetMultiAgents/src/Hr.Infrastructure/
 
+- `DependencyInjection.cs` — src/Hr.Infrastructure/DependencyInjection.cs (~218 tok)
+- `Hr.Infrastructure.csproj` — References Hr.Core, Hr.Application; EF Core + SQL Server (~50 tok)
+- `HrDbContext.cs` — src/Hr.Infrastructure/HrDbContext.cs (~314 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Agent/obj/
+## DotnetMultiAgents/src/Hr.Infrastructure/Repositories/
 
+- `JobAnnouncementRepository.cs` — src/Hr.Infrastructure/Repositories/JobAnnouncementRepository.cs (~478 tok)
+- `PositionRepository.cs` — src/Hr.Infrastructure/Repositories/PositionRepository.cs (~357 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Agent/obj/Debug/net10.0/
+## DotnetMultiAgents/src/Hr.Jobs.Mcp/
 
+- `Hr.Jobs.Mcp.csproj` — MCP server, port 5100; references Hr.Application + Hr.Infrastructure (~50 tok)
+- `Program.cs` — src/Hr.Jobs.Mcp/Program.cs (~1956 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Application/
+## DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/
 
+- `JobAnnouncementTools.cs` — src/Hr.Jobs.Mcp/Tools/JobAnnouncementTools.cs (~1335 tok)
+- `JobDescriptionTools.cs` — Fetches all positions in the same occupational series, then selects at most 3 representatives (next- (~2315 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Application/Services/
+## DotnetMultiAgents/src/Hr.Orchestrator/
 
+- `Hr.Orchestrator.csproj` — Multi-agent selector orchestrator; Part 1 of blog series (~50 tok)
+- `Program.cs` — src/Hr.Orchestrator/Program.cs (~2431 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Application/bin/Debug/net10.0/
+## DotnetMultiAgents/tools/UsaJobsFetcher/
 
+- `Program.cs` — tools/UsaJobsFetcher/Program.cs (~3417 tok)
 
-## DotnetAiAgentMcp/src/HrMcp.Application/obj/
+## blogs/
 
 
-## DotnetAiAgentMcp/src/HrMcp.Application/obj/Debug/net10.0/
+## blogs/series-2-multi-agents/
 
-
-## DotnetAiAgentMcp/src/HrMcp.Core/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/Entities/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/Enums/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/Interfaces/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/bin/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/obj/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Core/obj/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/Migrations/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/Repositories/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/bin/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/obj/
-
-
-## DotnetAiAgentMcp/src/HrMcp.Infrastructure.Persistence/obj/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/Properties/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/Tools/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/bin/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/obj/
-
-
-## DotnetAiAgentMcp/src/HrMcp.McpServer/obj/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/tools/UsaJobsFetcher/
-
-
-## DotnetAiAgentMcp/tools/UsaJobsFetcher/bin/Debug/net10.0/
-
-
-## DotnetAiAgentMcp/tools/UsaJobsFetcher/obj/
-
-
-## DotnetAiAgentMcp/tools/UsaJobsFetcher/obj/Debug/net10.0/
-
-
-## Playwright/
-
-- `package.json` — Node.js package manifest (~316 tok)
-- `playwright.config.ts` (~129 tok)
-
-## Playwright/specs/
-
-- `cnn-top-menu.spec.ts` — Navigate to CNN and dismiss any consent/overlay dialogs (~1440 tok)
-- `extract-story-details.js` — Extract per-story details (subtitle, tags, responseCount, author) for all 308 stories. (~1008 tok)
-- `fetch-story-details.mjs` — Fetches per-story details using Medium session cookies. (~1060 tok)
-
-## blogs/series-1-ai-agent-mcp/
-
-- `part-2-intro-to-mcp.md` — Part 2: Introduction to Model Context Protocol (~2862 tok)
-- `part-3-mcp-server-dotnet.md` — Part 3: Building an MCP Server in .NET 10 (~4326 tok)
-
-## blogs/series-1-ai-agent-mcp/diagrams/
-
-
-## blogs/standalone/
-
-- `5-mcp-tools-dotnet.md` — 6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them) (~1303 tok)
-- `7-mcp-tools-dotnet.md` — Magnificent 7 Tools Every .NET MCP Developer Should Know (~1720 tok)
+- `part-1-dotnet-agent-framework.md` — Part 1 — The .NET Agent Framework: IChatClient and MCP Clients (~2343 tok)
+- `part-2-clean-architecture-for-ai.md` — Part 2 — Clean Architecture for AI Applications (~2664 tok)
+- `part-3-hr-data-mcp-server.md` — Part 3 — Building the HR Data MCP Server (~2506 tok)
+- `part-4-compliance-mcp-deterministic-rules.md` — Part 4 — The Compliance MCP Server: Deterministic Rules, Zero LLM (~2877 tok)
+- `part-5-persisting-ai-artifacts.md` — Part 5 — Persisting AI Artifacts: The JobAnnouncement Lifecycle (~2431 tok)
+- `part-6-selector-pattern.md` — Part 6 — The Selector Pattern: Routing to Specialists (~2766 tok)
+- `part-7-claude-desktop-multi-agent.md` — Part 7 — Claude Desktop as Your Multi-Agent Platform (~1907 tok)
+- `preface-why-one-agent-is-not-enough.md` — Why One Agent Is Not Enough (~1845 tok)
 
 ## docs/
 
-
-## docs/superpowers/plans/
-
-- `2026-04-29-5-mcp-tools-dotnet.md` — 5 MCP Tools Every .NET Developer Should Know — Implementation Plan (~2272 tok)
-
-## docs/superpowers/specs/
-
-- `2026-04-29-5-mcp-tools-dotnet-design.md` — Spec: "5 MCP Tools Every .NET Developer Should Know" (~1519 tok)
-
-## medium/
-
-- `medium-public-url.json` (~955 tok)
-
-## medium/scripts/
-
-- `get-draft-urls.mjs` — get-draft-urls.mjs (~828 tok)
-- `list-drafts.mjs` — list-drafts.mjs (~486 tok)
-- `update-series-links.mjs` — update-series-links.mjs (~1397 tok)
+- `blog-series-plan.md` — Blog Series Plan — Building Multi-Agent Systems with .NET 10 (~2536 tok)

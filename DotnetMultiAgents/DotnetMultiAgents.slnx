@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Hr.Core/Hr.Core.csproj" />
+    <Project Path="src/Hr.Application/Hr.Application.csproj" />
+    <Project Path="src/Hr.Infrastructure/Hr.Infrastructure.csproj" />
+    <Project Path="src/Hr.Jobs.Mcp/Hr.Jobs.Mcp.csproj" />
+    <Project Path="src/Hr.Compliance.Mcp/Hr.Compliance.Mcp.csproj" />
+    <Project Path="src/Hr.Agent/Hr.Agent.csproj" />
+    <Project Path="src/Hr.Orchestrator/Hr.Orchestrator.csproj" />
+  </Folder>
+</Solution>

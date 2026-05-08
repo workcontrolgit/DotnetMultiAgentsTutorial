@@ -346,6 +346,102 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-02T19:54:16.976Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-05-08T04:26:17.855Z",
+      "error_message": "Wrong reference: Folder should be Project",
+      "file": "DotnetMultiAgents/DotnetMultiAgents.slnx",
+      "root_cause": "Used \"Folder\" instead of \"Project\"",
+      "fix": "Changed Folder → Project",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "slnx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T04:26:17.855Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-05-08T04:33:55.397Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 22→29 lines (12 removed) | Also: The `HrMcp.McpServer` exposes these tools to any M; | `WriteJobDescription` | AI-generated job descrip | Also: # Terminal 1 — start the MCP server (HTTP mode, po; # Terminal 2 — run the multi-agent orchestrator (P",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-08T04:34:15.655Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-05-08T04:46:41.687Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had \"HrMcp.Orchestrator\"",
+      "fix": "Changed to \"Hr.Orchestrator\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-05-08T04:47:14.018Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-05-08T04:55:05.596Z",
+      "error_message": "Significant refactor of ",
+      "file": "DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs",
+      "root_cause": "18 lines replaced/restructured",
+      "fix": "Rewrote 28→50 lines (18 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T04:55:05.596Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-05-08T05:04:42.286Z",
+      "error_message": "Null/undefined access in ",
+      "file": "DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T05:04:42.286Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-05-08T05:10:32.943Z",
+      "error_message": "Significant refactor of ",
+      "file": "DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 4→5 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T05:10:32.943Z"
     }
   ]
 }
