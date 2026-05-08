@@ -282,6 +282,7 @@ but no rule currently validates it. This is a natural extension point for a stri
 
 ## Related Repositories
 
+- [DotnetAiAgentMcp](https://github.com/workcontrolgit/DotnetAiAgentMcp) — Build a single AI agent with MCP tools in .NET 10 (the foundation this series extends)
 - [AngularNetTutorial](https://github.com/workcontrolgit/AngularNetTutorial) — Full-stack Angular 20 / .NET 10 / Duende IdentityServer
 
 ---
