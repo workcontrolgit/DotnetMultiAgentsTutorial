@@ -4,7 +4,7 @@ A hands-on tutorial repository for building **Multi-Agent Systems** with .NET 10
 
 Each part of the series implements a different multi-agent pattern — all using the same federal HR domain (positions, hiring organizations, job descriptions) as the running example.
 
-📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10 on Medium](https://medium.com/)
+📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md)
 
 ---
 
@@ -26,22 +26,22 @@ Each part of the series implements a different multi-agent pattern — all using
 
 ```mermaid
 flowchart TD
-    User(["👤 User"])
+    User(["User"])
 
     User -->|query| Orchestrator
 
     subgraph ORC["Hr.Orchestrator"]
         direction TB
         Orchestrator["HrOrchestrator"]
-        Router["AgentRouter\n─────────────\nLLM intent classifier\nno tools · low latency"]
+        Router["AgentRouter - LLM intent classifier"]
         Orchestrator --> Router
     end
 
     Router -->|position_search| PS
     Router -->|job_description| JD
-    Router -->|org_summary|    OS
-    Router -->|compliance|     CA
-    Router -->|general|        GA
+    Router -->|org_summary| OS
+    Router -->|compliance| CA
+    Router -->|general| GA
 
     subgraph AGENTS["Specialist Agents"]
         direction LR
@@ -52,31 +52,29 @@ flowchart TD
         GA["General"]
     end
 
-    PS -->|"GetOpenPositions\nGetPositionById\nGetPositionsByOrg\nGetHiringOrgs"| MCP1
-    JD -->|"WriteJobDescription\nGetPositionById"| MCP1
-    OS -->|"GetHiringOrgs\nGetPositionsByOrg"| MCP1
-    CA -->|"GetPositionById"| MCP1
-    CA -->|"RunFullComplianceCheck\nValidatePayGrade\nCheckApplicationPeriod\nGetOPMStandard\nListOPMSeries"| MCP2
+    PS --> MCP1
+    JD --> MCP1
+    OS --> MCP1
+    CA --> MCP1
+    CA --> MCP2
 
-    subgraph MCP1["Hr.Jobs.Mcp  :5100"]
+    subgraph MCP1["Hr.Jobs.Mcp :5100"]
         direction TB
-        HrTools["HR Data Tools"]
-        Ollama["🦙 Ollama llama3.2\n(WriteJobDescription)"]
-        DB1[("SQL Server\nLocalDB · HrMcpDb")]
-        HrTools --> Ollama
+        HrTools["HR Data Tools - 9 tools"]
+        DB1[("SQL Server LocalDB")]
         HrTools --> DB1
     end
 
-    subgraph MCP2["Hr.Compliance.Mcp  :5200"]
+    subgraph MCP2["Hr.Compliance.Mcp :5200"]
         direction TB
-        RuleEngine["OpmRuleEngine\n─────────────\n7 deterministic rules\nzero LLM calls"]
-        Repo["OpmStandardsRepository\n8 occupational series"]
-        DB2[("SQL Server\nLocalDB · HrMcpDb")]
+        RuleEngine["OpmRuleEngine - 7 deterministic rules"]
+        Repo["OpmStandardsRepository - 8 series"]
+        DB2[("SQL Server LocalDB")]
         RuleEngine --> Repo
         RuleEngine --> DB2
     end
 
-    style ORC  fill:#1e3a5f,color:#fff,stroke:#4a90d9
+    style ORC fill:#1e3a5f,color:#fff,stroke:#4a90d9
     style AGENTS fill:#1a3a2a,color:#fff,stroke:#4caf50
     style MCP1 fill:#3a1a00,color:#fff,stroke:#ff9800
     style MCP2 fill:#3a001a,color:#fff,stroke:#e91e8c
@@ -120,14 +118,26 @@ DotnetMultiAgentsTutorial/
 
 ## Blog Series
 
-| Part | Pattern | Status | Code Project |
-|------|---------|--------|-------------|
-| Preface | Why Multi-Agent? | ⬜ | — |
-| 1 | Selector — Router to Specialists | ⬜ | `Hr.Orchestrator` ✅ |
-| 2 | Pipe — Sequential Agent Chain | ⬜ | `Hr.Pipeline` |
-| 3 | Group Chat — Panel + Moderator | ⬜ | `Hr.GroupChat` |
-| 4 | Shared Memory — Stateful Context | ⬜ | `Hr.SharedMemory` |
-| 5 | Evaluator-Optimizer — Critic Loop | ⬜ | `Hr.EvalOptimizer` |
+### Series 2 — Building Multi-Agent Systems with .NET 10
+
+| Part | Title | Code Project |
+|------|-------|-------------|
+| Preface | [Why One Agent Is Not Enough](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md) | — |
+| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md) | `Hr.Orchestrator` |
+| 2 | [Clean Architecture for AI Applications](blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md) | `Hr.Core` / `Hr.Infrastructure` |
+| 3 | [Building the HR Data MCP Server](blogs/series-2-multi-agents/part-3-hr-data-mcp-server.md) | `Hr.Jobs.Mcp` |
+| 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](blogs/series-2-multi-agents/part-4-compliance-mcp-deterministic-rules.md) | `Hr.Compliance.Mcp` |
+| 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](blogs/series-2-multi-agents/part-5-persisting-ai-artifacts.md) | `Hr.Infrastructure` |
+| 6 | [The Selector Pattern: Routing to Specialists](blogs/series-2-multi-agents/part-6-selector-pattern.md) | `Hr.Orchestrator` |
+| 7 | [Claude Desktop as Your Multi-Agent Platform](blogs/series-2-multi-agents/part-7-claude-desktop-multi-agent.md) | — |
+
+### Coming Next
+
+| Pattern | Description | Code Project |
+|---------|-------------|-------------|
+| Pipe | Chain agents sequentially, each transforming the last output | `Hr.Pipeline` |
+| Group Chat | Run agents in parallel, synthesize with a moderator | `Hr.GroupChat` |
+| Evaluator-Optimizer | Critic loop — revise until quality threshold is met | `Hr.EvalOptimizer` |
 
 ---
 
@@ -272,6 +282,7 @@ but no rule currently validates it. This is a natural extension point for a stri
 
 ## Related Repositories
 
+- [DotnetAiAgentMcp](https://github.com/workcontrolgit/DotnetAiAgentMcp) — Build a single AI agent with MCP tools in .NET 10 (the foundation this series extends)
 - [AngularNetTutorial](https://github.com/workcontrolgit/AngularNetTutorial) — Full-stack Angular 20 / .NET 10 / Duende IdentityServer
 
 ---

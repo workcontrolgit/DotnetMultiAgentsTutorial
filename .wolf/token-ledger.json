@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-04-26T17:37:09.902Z",
   "lifetime": {
-    "total_tokens_estimated": 641942,
-    "total_reads": 799,
-    "total_writes": 884,
+    "total_tokens_estimated": 732949,
+    "total_reads": 877,
+    "total_writes": 921,
     "total_sessions": 52,
-    "anatomy_hits": 136,
-    "anatomy_misses": 658,
-    "repeated_reads_blocked": 362,
-    "estimated_savings_vs_bare_cli": 273005
+    "anatomy_hits": 177,
+    "anatomy_misses": 695,
+    "repeated_reads_blocked": 367,
+    "estimated_savings_vs_bare_cli": 294679
   },
   "sessions": [
     {
@@ -11642,6 +11642,761 @@
         "writes_count": 43,
         "repeated_reads_blocked": 3,
         "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T10:59:16.209Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 30,
+        "output_tokens_estimated": 981,
+        "reads_count": 3,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T11:05:03.739Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md",
+          "tokens_estimated": 1845,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md",
+          "tokens_estimated": 2343,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs",
+          "tokens_estimated": 1956,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md",
+          "tokens_estimated": 2664,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/test-1.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/playwright.config.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16545,
+        "output_tokens_estimated": 981,
+        "reads_count": 15,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 8
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T11:12:26.363Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md",
+          "tokens_estimated": 1845,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md",
+          "tokens_estimated": 2343,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs",
+          "tokens_estimated": 1956,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md",
+          "tokens_estimated": 2664,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/test-1.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/playwright.config.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 103,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 155,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16545,
+        "output_tokens_estimated": 1361,
+        "reads_count": 15,
+        "writes_count": 6,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 8
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T11:14:07.225Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md",
+          "tokens_estimated": 1845,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md",
+          "tokens_estimated": 2343,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs",
+          "tokens_estimated": 1956,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md",
+          "tokens_estimated": 2664,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/test-1.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/playwright.config.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 103,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 155,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 67,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 36,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16545,
+        "output_tokens_estimated": 1464,
+        "reads_count": 15,
+        "writes_count": 8,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 8
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T11:16:37.977Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md",
+          "tokens_estimated": 1845,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md",
+          "tokens_estimated": 2343,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs",
+          "tokens_estimated": 1956,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md",
+          "tokens_estimated": 2664,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/test-1.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/playwright.config.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 103,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 155,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 67,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 36,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16545,
+        "output_tokens_estimated": 1464,
+        "reads_count": 15,
+        "writes_count": 8,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 8
+      }
+    },
+    {
+      "id": "session-2026-05-08-0133",
+      "started": "2026-05-08T05:33:51.097Z",
+      "ended": "2026-05-08T11:19:29.474Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/HrAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 30,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 2780,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md",
+          "tokens_estimated": 1845,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md",
+          "tokens_estimated": 2343,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs",
+          "tokens_estimated": 1956,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md",
+          "tokens_estimated": 2664,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/tests/test-1.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/playwright.config.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/README.md",
+          "tokens_estimated": 2638,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/Playwright/specs/seed.spec.ts",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Hr.Agent.csproj",
+          "tokens_estimated": 165,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/appsettings.json",
+          "tokens_estimated": 94,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Agent/Program.cs",
+          "tokens_estimated": 722,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 103,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 155,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 67,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 36,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/README.md",
+          "tokens_estimated": 395,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 16687,
+        "output_tokens_estimated": 1859,
+        "reads_count": 15,
+        "writes_count": 9,
+        "repeated_reads_blocked": 2,
+        "anatomy_lookups": 8
       }
     }
   ],

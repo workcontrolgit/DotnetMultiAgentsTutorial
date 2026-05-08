@@ -1,11 +1,11 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T05:28:11.722Z
-> Files: 33 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T11:19:13.515Z
+> Files: 35 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
-- `README.md` — Project documentation (~2638 tok)
+- `README.md` — Project documentation (~2664 tok)
 
 ## .wolf/
 
@@ -16,7 +16,9 @@
 
 ## DotnetMultiAgents/src/Hr.Agent/
 
-- `Hr.Agent.csproj` — Single-agent baseline for comparison (~30 tok)
+- `appsettings.json` (~94 tok)
+- `Hr.Agent.csproj` (~225 tok)
+- `Program.cs` — src/Hr.Agent/Program.cs (~674 tok)
 
 ## DotnetMultiAgents/src/Hr.Application/
 
