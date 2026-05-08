@@ -1,14 +1,24 @@
 // src/Hr.Agent/Program.cs
 using Microsoft.Extensions.AI;
+using Microsoft.Extensions.Configuration;
 using ModelContextProtocol.Client;
 using OllamaSharp;
 using Hr.Agent;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-var mcpServerUrl =
-    Environment.GetEnvironmentVariable("HR_MCP_SERVER_URL") ??
-    "http://localhost:5100/mcp";
+var config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false)
+    .AddEnvironmentVariables()
+    .Build();
+
+var mcpServerUrl    = config["McpServer:Url"]!;
+var tokenEndpoint   = config["Oidc:TokenEndpoint"]!;
+var clientId        = config["Oidc:ClientId"]!;
+var clientSecret    = config["Oidc:ClientSecret"]!;
+var scope           = config["Oidc:Scope"]!;
+var ollamaBaseUrl   = config["Ollama:BaseUrl"]!;
+var ollamaModel     = config["Ollama:Model"]!;
 
 // --- Token acquisition (client credentials flow) ---
 // Trust self-signed cert used by the local Duende IdentityServer container
@@ -20,13 +30,13 @@ using var tokenHandler = new HttpClientHandler
 using var tokenClient = new HttpClient(tokenHandler);
 
 var tokenResponse = await tokenClient.PostAsync(
-    "https://localhost:44310/connect/token",
+    tokenEndpoint,
     new FormUrlEncodedContent(new Dictionary<string, string>
     {
         ["grant_type"]    = "client_credentials",
-        ["client_id"]     = "hr-mcp-agent",
-        ["client_secret"] = "hr-mcp-agent-secret",
-        ["scope"]         = "hr-mcp-api",
+        ["client_id"]     = clientId,
+        ["client_secret"] = clientSecret,
+        ["scope"]         = scope,
     }));
 tokenResponse.EnsureSuccessStatusCode();
 
@@ -51,7 +61,7 @@ Console.WriteLine($"Connected. Tools: {string.Join(", ", mcpTools.Select(t => t.
 // OllamaApiClient implements IChatClient (Microsoft.Extensions.AI) natively.
 // Cast to IChatClient explicitly to resolve AsBuilder() overload ambiguity.
 IChatClient chatClient = ((IChatClient)new OllamaApiClient(
-        new Uri("http://localhost:11434"), "llama3.2"))
+        new Uri(ollamaBaseUrl), ollamaModel))
     .AsBuilder()
     .UseFunctionInvocation()
     .Build();

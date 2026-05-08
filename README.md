@@ -1,6 +1,6 @@
-# DotnetMultiAgentsTutorial
+# Dotnet Multi-Agents Tutorial
 
-A hands-on tutorial repository for building **Multi-Agent Systems** with .NET 10, [Microsoft.Extensions.AI](https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai), and the [Model Context Protocol (MCP)](https://modelcontextprotocol.io).
+A hands-on tutorial repository for building **Multi-Agent Systems** with .NET 10, [Microsoft.Extensions.AI](https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai), the [Model Context Protocol C# SDK](https://github.com/modelcontextprotocol/csharp-sdk), and the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) for multi-agent orchestration.
 
 Each part of the series implements a different multi-agent pattern — all using the same federal HR domain (positions, hiring organizations, job descriptions) as the running example.
 
@@ -18,6 +18,7 @@ Each part of the series implements a different multi-agent pattern — all using
   - **Evaluator-Optimizer** — loop a critic agent against a drafter until quality is met
 - How to connect agents to an MCP server via `ModelContextProtocol` client
 - How to use `IChatClient` (Microsoft.Extensions.AI) to stay model-agnostic — swap Ollama for any LLM without touching agent logic
+- How the [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) provides the orchestration primitives (`AgentRouter`, `SpecialistAgent`) that wire intent classification to tool-scoped specialist agents
 
 ---
 
@@ -258,10 +259,11 @@ but no rule currently validates it. This is a natural extension point for a stri
 
 | Layer | Technology |
 |-------|-----------|
+| Multi-agent orchestration | [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) |
 | Agent abstraction | `Microsoft.Extensions.AI` 10.* (`IChatClient`) |
 | Local LLM | `OllamaSharp` 5.* (`OllamaApiClient`) |
-| MCP server SDK | `ModelContextProtocol` 1.* |
-| MCP client SDK | `ModelContextProtocol.Core` (via `ModelContextProtocol`) |
+| MCP server SDK | [`ModelContextProtocol` 1.*](https://github.com/modelcontextprotocol/csharp-sdk) |
+| MCP client SDK | [`ModelContextProtocol.Core`](https://github.com/modelcontextprotocol/csharp-sdk) (via `ModelContextProtocol`) |
 | Auth | Duende IdentityServer — client credentials flow |
 | Persistence | EF Core 9 + SQL Server LocalDB |
 | Target framework | .NET 10 |
