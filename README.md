@@ -4,7 +4,7 @@ A hands-on tutorial repository for building **Multi-Agent Systems** with .NET 10
 
 Each part of the series implements a different multi-agent pattern — all using the same federal HR domain (positions, hiring organizations, job descriptions) as the running example.
 
-📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10 on Medium](https://medium.com/)
+📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md)
 
 ---
 
@@ -118,14 +118,26 @@ DotnetMultiAgentsTutorial/
 
 ## Blog Series
 
-| Part | Pattern | Status | Code Project |
-|------|---------|--------|-------------|
-| Preface | Why Multi-Agent? | ⬜ | — |
-| 1 | Selector — Router to Specialists | ⬜ | `Hr.Orchestrator` ✅ |
-| 2 | Pipe — Sequential Agent Chain | ⬜ | `Hr.Pipeline` |
-| 3 | Group Chat — Panel + Moderator | ⬜ | `Hr.GroupChat` |
-| 4 | Shared Memory — Stateful Context | ⬜ | `Hr.SharedMemory` |
-| 5 | Evaluator-Optimizer — Critic Loop | ⬜ | `Hr.EvalOptimizer` |
+### Series 2 — Building Multi-Agent Systems with .NET 10
+
+| Part | Title | Code Project |
+|------|-------|-------------|
+| Preface | [Why One Agent Is Not Enough](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md) | — |
+| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md) | `Hr.Orchestrator` |
+| 2 | [Clean Architecture for AI Applications](blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md) | `Hr.Core` / `Hr.Infrastructure` |
+| 3 | [Building the HR Data MCP Server](blogs/series-2-multi-agents/part-3-hr-data-mcp-server.md) | `Hr.Jobs.Mcp` |
+| 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](blogs/series-2-multi-agents/part-4-compliance-mcp-deterministic-rules.md) | `Hr.Compliance.Mcp` |
+| 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](blogs/series-2-multi-agents/part-5-persisting-ai-artifacts.md) | `Hr.Infrastructure` |
+| 6 | [The Selector Pattern: Routing to Specialists](blogs/series-2-multi-agents/part-6-selector-pattern.md) | `Hr.Orchestrator` |
+| 7 | [Claude Desktop as Your Multi-Agent Platform](blogs/series-2-multi-agents/part-7-claude-desktop-multi-agent.md) | — |
+
+### Coming Next
+
+| Pattern | Description | Code Project |
+|---------|-------------|-------------|
+| Pipe | Chain agents sequentially, each transforming the last output | `Hr.Pipeline` |
+| Group Chat | Run agents in parallel, synthesize with a moderator | `Hr.GroupChat` |
+| Evaluator-Optimizer | Critic loop — revise until quality threshold is met | `Hr.EvalOptimizer` |
 
 ---
 
