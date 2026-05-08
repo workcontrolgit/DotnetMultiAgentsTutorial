@@ -274,3 +274,118 @@
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
+
+## Session: 2026-05-08 23:59
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-08 23:59
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:03 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/HrMcp.Orchestrator.csproj | — | ~127 |
+| 00:15 | Implemented HrMcp.Orchestrator: SpecialistAgent, AgentIntent, AgentRouter, HrOrchestrator, Program.cs | 6 new files | build succeeded 0 errors |
+| 00:03 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/Agents/SpecialistAgent.cs | — | ~253 |
+| 00:03 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/Orchestration/AgentIntent.cs | — | ~196 |
+| 00:04 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/Orchestration/AgentRouter.cs | — | ~534 |
+| 00:04 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/Orchestration/HrOrchestrator.cs | — | ~509 |
+| 00:05 | Created DotnetAiAgentMcp/src/HrMcp.Orchestrator/Program.cs | — | ~1680 |
+| 00:05 | Edited DotnetAiAgentMcp/DotnetAiAgentMcp.slnx | 3→4 lines | ~43 |
+| 00:05 | Edited DotnetAiAgentMcp/src/HrMcp.Orchestrator/Agents/SpecialistAgent.cs | 4→4 lines | ~40 |
+| 00:06 | Session end: 8 writes across 7 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 15 reads | ~3623 tok |
+| 00:16 | Created docs/blog-series-plan.md | — | ~3488 |
+
+| 00:35 | Renamed DotnetAiAgentMcp → DotnetMultiAgents, renamed .slnx, removed legacy series-1 blogs | folder + solution + blogs | build verified, git staged |
+| 00:40 | Wrote new multi-agent blog series plan (5 parts: Selector, Pipe, GroupChat, SharedMemory, EvalOptimizer) | docs/blog-series-plan.md | complete |
+| 00:16 | Session end: 9 writes across 8 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 18 reads | ~7360 tok |
+| 00:17 | Created README.md | — | ~1401 |
+| 00:17 | Session end: 10 writes across 9 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 19 reads | ~8861 tok |
+| 00:21 | Session end: 10 writes across 9 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 19 reads | ~8861 tok |
+| 00:23 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/HrMcp.ComplianceMcp.csproj | — | ~207 |
+| 00:23 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/appsettings.json | — | ~160 |
+| 00:24 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Program.cs | — | ~652 |
+| 00:24 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Rules/ComplianceResult.cs | — | ~366 |
+| 00:24 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Rules/OpmStandard.cs | — | ~118 |
+| 00:24 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Rules/OpmStandardsRepository.cs | — | ~1296 |
+| 00:25 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Rules/OpmRuleEngine.cs | — | ~2750 |
+| 00:26 | Created DotnetMultiAgents/src/HrMcp.ComplianceMcp/Tools/ComplianceTools.cs | — | ~1762 |
+| 00:26 | Edited DotnetMultiAgents/DotnetMultiAgents.slnx | 2→3 lines | ~42 |
+| 00:26 | Edited DotnetMultiAgents/src/HrMcp.Orchestrator/Orchestration/AgentIntent.cs | 6→9 lines | ~88 |
+| 00:26 | Edited DotnetMultiAgents/src/HrMcp.Orchestrator/Orchestration/AgentRouter.cs | 7→8 lines | ~187 |
+| 00:26 | Edited DotnetMultiAgents/src/HrMcp.Orchestrator/Orchestration/AgentRouter.cs | 7→8 lines | ~91 |
+| 00:26 | Edited DotnetMultiAgents/src/HrMcp.Orchestrator/Orchestration/HrOrchestrator.cs | 6→7 lines | ~67 |
+| 00:27 | Edited DotnetMultiAgents/src/HrMcp.Orchestrator/Orchestration/HrOrchestrator.cs | 7→8 lines | ~99 |
+| 00:27 | Created DotnetMultiAgents/src/HrMcp.Orchestrator/Program.cs | — | ~2312 |
+| 00:28 | Session end: 25 writes across 17 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 27 reads | ~19773 tok |
+| 00:33 | Edited README.md | expanded (+62 lines) | ~508 |
+| 00:33 | Edited README.md | expanded (+7 lines) | ~416 |
+| 00:34 | Edited README.md | expanded (+14 lines) | ~371 |
+| 00:34 | Edited README.md | 5→8 lines | ~78 |
+| 00:34 | Session end: 29 writes across 17 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 27 reads | ~22556 tok |
+| 00:38 | Session end: 29 writes across 17 files (HrMcp.Orchestrator.csproj, SpecialistAgent.cs, AgentIntent.cs, AgentRouter.cs, HrOrchestrator.cs) | 27 reads | ~22556 tok |
+
+## Session: 2026-05-08 00:43
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:44 | Created DotnetMultiAgents/DotnetMultiAgents.slnx | — | ~131 |
+| 00:46 | Edited README.md | 31→31 lines | ~423 |
+| 00:46 | Edited README.md | "HrMcp.Orchestrator" → "Hr.Orchestrator" | ~10 |
+| 00:46 | Edited README.md | "HrMcp.McpServer  :5100" → "Hr.Jobs.Mcp  :5100" | ~11 |
+| 00:46 | Edited README.md | "HrMcp.ComplianceMcp  :520" → "Hr.Compliance.Mcp  :5200" | ~12 |
+| 00:47 | Edited README.md | 8→8 lines | ~118 |
+| 00:47 | Edited README.md | 13→13 lines | ~113 |
+| 00:47 | Edited README.md | 2→2 lines | ~52 |
+| 00:47 | Edited README.md | inline fix | ~12 |
+| 00:47 | Edited README.md | inline fix | ~14 |
+| 00:48 | Rename HrMcp.* → Hr.* namespace across all 7 projects | DotnetMultiAgents/src/Hr.*/**, DotnetMultiAgents.slnx, README.md | Build: 0 errors, git staged | ~800 |
+| 00:48 | Session end: 10 writes across 2 files (DotnetMultiAgents.slnx, README.md) | 3 reads | ~1109 tok |
+| 00:50 | Session end: 10 writes across 2 files (DotnetMultiAgents.slnx, README.md) | 5 reads | ~1109 tok |
+| 00:54 | Created DotnetMultiAgents/tools/UsaJobsFetcher/Program.cs | — | ~3417 |
+| 00:55 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs | modified description() | ~712 |
+| 00:55 | Session end: 12 writes across 4 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs) | 7 reads | ~5533 tok |
+| 00:57 | Session end: 12 writes across 4 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs) | 9 reads | ~5533 tok |
+| 01:00 | Edited README.md | expanded (+51 lines) | ~602 |
+| 01:00 | Session end: 13 writes across 4 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs) | 10 reads | ~8378 tok |
+| 01:01 | Session end: 13 writes across 4 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs) | 10 reads | ~8378 tok |
+| 01:03 | Edited DotnetMultiAgents/src/Hr.Core/Interfaces/IPositionRepository.cs | 1→2 lines | ~58 |
+| 01:03 | Edited DotnetMultiAgents/src/Hr.Infrastructure/Repositories/PositionRepository.cs | 2→5 lines | ~117 |
+| 01:03 | Edited DotnetMultiAgents/src/Hr.Application/Services/PositionService.cs | 2→5 lines | ~98 |
+| 01:04 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs | modified JobDescriptionTools() | ~374 |
+| 01:04 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs | modified description() | ~349 |
+| 01:04 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs | added optional chaining | ~1207 |
+| 01:04 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs | modified Max() | ~196 |
+| 01:05 | Session end: 20 writes across 7 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs, IPositionRepository.cs) | 13 reads | ~12092 tok |
+| 01:06 | Session end: 20 writes across 7 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs, IPositionRepository.cs) | 13 reads | ~12092 tok |
+| 01:08 | Created DotnetMultiAgents/src/Hr.Core/Enums/AnnouncementStatus.cs | — | ~120 |
+| 01:08 | Created DotnetMultiAgents/src/Hr.Core/Entities/JobAnnouncement.cs | — | ~304 |
+| 01:09 | Created DotnetMultiAgents/src/Hr.Core/Interfaces/IJobAnnouncementRepository.cs | — | ~163 |
+| 01:09 | Edited DotnetMultiAgents/src/Hr.Infrastructure/HrDbContext.cs | 3→4 lines | ~94 |
+| 01:09 | Created DotnetMultiAgents/src/Hr.Infrastructure/Repositories/JobAnnouncementRepository.cs | — | ~478 |
+| 01:09 | Edited DotnetMultiAgents/src/Hr.Infrastructure/DependencyInjection.cs | 2→3 lines | ~66 |
+| 01:09 | Created DotnetMultiAgents/src/Hr.Application/Services/JobAnnouncementService.cs | — | ~297 |
+| 01:09 | Created DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobAnnouncementTools.cs | — | ~1335 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs | 6→7 lines | ~75 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs | 6→7 lines | ~65 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Jobs.Mcp/Program.cs | 2→3 lines | ~39 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Orchestrator/Program.cs | 4→6 lines | ~61 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Orchestrator/Program.cs | 4→5 lines | ~82 |
+| 01:10 | Edited DotnetMultiAgents/src/Hr.Orchestrator/Program.cs | 8→11 lines | ~176 |
+| 01:11 | Session end: 34 writes across 15 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs, IPositionRepository.cs) | 18 reads | ~15687 tok |
+| 01:17 | Session end: 34 writes across 15 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs, IPositionRepository.cs) | 18 reads | ~15687 tok |
+| 01:20 | Created docs/blog-series-plan.md | — | ~2705 |
+| 01:21 | Created blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md | — | ~1968 |
+| 01:22 | Created blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md | — | ~2499 |
+| 01:23 | Created blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md | — | ~2842 |
+| 01:24 | Created blogs/series-2-multi-agents/part-3-hr-data-mcp-server.md | — | ~2673 |
+| 01:25 | Created blogs/series-2-multi-agents/part-4-compliance-mcp-deterministic-rules.md | — | ~3069 |
+| 01:26 | Created blogs/series-2-multi-agents/part-5-persisting-ai-artifacts.md | — | ~2593 |
+| 01:27 | Created blogs/series-2-multi-agents/part-6-selector-pattern.md | — | ~2951 |
+| 01:28 | Created blogs/series-2-multi-agents/part-7-claude-desktop-multi-agent.md | — | ~2035 |
+| 01:28 | Session end: 43 writes across 24 files (DotnetMultiAgents.slnx, README.md, Program.cs, JobDescriptionTools.cs, IPositionRepository.cs) | 19 reads | ~40688 tok |
+
+## Session: 2026-05-08 01:33
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

@@ -9,6 +9,7 @@ public class HrDbContext(DbContextOptions<HrDbContext> options) : DbContext(opti
     public DbSet<HiringOrganization>   HiringOrganizations   => Set<HiringOrganization>();
     public DbSet<Position>             Positions             => Set<Position>();
     public DbSet<PositionRemuneration> PositionRemunerations => Set<PositionRemuneration>();
+    public DbSet<JobAnnouncement>      JobAnnouncements      => Set<JobAnnouncement>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

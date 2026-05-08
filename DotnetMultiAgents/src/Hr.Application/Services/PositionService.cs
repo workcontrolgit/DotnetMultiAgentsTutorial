@@ -17,4 +17,7 @@ public class PositionService(IPositionRepository repo)
 
     public Task<IEnumerable<Position>> GetPositionsByOrganizationAsync(int organizationId, CancellationToken ct = default)
         => repo.GetByOrganizationAsync(organizationId, ct);
+
+    public Task<IEnumerable<Position>> GetPositionsBySeriesAsync(string occupationalSeries, CancellationToken ct = default)
+        => repo.GetBySeriesAsync(occupationalSeries, ct);
 }

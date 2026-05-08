@@ -100,16 +100,19 @@ var positionTools = hrTools
     .ToList();
 
 var jdTools = hrTools
-    .Where(t => t.Name is "WriteJobDescription" or "GetPositionById")
+    .Where(t => t.Name is "WriteJobDescription" or "GetPositionById"
+                       or "SaveJobAnnouncement" or "GetJobAnnouncement"
+                       or "ListJobAnnouncements")
     .ToList();
 
 var orgTools = hrTools
     .Where(t => t.Name is "GetHiringOrganizations" or "GetPositionsByOrganization")
     .ToList();
 
-// Compliance agent gets ALL compliance tools + GetPositionById to look up position context
+// Compliance agent gets ALL compliance tools + GetPositionById + UpdateAnnouncementStatus
+// so it can record the compliance outcome against a saved draft.
 var complianceAgentTools = complianceTools
-    .Concat(hrTools.Where(t => t.Name == "GetPositionById"))
+    .Concat(hrTools.Where(t => t.Name is "GetPositionById" or "UpdateAnnouncementStatus"))
     .ToList();
 
 var positionSearchAgent = new SpecialistAgent(
@@ -161,6 +164,9 @@ var complianceAgent = new SpecialistAgent(
         - Use GetOPMStandard to look up the qualification standard for an occupational series.
         - Use ListOPMSeries to show all series you know about.
         - If the user gives you a position title but no ID, use GetPositionById first.
+        - If the user provides an announcement ID alongside the position ID, call
+          UpdateAnnouncementStatus after the compliance check completes:
+          set status to CompliancePassed or ComplianceFailed and include a brief summary.
 
         When reporting results:
         - Clearly state the overall status: PASS, WARNING, or FAIL.

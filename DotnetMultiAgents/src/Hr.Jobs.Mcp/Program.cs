@@ -65,6 +65,7 @@ try
             .WithTools<PositionTools>()
             .WithTools<HiringOrganizationTools>()
             .WithTools<JobDescriptionTools>()
+            .WithTools<JobAnnouncementTools>()
             .WithStdioServerTransport();
 
         using var host = hostBuilder.Build();
@@ -108,6 +109,7 @@ try
         .WithTools<PositionTools>()
         .WithTools<HiringOrganizationTools>()
         .WithTools<JobDescriptionTools>()
+        .WithTools<JobAnnouncementTools>()
         .WithHttpTransport();
 
     var app = builder.Build();
@@ -145,6 +147,7 @@ static void ConfigureCommonServices(IServiceCollection services, IConfiguration 
         configuration.GetConnectionString("DefaultConnection")!);
     services.AddScoped<PositionService>();
     services.AddScoped<HiringOrganizationService>();
+    services.AddScoped<JobAnnouncementService>();
 
     // IChatClient used by WriteJobDescription tool to generate LLM narratives
     services.AddSingleton<IChatClient>(

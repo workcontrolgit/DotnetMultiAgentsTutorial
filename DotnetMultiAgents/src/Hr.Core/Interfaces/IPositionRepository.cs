@@ -9,4 +9,5 @@ public interface IPositionRepository
     Task<IEnumerable<Position>> GetOpenPositionsAsync(CancellationToken ct = default);
     Task<Position?> GetByIdAsync(int id, CancellationToken ct = default);
     Task<IEnumerable<Position>> GetByOrganizationAsync(int organizationId, CancellationToken ct = default);
+    Task<IEnumerable<Position>> GetBySeriesAsync(string occupationalSeries, CancellationToken ct = default);
 }

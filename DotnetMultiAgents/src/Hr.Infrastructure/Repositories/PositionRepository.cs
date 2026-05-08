@@ -23,4 +23,7 @@ public class PositionRepository(HrDbContext db) : IPositionRepository
 
     public async Task<IEnumerable<Position>> GetByOrganizationAsync(int organizationId, CancellationToken ct = default)
         => await BaseQuery.Where(p => p.HiringOrganizationId == organizationId).ToListAsync(ct);
+
+    public async Task<IEnumerable<Position>> GetBySeriesAsync(string occupationalSeries, CancellationToken ct = default)
+        => await BaseQuery.Where(p => p.OccupationalSeries == occupationalSeries).ToListAsync(ct);
 }
