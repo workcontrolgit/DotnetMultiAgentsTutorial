@@ -1,11 +1,16 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T11:19:13.515Z
-> Files: 35 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T11:29:17.164Z
+> Files: 37 tracked | Anatomy hits: 0 | Misses: 0
+
+## ../../Users/Fuji Nguyen/.claude/projects/c--apps-DotnetMultiAgentsTutorial/memory/
+
+- `feedback_commit_messages.md` (~98 tok)
+- `MEMORY.md` — Memory Index (~33 tok)
 
 ## ./
 
-- `README.md` — Project documentation (~2664 tok)
+- `README.md` — Project documentation (~3003 tok)
 
 ## .wolf/
 

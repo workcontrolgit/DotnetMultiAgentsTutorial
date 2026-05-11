@@ -442,6 +442,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-08T05:10:32.943Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-05-08T11:22:25.369Z",
+      "error_message": "Significant refactor of ",
+      "file": "README.md",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 10→22 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T11:22:25.369Z"
     }
   ]
 }
