@@ -1,4 +1,5 @@
 // src/Hr.Compliance.Mcp/Program.cs
+using Hr.Application.Services;
 using Hr.Compliance.Mcp.Rules;
 using Hr.Compliance.Mcp.Tools;
 using Hr.Infrastructure;
@@ -21,6 +22,7 @@ try
     // ── Persistence (read-only usage — fetch position data for rule checks) ──
     builder.Services.AddPersistence(
         builder.Configuration.GetConnectionString("DefaultConnection")!);
+    builder.Services.AddScoped<PositionService>();
 
     // ── OPM Rule Engine (singleton — rule definitions are immutable) ─────────
     builder.Services.AddSingleton<OpmStandardsRepository>();
