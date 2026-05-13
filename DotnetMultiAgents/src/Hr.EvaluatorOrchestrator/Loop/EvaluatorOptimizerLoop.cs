@@ -61,8 +61,10 @@ public sealed class EvaluatorOptimizerLoop(
             {
                 lastFeedback = BuildFeedbackPrompt(result);
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Score {result.Score}/100 — below threshold. Retrying with feedback...\n");
+                Console.WriteLine($"Score {result.Score}/100 — below threshold.");
                 Console.ResetColor();
+                if (!Confirm("Continue to next iteration with feedback?")) break;
+                Console.WriteLine();
             }
             else
             {
@@ -104,6 +106,14 @@ public sealed class EvaluatorOptimizerLoop(
         foreach (var (criterion, note) in result.Feedback)
             Console.WriteLine($"  {criterion,-15}: {note}");
         Console.WriteLine();
+    }
+
+    private static bool Confirm(string prompt)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write($"{prompt} (y/n): ");
+        Console.ResetColor();
+        return Console.ReadLine()?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true;
     }
 
     private static string BuildFeedbackPrompt(EvaluationResult result)

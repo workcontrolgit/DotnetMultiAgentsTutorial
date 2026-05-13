@@ -42,7 +42,7 @@ public sealed class EvaluatorAgent(IChatClient chatClient)
                 dto?.Score ?? 0,
                 dto?.Feedback ?? []);
         }
-        catch
+        catch (JsonException)
         {
             // LLM returned non-JSON — score 0 forces another iteration
             return new EvaluationResult(0, new Dictionary<string, string>
