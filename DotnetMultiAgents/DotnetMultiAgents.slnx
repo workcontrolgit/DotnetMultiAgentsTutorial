@@ -8,5 +8,6 @@
     <Project Path="src/Hr.Agent/Hr.Agent.csproj" />
     <Project Path="src/Hr.SelectorOrchestrator/Hr.SelectorOrchestrator.csproj" />
     <Project Path="src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj" />
+    <Project Path="src/Hr.GroupChatOrchestrator/Hr.GroupChatOrchestrator.csproj" />
   </Folder>
 </Solution>
