@@ -54,7 +54,7 @@ Add both MCP servers:
       "cwd": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents"
     },
     "hr-compliance": {
-      "command": "command": "dotnet",
+      "command": "dotnet",
       "args": [
         "run",
         "--project",
