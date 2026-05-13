@@ -25,7 +25,7 @@ The Selector pattern is the simplest of the four multi-agent patterns and the ri
 The router's system prompt defines exactly 5 categories and demands a single label in return:
 
 ```csharp
-// src/Hr.Orchestrator/Orchestration/AgentRouter.cs
+// src/Hr.SelectorOrchestrator/Orchestration/AgentRouter.cs
 private static readonly string RouterSystemPrompt = """
     You are an intent classifier for an HR assistant application.
     Given a user's message, classify it into exactly one of these categories:
@@ -135,7 +135,7 @@ Maximum tools any single agent sees: 7. Total tools across both servers: 14. The
 ## HrOrchestrator: The Selector Loop
 
 ```csharp
-// src/Hr.Orchestrator/Orchestration/HrOrchestrator.cs
+// src/Hr.SelectorOrchestrator/Orchestration/HrOrchestrator.cs
 public async Task RunAsync(CancellationToken ct = default)
 {
     Console.WriteLine("HR Orchestrator ready. Type 'exit' to quit.\n");
@@ -187,7 +187,7 @@ dotnet run --project src/Hr.Jobs.Mcp
 dotnet run --project src/Hr.Compliance.Mcp
 
 # Terminal 3
-dotnet run --project src/Hr.Orchestrator
+dotnet run --project src/Hr.SelectorOrchestrator
 ```
 
 ```

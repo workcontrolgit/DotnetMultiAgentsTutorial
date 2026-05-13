@@ -30,7 +30,7 @@ flowchart TD
 
     User -->|query| Orchestrator
 
-    subgraph ORC["Hr.Orchestrator"]
+    subgraph ORC["Hr.SelectorOrchestrator"]
         direction TB
         Orchestrator["HrOrchestrator"]
         Router["AgentRouter - LLM intent classifier"]
@@ -101,7 +101,7 @@ DotnetMultiAgentsTutorial/
 │       │   └── Tools/
 │       │       └── ComplianceTools.cs       # MCP tool definitions
 │       ├── Hr.Agent/                        # Single-agent baseline (for comparison)
-│       └── Hr.Orchestrator/                 # ✅ Part 1 — Selector pattern
+│       └── Hr.SelectorOrchestrator/                 # ✅ Part 1 — Selector pattern
 │           ├── Agents/
 │           │   └── SpecialistAgent.cs       # Configurable specialist agent
 │           └── Orchestration/
@@ -123,12 +123,12 @@ DotnetMultiAgentsTutorial/
 | Part | Title | Code Project |
 |------|-------|-------------|
 | Preface | [Why One Agent Is Not Enough](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md) | — |
-| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md) | `Hr.Orchestrator` |
+| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md) | `Hr.SelectorOrchestrator` |
 | 2 | [Clean Architecture for AI Applications](blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md) | `Hr.Core` / `Hr.Infrastructure` |
 | 3 | [Building the HR Data MCP Server](blogs/series-2-multi-agents/part-3-hr-data-mcp-server.md) | `Hr.Jobs.Mcp` |
 | 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](blogs/series-2-multi-agents/part-4-compliance-mcp-deterministic-rules.md) | `Hr.Compliance.Mcp` |
 | 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](blogs/series-2-multi-agents/part-5-persisting-ai-artifacts.md) | `Hr.Infrastructure` |
-| 6 | [The Selector Pattern: Routing to Specialists](blogs/series-2-multi-agents/part-6-selector-pattern.md) | `Hr.Orchestrator` |
+| 6 | [The Selector Pattern: Routing to Specialists](blogs/series-2-multi-agents/part-6-selector-pattern.md) | `Hr.SelectorOrchestrator` |
 | 7 | [Claude Desktop as Your Multi-Agent Platform](blogs/series-2-multi-agents/part-7-claude-desktop-multi-agent.md) | — |
 
 ### Coming Next
@@ -172,10 +172,10 @@ dotnet run --project src/Hr.Jobs.Mcp
 dotnet run --project src/Hr.Compliance.Mcp
 
 # Terminal 3 — multi-agent orchestrator (Selector pattern)
-dotnet run --project src/Hr.Orchestrator
+dotnet run --project src/Hr.SelectorOrchestrator
 ```
 
-> **Local dev without OIDC:** comment out the token acquisition block in `Hr.Orchestrator/Program.cs`
+> **Local dev without OIDC:** comment out the token acquisition block in `Hr.SelectorOrchestrator/Program.cs`
 > and remove `.RequireAuthorization()` from `Hr.Jobs.Mcp/Program.cs` to skip auth locally.
 
 ---

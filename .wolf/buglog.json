@@ -458,6 +458,22 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-05-08T11:22:25.369Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-05-13T02:50:13.237Z",
+      "error_message": "Incorrect value in code",
+      "file": "DotnetMultiAgents/DotnetMultiAgents.slnx",
+      "root_cause": "Had \"src/Hr.Orchestrator/Hr.Orchestrator.csproj\"",
+      "fix": "Changed to \"src/Hr.SelectorOrchestrator/Hr.SelectorOrchestrat",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "slnx"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-13T02:50:13.237Z"
     }
   ]
 }

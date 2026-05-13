@@ -18,7 +18,7 @@
 - **Project:** DotnetMultiAgentsTutorial
 - **Description:** A tutorial repository demonstrating **Multi-Agent systems** using Microsoft Agent Framework, .NET 10, MCP, and Clean Architecture.
 - **Solution file:** `DotnetMultiAgents/DotnetMultiAgents.slnx` (renamed from DotnetAiAgentMcp — not `.sln`)
-- **Project naming convention:** `Hr.[Subdomain].[Technology]` — e.g., `Hr.Core`, `Hr.Jobs.Mcp`, `Hr.Compliance.Mcp`, `Hr.Orchestrator`. Root namespace matches project name.
+- **Project naming convention:** `Hr.[Subdomain].[Technology]` — e.g., `Hr.Core`, `Hr.Jobs.Mcp`, `Hr.Compliance.Mcp`, `Hr.SelectorOrchestrator`. Root namespace matches project name.
 - **Blog series location:** `blogs/` — new multi-agent series in progress; old series-1-ai-agent-mcp removed.
 - **Blog diagram convention:** Place diagram/image assets under `blogs/<series>/diagrams/` and reference them using relative paths like `diagrams/<filename>.png`.
 - **OllamaSharp vs deprecated package:** `Microsoft.Extensions.AI.Ollama` is deprecated in the GA release. Use `OllamaSharp` (`OllamaApiClient`) instead. `OllamaApiClient` implements `IChatClient` natively.

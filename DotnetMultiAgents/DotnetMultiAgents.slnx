@@ -6,6 +6,6 @@
     <Project Path="src/Hr.Jobs.Mcp/Hr.Jobs.Mcp.csproj" />
     <Project Path="src/Hr.Compliance.Mcp/Hr.Compliance.Mcp.csproj" />
     <Project Path="src/Hr.Agent/Hr.Agent.csproj" />
-    <Project Path="src/Hr.Orchestrator/Hr.Orchestrator.csproj" />
+    <Project Path="src/Hr.SelectorOrchestrator/Hr.SelectorOrchestrator.csproj" />
   </Folder>
 </Solution>

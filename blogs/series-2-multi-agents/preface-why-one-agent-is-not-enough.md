@@ -101,24 +101,13 @@ By the end of this series you will have a working multi-agent system backed by r
 
 - **Hr.Jobs.Mcp** — MCP server on port 5100: HR data tools, AI-powered job description writer, announcement persistence
 - **Hr.Compliance.Mcp** — MCP server on port 5200: 7 deterministic OPM compliance rules, zero LLM calls
-- **Hr.Orchestrator** — Multi-agent selector: LLM router + 5 specialist agents, each with a focused prompt and tool subset
+- **Hr.SelectorOrchestrator** — Multi-agent selector: LLM router + 5 specialist agents, each with a focused prompt and tool subset
 
 The same two MCP servers also connect directly to Claude Desktop, giving you a second way to run the system — no orchestrator code required.
 
 The full architecture:
 
-```
-User query
-    │
-    ▼
-AgentRouter (LLM classifier — no tools)
-    │
-    ├── position_search  → PositionSearch agent  → Hr.Jobs.Mcp :5100
-    ├── job_description  → JobDescription agent  → Hr.Jobs.Mcp :5100
-    ├── org_summary      → OrgSummary agent      → Hr.Jobs.Mcp :5100
-    ├── compliance       → OPMCompliance agent   → Hr.Compliance.Mcp :5200
-    └── general          → General agent         → (no tools)
-```
+![Agent router architecture](../images/preface-agent-router.png)
 
 ---
 

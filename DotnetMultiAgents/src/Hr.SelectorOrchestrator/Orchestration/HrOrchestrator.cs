@@ -1,7 +1,7 @@
 // Orchestration/HrOrchestrator.cs
-using Hr.Orchestrator.Agents;
+using Hr.SelectorOrchestrator.Agents;
 
-namespace Hr.Orchestrator.Orchestration;
+namespace Hr.SelectorOrchestrator.Orchestration;
 
 /// <summary>
 /// Top-level orchestrator that routes each user query to the appropriate

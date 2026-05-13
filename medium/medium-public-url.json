@@ -56,12 +56,100 @@
     "draftUrl": "https://medium.com/scrum-and-coke/part-6-securing-the-mcp-server-with-oidc-5ee56af86160"
   },
   {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "preface",
+    "title": "Why One Agent Is Not Enough",
+    "editId": "9872c10a2a70",
+    "editUrl": "https://medium.com/p/9872c10a2a70/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-1",
+    "title": "Part 1 — The .NET Agent Framework: IChatClient and MCP Clients",
+    "editId": "4b52cc179e26",
+    "editUrl": "https://medium.com/p/4b52cc179e26/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-1-the-net-agent-framework-ichatclient-and-mcp-clients-4b52cc179e26",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-2",
+    "title": "Part 2 — Clean Architecture for AI Applications",
+    "editId": "63bac0acdd34",
+    "editUrl": "https://medium.com/p/63bac0acdd34/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-2-clean-architecture-for-ai-applications-63bac0acdd34",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-3",
+    "title": "Part 3 — Building the HR Data MCP Server",
+    "editId": "47b5690f938e",
+    "editUrl": "https://medium.com/p/47b5690f938e/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-3-building-the-hr-data-mcp-server-47b5690f938e",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-4",
+    "title": "Part 4 — The Compliance MCP Server: Deterministic Rules, Zero LLM",
+    "editId": "6fa051cb3f8d",
+    "editUrl": "https://medium.com/p/6fa051cb3f8d/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-4-the-compliance-mcp-server-deterministic-rules-zero-llm-6fa051cb3f8d",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-5",
+    "title": "Part 5 — Persisting AI Artifacts: The JobAnnouncement Lifecycle",
+    "editId": "d51ac226ff82",
+    "editUrl": "https://medium.com/p/d51ac226ff82/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-5-persisting-ai-artifacts-the-jobannouncement-lifecycle-d51ac226ff82",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-6",
+    "title": "Part 6 — The Selector Pattern: Routing to Specialists",
+    "editId": "5a92c773adc2",
+    "editUrl": "https://medium.com/p/5a92c773adc2/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-6-the-selector-pattern-routing-to-specialists-5a92c773adc2",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
+    "series": "Series 2: Building Multi-Agent Systems with .NET 10",
+    "part": "part-7",
+    "title": "Part 7 — Claude Desktop as Your Multi-Agent Platform",
+    "editId": "fb51901e7cc3",
+    "editUrl": "https://medium.com/p/fb51901e7cc3/edit",
+    "draftUrl": "https://medium.com/scrum-and-coke/part-7-claude-desktop-as-your-multi-agent-platform-fb51901e7cc3",
+    "status": "pending-review",
+    "publication": "Scrum and Coke",
+    "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
+  },
+  {
     "series": "Standalone",
     "part": "standalone-1",
     "title": "6 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)",
     "editId": "46c20739d9e7",
     "editUrl": "https://medium.com/p/46c20739d9e7/edit",
-    "draftUrl": "",
+    "draftUrl": "https://medium.com/scrum-and-coke/6-mcp-tools-every-net-developer-should-know-from-someone-whos-actually-used-them-46c20739d9e7",
     "status": "pending-review",
     "publication": "Scrum and Coke",
     "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]
@@ -72,7 +160,7 @@
     "title": "Magnificent 7 MCP Tools Every .NET Developer Should Know (From Someone Who's Actually Used Them)",
     "editId": "316c7075971e",
     "editUrl": "https://medium.com/p/316c7075971e/edit",
-    "draftUrl": "",
+    "draftUrl": "https://medium.com/scrum-and-coke/magnificent-7-mcp-tools-every-net-developer-should-know-from-someone-whos-actually-used-them-316c7075971e",
     "status": "pending-review",
     "publication": "Scrum and Coke",
     "topics": ["Artificial Intelligence", "Dotnet", "Programming", "Software Engineering", "Technology"]

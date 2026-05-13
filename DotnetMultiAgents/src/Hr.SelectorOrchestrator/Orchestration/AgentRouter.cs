@@ -1,7 +1,7 @@
 // Orchestration/AgentRouter.cs
 using Microsoft.Extensions.AI;
 
-namespace Hr.Orchestrator.Orchestration;
+namespace Hr.SelectorOrchestrator.Orchestration;
 
 /// <summary>
 /// Uses a lightweight LLM call (no tools) to classify a user query into an <see cref="AgentIntent"/>.

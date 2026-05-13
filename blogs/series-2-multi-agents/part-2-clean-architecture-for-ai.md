@@ -14,23 +14,7 @@ This post walks through exactly how the HR multi-agent system is structured, why
 
 ## The Layer Diagram
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  Hr.Orchestrator        (multi-agent loop)              │
-│  Hr.Jobs.Mcp   :5100    (MCP server — HR data tools)    │
-│  Hr.Compliance.Mcp :5200 (MCP server — rule engine)     │
-│  ──── outer layer: LLM calls live here ────             │
-├─────────────────────────────────────────────────────────┤
-│  Hr.Infrastructure      (EF Core, repositories)         │
-│  ──── infrastructure layer: DB calls live here ─────    │
-├─────────────────────────────────────────────────────────┤
-│  Hr.Application         (services, orchestration)       │
-│  ──── application layer: use cases live here ───────    │
-├─────────────────────────────────────────────────────────┤
-│  Hr.Core                (entities, interfaces, enums)   │
-│  ──── domain layer: no external dependencies ────────   │
-└─────────────────────────────────────────────────────────┘
-```
+![Clean architecture layer diagram](../images/part-2-layer-diagram.png)
 
 Dependency arrows point inward only. `Hr.Jobs.Mcp` knows about `Hr.Application`. `Hr.Application` knows about `Hr.Core`. `Hr.Core` knows about nothing outside itself.
 
@@ -222,7 +206,7 @@ The two MCP servers are deployed independently. `Hr.Jobs.Mcp` owns HR data and a
 This is the same service boundary principle you use with microservices, applied to AI tool servers. The orchestrator is the only component that connects to both — it composes their capabilities at runtime without coupling them at compile time.
 
 ```
-Hr.Orchestrator
+Hr.SelectorOrchestrator
   ├── connects to Hr.Jobs.Mcp :5100  (9 tools)
   └── connects to Hr.Compliance.Mcp :5200  (5 tools)
 
@@ -238,7 +222,7 @@ Both servers point to the same LocalDB connection string. In production you woul
 
 Clean architecture earns its keep when requirements change:
 
-- **Swap Ollama for Claude**: change one line in `BuildClient()` in `Hr.Orchestrator/Program.cs`. No domain or application code changes.
+- **Swap Ollama for Claude**: change one line in `BuildClient()` in `Hr.SelectorOrchestrator/Program.cs`. No domain or application code changes.
 - **Swap SQL Server for PostgreSQL**: change `UseSqlServer` to `UseNpgsql` in `DependencyInjection.cs`. No domain or MCP tool code changes.
 - **Add a new specialist agent**: add a new `SpecialistAgent` in `Program.cs` with a different tool subset and system prompt. The existing agents are untouched.
 - **Test application logic**: inject mock implementations of `IPositionRepository` and `IJobAnnouncementRepository` in `Hr.Application` tests. No MCP server, no database, no LLM needed.

@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-08T11:29:17.164Z
-> Files: 37 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T02:50:13.226Z
+> Files: 39 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../Users/Fuji Nguyen/.claude/projects/c--apps-DotnetMultiAgentsTutorial/memory/
 
@@ -17,7 +17,7 @@
 
 ## DotnetMultiAgents/
 
-- `DotnetMultiAgents.slnx` — Solution file referencing all 7 Hr.* projects (~50 tok)
+- `DotnetMultiAgents.slnx` (~135 tok)
 
 ## DotnetMultiAgents/src/Hr.Agent/
 
@@ -76,10 +76,10 @@
 - `JobAnnouncementTools.cs` — src/Hr.Jobs.Mcp/Tools/JobAnnouncementTools.cs (~1335 tok)
 - `JobDescriptionTools.cs` — Fetches all positions in the same occupational series, then selects at most 3 representatives (next- (~2315 tok)
 
-## DotnetMultiAgents/src/Hr.Orchestrator/
+## DotnetMultiAgents/src/Hr.SelectorOrchestrator/
 
-- `Hr.Orchestrator.csproj` — Multi-agent selector orchestrator; Part 1 of blog series (~50 tok)
-- `Program.cs` — src/Hr.Orchestrator/Program.cs (~2431 tok)
+- `Hr.SelectorOrchestrator.csproj` — Multi-agent selector orchestrator; Part 1 of blog series (~50 tok)
+- `Program.cs` — src/Hr.SelectorOrchestrator/Program.cs (~2431 tok)
 
 ## DotnetMultiAgents/tools/UsaJobsFetcher/
 
@@ -102,3 +102,11 @@
 ## docs/
 
 - `blog-series-plan.md` — Blog Series Plan — Building Multi-Agent Systems with .NET 10 (~2536 tok)
+
+## docs/superpowers/specs/
+
+- `2026-05-12-series-2b-patterns-design.md` — Series 2B — Multi-Agent Patterns Extension: Design Spec (~2099 tok)
+
+## medium/
+
+- `medium-public-url.json` (~2324 tok)

@@ -6,7 +6,7 @@
 
 You have built a complete multi-agent system: two MCP servers, five specialist agents, an intent router, and an orchestrator loop. It works with Ollama running locally.
 
-Now close `Hr.Orchestrator`. You will not need it for this post.
+Now close `Hr.SelectorOrchestrator`. You will not need it for this post.
 
 This post shows how to connect the same two MCP servers — unchanged — to Claude Desktop, and let Claude act as the orchestrator. The demo produces the same results as Part 6 without a single line of orchestrator code.
 
@@ -116,7 +116,7 @@ Both approaches work. The choice depends on your requirements.
 - You need predictable, auditable routing — a log that says exactly which agent handled each query
 - You need cost control — routing classification to a cheap local model, specialist work to a capable model
 - You need a multi-user system — the orchestrator is a service, Claude Desktop is a desktop app
-- You need to customize agent behavior — the specialist system prompts in `Hr.Orchestrator` are tuned for federal HR writing standards in ways you cannot replicate in Claude Desktop
+- You need to customize agent behavior — the specialist system prompts in `Hr.SelectorOrchestrator` are tuned for federal HR writing standards in ways you cannot replicate in Claude Desktop
 - You are running in an air-gapped environment where cloud APIs are not available
 
 The coded orchestrator and Claude Desktop are not competing solutions. They serve different stages of the same development lifecycle. Build and test with Claude Desktop. Deploy with the orchestrator.
@@ -125,7 +125,7 @@ The coded orchestrator and Claude Desktop are not competing solutions. They serv
 
 ## What Claude Desktop Does Differently
 
-One difference worth noting: Claude Desktop does not implement the Selector pattern. It is a single agent with access to all 14 tools — closer to `Hr.Agent` than to `Hr.Orchestrator`.
+One difference worth noting: Claude Desktop does not implement the Selector pattern. It is a single agent with access to all 14 tools — closer to `Hr.Agent` than to `Hr.SelectorOrchestrator`.
 
 This means:
 - Claude may call tools from both servers in a single turn if it judges them relevant — the compliance server and HR server are not isolated by query type

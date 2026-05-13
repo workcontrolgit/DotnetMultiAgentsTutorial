@@ -27,12 +27,12 @@ What they do **not** yet know:
 | Post | Title | Pattern | Code project | Status |
 |------|-------|---------|--------------|--------|
 | Preface | Why One Agent Is Not Enough | — | — | pending |
-| Part 1 | The .NET Agent Framework | IChatClient + MCP | Hr.Orchestrator | pending |
+| Part 1 | The .NET Agent Framework | IChatClient + MCP | Hr.SelectorOrchestrator | pending |
 | Part 2 | Clean Architecture for AI Apps | Layered design | All projects | pending |
 | Part 3 | Building the HR Data MCP Server | MCP server + tools | Hr.Jobs.Mcp | pending |
 | Part 4 | Compliance MCP: Deterministic Rules, Zero LLM | Rule engine | Hr.Compliance.Mcp | pending |
 | Part 5 | Persisting AI Artifacts | JobAnnouncement lifecycle | Hr.Infrastructure | pending |
-| Part 6 | The Selector Pattern | Multi-agent routing | Hr.Orchestrator | pending |
+| Part 6 | The Selector Pattern | Multi-agent routing | Hr.SelectorOrchestrator | pending |
 | Part 7 | Claude Desktop as Multi-Agent Platform | Claude Desktop + MCP | Hr.Jobs.Mcp + Hr.Compliance.Mcp | pending |
 
 ---
@@ -68,8 +68,8 @@ But when you ask it to do all three in one conversation, quality collapses. Why?
 
 **Code references:**
 - `src/Hr.Agent/HrAgent.cs`
-- `src/Hr.Orchestrator/Agents/SpecialistAgent.cs`
-- `src/Hr.Orchestrator/Program.cs` (BuildClient helper)
+- `src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs`
+- `src/Hr.SelectorOrchestrator/Program.cs` (BuildClient helper)
 
 ---
 
@@ -170,11 +170,11 @@ But when you ask it to do all three in one conversation, quality collapses. Why?
 - General: no tools
 
 **Code references:**
-- `src/Hr.Orchestrator/Orchestration/AgentRouter.cs`
-- `src/Hr.Orchestrator/Orchestration/AgentIntent.cs`
-- `src/Hr.Orchestrator/Orchestration/HrOrchestrator.cs`
-- `src/Hr.Orchestrator/Agents/SpecialistAgent.cs`
-- `src/Hr.Orchestrator/Program.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/AgentRouter.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/AgentIntent.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/HrOrchestrator.cs`
+- `src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs`
+- `src/Hr.SelectorOrchestrator/Program.cs`
 
 ---
 

@@ -26,7 +26,7 @@ That is the entire contract. Messages in, response out. Every LLM backend — Ol
 In this project, the local Ollama backend is provided by `OllamaSharp`:
 
 ```csharp
-// src/Hr.Orchestrator/Program.cs
+// src/Hr.SelectorOrchestrator/Program.cs
 IChatClient BuildClient(bool withFunctionInvocation)
 {
     var builder = ((IChatClient)new OllamaApiClient(
@@ -54,21 +54,7 @@ Two things to notice here.
 
 Without it, your code receives a `ChatResponse` containing a tool call request and you have to handle execution manually. With it, tool calls are transparent: you send a message, you get a text response, everything in between is handled.
 
-```
-Message
-  │
-  ▼
-IChatClient (with UseFunctionInvocation middleware)
-  │  ┌─────────────────────────────────────┐
-  │  │  LLM returns: ToolCallRequest       │
-  │  │  Middleware executes the tool       │
-  │  │  LLM returns: ToolCallRequest (2nd) │
-  │  │  Middleware executes the tool       │
-  │  │  LLM returns: TextResponse         │
-  │  └─────────────────────────────────────┘
-  ▼
-ChatResponse (final text only)
-```
+![Tool invocation flow](../images/part-1-tool-flow.png)
 
 The router does not use this middleware because it never calls tools. It classifies intent and returns a label. Adding `UseFunctionInvocation` to the router would add overhead for a capability it will never use.
 
@@ -79,7 +65,7 @@ The router does not use this middleware because it never calls tools. It classif
 The agent's tools come from two MCP servers. Connecting to each is three lines:
 
 ```csharp
-// src/Hr.Orchestrator/Program.cs
+// src/Hr.SelectorOrchestrator/Program.cs
 await using var hrMcpClient = await McpClient.CreateAsync(
     new HttpClientTransport(new HttpClientTransportOptions
     {
@@ -120,7 +106,7 @@ var response = await chatClient.GetResponseAsync(
 The multi-agent orchestrator wraps the same `IChatClient` in a `SpecialistAgent` that scopes the tool list and pins the system prompt:
 
 ```csharp
-// src/Hr.Orchestrator/Agents/SpecialistAgent.cs
+// src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs
 public sealed class SpecialistAgent(
     string name,
     string systemPrompt,
@@ -150,7 +136,7 @@ This is the entirety of a specialist agent. The power comes from what you pass i
 The job description specialist is created like this:
 
 ```csharp
-// src/Hr.Orchestrator/Program.cs
+// src/Hr.SelectorOrchestrator/Program.cs
 var jdTools = hrTools
     .Where(t => t.Name is "WriteJobDescription" or "GetPositionById"
                        or "SaveJobAnnouncement" or "GetJobAnnouncement"

@@ -1,8 +1,8 @@
-// src/Hr.Orchestrator/Program.cs
+// src/Hr.SelectorOrchestrator/Program.cs
 using System.Net.Http.Json;
 using System.Text.Json;
-using Hr.Orchestrator.Agents;
-using Hr.Orchestrator.Orchestration;
+using Hr.SelectorOrchestrator.Agents;
+using Hr.SelectorOrchestrator.Orchestration;
 using Microsoft.Extensions.AI;
 using ModelContextProtocol.Client;
 using OllamaSharp;

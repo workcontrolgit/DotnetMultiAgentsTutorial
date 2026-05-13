@@ -1,12 +1,71 @@
 {
-  "session_id": "session-2026-05-11-0022",
-  "started": "2026-05-11T04:22:12.161Z",
-  "files_read": {},
-  "files_written": [],
-  "edit_counts": {},
-  "anatomy_hits": 0,
-  "anatomy_misses": 0,
+  "session_id": "session-2026-05-12-1526",
+  "started": "2026-05-12T19:26:56.756Z",
+  "files_read": {
+    "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-13T01:47:28.138Z"
+    },
+    "c:/apps/DotnetMultiAgentsTutorial/.wolf/cerebrum.md": {
+      "count": 1,
+      "tokens": 0,
+      "first_read": "2026-05-13T01:47:28.365Z"
+    },
+    "c:/apps/DotnetMultiAgentsTutorial/docs/blog-series-plan.md": {
+      "count": 1,
+      "tokens": 2536,
+      "first_read": "2026-05-13T01:49:21.638Z"
+    },
+    "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md": {
+      "count": 1,
+      "tokens": 2059,
+      "first_read": "2026-05-13T02:40:01.296Z"
+    },
+    "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Hr.Orchestrator.csproj": {
+      "count": 1,
+      "tokens": 50,
+      "first_read": "2026-05-13T02:49:38.067Z"
+    },
+    "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx": {
+      "count": 1,
+      "tokens": 50,
+      "first_read": "2026-05-13T02:49:38.564Z"
+    }
+  },
+  "files_written": [
+    {
+      "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+      "action": "create",
+      "tokens": 2353,
+      "at": "2026-05-13T02:39:58.336Z"
+    },
+    {
+      "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+      "action": "edit",
+      "tokens": 128,
+      "at": "2026-05-13T02:40:22.878Z"
+    },
+    {
+      "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+      "action": "edit",
+      "tokens": 110,
+      "at": "2026-05-13T02:40:31.335Z"
+    },
+    {
+      "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+      "action": "edit",
+      "tokens": 24,
+      "at": "2026-05-13T02:50:13.235Z"
+    }
+  ],
+  "edit_counts": {
+    "docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md": 3,
+    "DotnetMultiAgents/DotnetMultiAgents.slnx": 1
+  },
+  "anatomy_hits": 4,
+  "anatomy_misses": 2,
   "repeated_reads_warned": 0,
   "cerebrum_warnings": 0,
-  "stop_count": 0
+  "stop_count": 12
 }

@@ -30,7 +30,7 @@ Three new projects added to `DotnetMultiAgents.slnx`:
 
 ```
 DotnetMultiAgents/src/
-├── Hr.Orchestrator/              ← existing (Selector, Part 6)
+├── Hr.SelectorOrchestrator/              ← existing (Selector, Part 6)
 ├── Hr.PipeOrchestrator/          ← NEW (Part 8)
 │   ├── Hr.PipeOrchestrator.csproj
 │   ├── Program.cs
@@ -64,7 +64,7 @@ DotnetMultiAgents/src/
 - `Hr.Compliance.Mcp` — port 5200
 - `Hr.Core`, `Hr.Application`, `Hr.Infrastructure` — domain and persistence layers
 
-Each new project uses `IChatClient` via `OllamaSharp` and connects to MCP servers via `McpClient.CreateAsync(new HttpClientTransport(...))` — identical stack to `Hr.Orchestrator`.
+Each new project uses `IChatClient` via `OllamaSharp` and connects to MCP servers via `McpClient.CreateAsync(new HttpClientTransport(...))` — identical stack to `Hr.SelectorOrchestrator`.
 
 ---
 
@@ -97,8 +97,8 @@ Stage 3 — StatusAgent (deterministic, no LLM)
 ### Key Components
 
 - **`HrPipeline.cs`** — orchestrates three stages sequentially; after each stage prints result and prompts `"Continue to next stage? (y/n)"`
-- **`DraftAgent`** — standalone class with focused system prompt and 3 MCP tools; no dependency on `Hr.Orchestrator`
-- **`ComplianceAgent`** — standalone class with 2 MCP tools; no dependency on `Hr.Orchestrator`
+- **`DraftAgent`** — standalone class with focused system prompt and 3 MCP tools; no dependency on `Hr.SelectorOrchestrator`
+- **`ComplianceAgent`** — standalone class with 2 MCP tools; no dependency on `Hr.SelectorOrchestrator`
 - **Stage 3** — direct MCP tool call from `HrPipeline.cs`, no LLM (deterministic status write)
 
 ### Semi-Automated UX

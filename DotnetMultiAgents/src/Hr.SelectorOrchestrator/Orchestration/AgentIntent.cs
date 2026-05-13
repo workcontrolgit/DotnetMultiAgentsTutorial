@@ -1,5 +1,5 @@
 // Orchestration/AgentIntent.cs
-namespace Hr.Orchestrator.Orchestration;
+namespace Hr.SelectorOrchestrator.Orchestration;
 
 /// <summary>
 /// Represents the classified intent of a user query.

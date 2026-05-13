@@ -1,7 +1,7 @@
 // Agents/SpecialistAgent.cs
 using Microsoft.Extensions.AI;
 
-namespace Hr.Orchestrator.Agents;
+namespace Hr.SelectorOrchestrator.Agents;
 
 /// <summary>
 /// A focused agent with a fixed system prompt and a curated subset of MCP tools.
