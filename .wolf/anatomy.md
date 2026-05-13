@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T02:50:13.226Z
-> Files: 39 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T03:57:50.836Z
+> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../Users/Fuji Nguyen/.claude/projects/c--apps-DotnetMultiAgentsTutorial/memory/
 
@@ -17,7 +17,7 @@
 
 ## DotnetMultiAgents/
 
-- `DotnetMultiAgents.slnx` (~135 tok)
+- `DotnetMultiAgents.slnx` (~200 tok)
 
 ## DotnetMultiAgents/src/Hr.Agent/
 
@@ -55,6 +55,27 @@
 - `IJobAnnouncementRepository.cs` — src/Hr.Core/Interfaces/IJobAnnouncementRepository.cs (~163 tok)
 - `IPositionRepository.cs` — src/Hr.Core/Interfaces/IPositionRepository.cs (~164 tok)
 
+## DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/
+
+- `Hr.EvaluatorOrchestrator.csproj` (~126 tok)
+- `Program.cs` — src/Hr.EvaluatorOrchestrator/Program.cs (~29 tok)
+
+## DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/
+
+- `EvaluatorAgent.cs` — Scores a job announcement draft against a 4-criterion rubric (25 pts each, 100 max). Returns a struc (~683 tok)
+
+## DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/
+
+- `EvaluatorOptimizerLoop.cs` — Implements the Evaluator-Optimizer pattern. Each iteration: 1. GeneratorAgent produces (or improves) (~1294 tok)
+
+## DotnetMultiAgents/src/Hr.GroupChatOrchestrator/
+
+- `Hr.GroupChatOrchestrator.csproj` (~126 tok)
+
+## DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Chat/
+
+- `HrGroupChat.cs` — Group Chat (Debate) pattern. Runs 3 specialists in parallel to critique a draft, then moderator synthesizes (~370 tok)
+
 ## DotnetMultiAgents/src/Hr.Infrastructure/
 
 - `DependencyInjection.cs` — src/Hr.Infrastructure/DependencyInjection.cs (~218 tok)
@@ -75,6 +96,10 @@
 
 - `JobAnnouncementTools.cs` — src/Hr.Jobs.Mcp/Tools/JobAnnouncementTools.cs (~1335 tok)
 - `JobDescriptionTools.cs` — Fetches all positions in the same occupational series, then selects at most 3 representatives (next- (~2315 tok)
+
+## DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/
+
+- `DraftAgent.cs` — Stage 1 of the HR pipeline. Calls WriteJobDescription then SaveJobAnnouncement. Parses the saved ann (~500 tok)
 
 ## DotnetMultiAgents/src/Hr.SelectorOrchestrator/
 
@@ -102,6 +127,10 @@
 ## docs/
 
 - `blog-series-plan.md` — Blog Series Plan — Building Multi-Agent Systems with .NET 10 (~2536 tok)
+
+## docs/superpowers/plans/
+
+- `2026-05-12-series-2b-patterns.md` — Series 2B — Multi-Agent Patterns Implementation Plan (~10215 tok)
 
 ## docs/superpowers/specs/
 

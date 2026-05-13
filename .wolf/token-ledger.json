@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-04-26T17:37:09.902Z",
   "lifetime": {
-    "total_tokens_estimated": 907323,
-    "total_reads": 1038,
-    "total_writes": 1018,
-    "total_sessions": 58,
-    "anatomy_hits": 252,
-    "anatomy_misses": 777,
-    "repeated_reads_blocked": 391,
-    "estimated_savings_vs_bare_cli": 373615
+    "total_tokens_estimated": 971737,
+    "total_reads": 1110,
+    "total_writes": 1049,
+    "total_sessions": 59,
+    "anatomy_hits": 280,
+    "anatomy_misses": 821,
+    "repeated_reads_blocked": 488,
+    "estimated_savings_vs_bare_cli": 391076
   },
   "sessions": [
     {
@@ -14243,6 +14243,661 @@
         "writes_count": 3,
         "repeated_reads_blocked": 0,
         "anatomy_lookups": 2
+      }
+    },
+    {
+      "id": "session-2026-05-12-1526",
+      "started": "2026-05-12T19:26:56.756Z",
+      "ended": "2026-05-13T02:50:52.770Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/blog-series-plan.md",
+          "tokens_estimated": 2536,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 2059,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Hr.Orchestrator.csproj",
+          "tokens_estimated": 50,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 50,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 2353,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 128,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 110,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 24,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 4695,
+        "output_tokens_estimated": 2615,
+        "reads_count": 6,
+        "writes_count": 4,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-12-1526",
+      "started": "2026-05-12T19:26:56.756Z",
+      "ended": "2026-05-13T03:01:32.909Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/blog-series-plan.md",
+          "tokens_estimated": 2536,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 2099,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Orchestrator/Hr.Orchestrator.csproj",
+          "tokens_estimated": 50,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 50,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Orchestration/HrOrchestrator.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Orchestration/AgentRouter.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.Jobs.Mcp/Tools/JobAnnouncementTools.cs",
+          "tokens_estimated": 1335,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Orchestration/AgentIntent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 2353,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 128,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/specs/2026-05-12-series-2b-patterns-design.md",
+          "tokens_estimated": 110,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/plans/2026-05-12-series-2b-patterns.md",
+          "tokens_estimated": 11674,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8501,
+        "output_tokens_estimated": 14289,
+        "reads_count": 12,
+        "writes_count": 5,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 6
+      }
+    },
+    {
+      "id": "session-2026-05-13-2306",
+      "started": "2026-05-13T03:06:13.876Z",
+      "ended": "2026-05-13T03:58:12.524Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/plans/2026-05-12-series-2b-patterns.md",
+          "tokens_estimated": 10215,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 177,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents.slnx",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 155,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/DraftAgent.cs",
+          "tokens_estimated": 500,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/ComplianceAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Pipeline/HrPipeline.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Chat/HrGroupChat.cs",
+          "tokens_estimated": 370,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Models/EvaluationResult.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 678,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/GeneratorAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Program.cs",
+          "tokens_estimated": 29,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Hr.GroupChatOrchestrator.csproj",
+          "tokens_estimated": 126,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Hr.EvaluatorOrchestrator.csproj",
+          "tokens_estimated": 126,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 159,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/DraftAgent.cs",
+          "tokens_estimated": 536,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Hr.GroupChatOrchestrator.csproj",
+          "tokens_estimated": 135,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 183,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Hr.EvaluatorOrchestrator.csproj",
+          "tokens_estimated": 135,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 207,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Program.cs",
+          "tokens_estimated": 31,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 727,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 12,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 103,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 14807,
+        "output_tokens_estimated": 2350,
+        "reads_count": 27,
+        "writes_count": 11,
+        "repeated_reads_blocked": 48,
+        "anatomy_lookups": 9
+      }
+    },
+    {
+      "id": "session-2026-05-13-2306",
+      "started": "2026-05-13T03:06:13.876Z",
+      "ended": "2026-05-13T03:59:25.996Z",
+      "reads": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/docs/superpowers/plans/2026-05-12-series-2b-patterns.md",
+          "tokens_estimated": 10215,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 177,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents.slnx",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 155,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/anatomy.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/memory.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/DraftAgent.cs",
+          "tokens_estimated": 500,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/ComplianceAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Pipeline/HrPipeline.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/.wolf/cerebrum.md",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "C:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Chat/HrGroupChat.cs",
+          "tokens_estimated": 370,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Program.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.SelectorOrchestrator/Program.cs",
+          "tokens_estimated": 2431,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Models/EvaluationResult.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 678,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/GeneratorAgent.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 0,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Program.cs",
+          "tokens_estimated": 29,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj",
+          "tokens_estimated": 0,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Hr.GroupChatOrchestrator.csproj",
+          "tokens_estimated": 126,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Hr.EvaluatorOrchestrator.csproj",
+          "tokens_estimated": 126,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 159,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.PipeOrchestrator/Agents/DraftAgent.cs",
+          "tokens_estimated": 536,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.GroupChatOrchestrator/Hr.GroupChatOrchestrator.csproj",
+          "tokens_estimated": 135,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 183,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Hr.EvaluatorOrchestrator.csproj",
+          "tokens_estimated": 135,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/DotnetMultiAgents.slnx",
+          "tokens_estimated": 207,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Program.cs",
+          "tokens_estimated": 31,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 727,
+          "action": "create"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs",
+          "tokens_estimated": 12,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 122,
+          "action": "edit"
+        },
+        {
+          "file": "c:/apps/DotnetMultiAgentsTutorial/DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs",
+          "tokens_estimated": 103,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 14807,
+        "output_tokens_estimated": 2350,
+        "reads_count": 27,
+        "writes_count": 11,
+        "repeated_reads_blocked": 48,
+        "anatomy_lookups": 9
       }
     }
   ],
