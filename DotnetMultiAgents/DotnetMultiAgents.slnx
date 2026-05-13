@@ -7,5 +7,6 @@
     <Project Path="src/Hr.Compliance.Mcp/Hr.Compliance.Mcp.csproj" />
     <Project Path="src/Hr.Agent/Hr.Agent.csproj" />
     <Project Path="src/Hr.SelectorOrchestrator/Hr.SelectorOrchestrator.csproj" />
+    <Project Path="src/Hr.PipeOrchestrator/Hr.PipeOrchestrator.csproj" />
   </Folder>
 </Solution>
