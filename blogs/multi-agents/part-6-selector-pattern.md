@@ -8,8 +8,6 @@
 
 ← [Part 5 — Persisting AI Artifacts](part-5-persisting-ai-artifacts.md) &nbsp;|&nbsp; [Part 7 — Claude Desktop as Multi-Agent Platform →](part-7-claude-desktop-multi-agent.md)
 
-*Medium: [← Part 5](MEDIUM_URL_PART_5) | [Part 7 →](MEDIUM_URL_PART_7)*
-
 ---
 
 Parts 3 through 5 built the tools — two MCP servers with 14 tools between them, covering HR data queries, job description generation, compliance checking, and announcement persistence. This post wires them together into a multi-agent system using the Selector pattern.
@@ -272,8 +270,6 @@ The Selector orchestrator works — but it required writing a router, five speci
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · **Part 6** · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 5 — Persisting AI Artifacts](part-5-persisting-ai-artifacts.md) &nbsp;|&nbsp; [Part 7 — Claude Desktop as Multi-Agent Platform →](part-7-claude-desktop-multi-agent.md)
-
-*Medium: [← Part 5](MEDIUM_URL_PART_5) | [Part 7 →](MEDIUM_URL_PART_7)*
 
 ---
 

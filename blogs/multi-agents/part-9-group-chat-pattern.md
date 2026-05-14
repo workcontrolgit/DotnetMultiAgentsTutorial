@@ -8,8 +8,6 @@
 
 ← [Part 8 — The Pipe Pattern](part-8-pipe-pattern.md) &nbsp;|&nbsp; [Part 10 — The Evaluator-Optimizer Pattern →](part-10-evaluator-optimizer-pattern.md)
 
-*Medium: [← Part 8](MEDIUM_URL_PART_8) | [Part 10 →](MEDIUM_URL_PART_10)*
-
 ---
 
 The Pipe pattern produces a draft, compliance-checks it, and records the outcome. One agent per stage, one perspective per draft. For many workflows that is enough.
@@ -305,8 +303,6 @@ Group Chat produces a better draft. But "better" is qualitative — how much bet
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · **Part 9** · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 8 — The Pipe Pattern](part-8-pipe-pattern.md) &nbsp;|&nbsp; [Part 10 — The Evaluator-Optimizer Pattern →](part-10-evaluator-optimizer-pattern.md)
-
-*Medium: [← Part 8](MEDIUM_URL_PART_8) | [Part 10 →](MEDIUM_URL_PART_10)*
 
 ---
 

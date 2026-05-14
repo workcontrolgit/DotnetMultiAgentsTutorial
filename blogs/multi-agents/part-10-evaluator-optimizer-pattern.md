@@ -8,8 +8,6 @@
 
 ← [Part 9 — The Group Chat Pattern](part-9-group-chat-pattern.md)
 
-*Medium: [← Part 9](MEDIUM_URL_PART_9)*
-
 ---
 
 The Group Chat produces an improved draft through multiple perspectives. But "improved" is relative — the revised draft is better than the original, but is it good enough? Without a quality threshold, you cannot know when to stop revising and when to publish.
@@ -274,8 +272,6 @@ The repository is open. Clone it, run it locally with Ollama, and extend it. Add
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · **Part 10**
 
 ← [Part 9 — The Group Chat Pattern](part-9-group-chat-pattern.md)
-
-*Medium: [← Part 9](MEDIUM_URL_PART_9)*
 
 ---
 

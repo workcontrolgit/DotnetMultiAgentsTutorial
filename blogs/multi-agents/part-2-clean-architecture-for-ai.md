@@ -8,8 +8,6 @@
 
 ← [Part 1 — The .NET Agent Framework](part-1-dotnet-agent-framework.md) &nbsp;|&nbsp; [Part 3 — Building the HR Data MCP Server →](part-3-hr-data-mcp-server.md)
 
-*Medium: [← Part 1](MEDIUM_URL_PART_1) | [Part 3 →](MEDIUM_URL_PART_3)*
-
 ---
 
 Clean architecture is not a new idea. You have probably applied it to REST APIs: domain entities at the center, application services in the next ring, infrastructure (databases, HTTP clients) at the edge. The dependency rule flows inward — inner layers know nothing about outer ones.
@@ -266,8 +264,6 @@ The layer boundaries are in place and the `JobAnnouncement` lifecycle is designe
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · **Part 2** · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 1 — The .NET Agent Framework](part-1-dotnet-agent-framework.md) &nbsp;|&nbsp; [Part 3 — Building the HR Data MCP Server →](part-3-hr-data-mcp-server.md)
-
-*Medium: [← Part 1](MEDIUM_URL_PART_1) | [Part 3 →](MEDIUM_URL_PART_3)*
 
 ---
 

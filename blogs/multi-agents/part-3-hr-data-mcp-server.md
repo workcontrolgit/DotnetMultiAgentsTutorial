@@ -8,8 +8,6 @@
 
 ← [Part 2 — Clean Architecture for AI Applications](part-2-clean-architecture-for-ai.md) &nbsp;|&nbsp; [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM →](part-4-compliance-mcp-deterministic-rules.md)
 
-*Medium: [← Part 2](MEDIUM_URL_PART_2) | [Part 4 →](MEDIUM_URL_PART_4)*
-
 ---
 
 The HR data MCP server (`Hr.Jobs.Mcp`) is the workhorse of the system. It exposes 9 tools across three categories: position queries, job description generation, and announcement persistence. It runs on port 5100, and every specialist agent that touches HR data connects to it.
@@ -275,8 +273,6 @@ The HR Jobs server handles data queries and LLM-powered draft generation. But co
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · **Part 3** · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 2 — Clean Architecture for AI Applications](part-2-clean-architecture-for-ai.md) &nbsp;|&nbsp; [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM →](part-4-compliance-mcp-deterministic-rules.md)
-
-*Medium: [← Part 2](MEDIUM_URL_PART_2) | [Part 4 →](MEDIUM_URL_PART_4)*
 
 ---
 

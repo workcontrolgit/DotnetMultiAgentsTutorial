@@ -8,8 +8,6 @@
 
 [Part 1 — The .NET Agent Framework →](part-1-dotnet-agent-framework.md)
 
-*Medium: [Part 1 →](MEDIUM_URL_PART_1)*
-
 ---
 
 You built an AI agent. It connects to your MCP server, calls your tools, and returns intelligent answers. It works. You demo it for your team, they love it, and you start thinking about production.
@@ -147,8 +145,6 @@ The four patterns this series covers — Selector, Pipe, Group Chat, and Evaluat
 **Series:** **Preface** · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 [Part 1 — The .NET Agent Framework →](part-1-dotnet-agent-framework.md)
-
-*Medium: [Part 1 →](MEDIUM_URL_PART_1)*
 
 ---
 

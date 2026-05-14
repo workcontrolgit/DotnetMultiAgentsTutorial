@@ -8,8 +8,6 @@
 
 ← [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM](part-4-compliance-mcp-deterministic-rules.md) &nbsp;|&nbsp; [Part 6 — The Selector Pattern →](part-6-selector-pattern.md)
 
-*Medium: [← Part 4](MEDIUM_URL_PART_4) | [Part 6 →](MEDIUM_URL_PART_6)*
-
 ---
 
 `WriteJobDescription` returns a string. When the conversation ends, the string disappears.
@@ -249,8 +247,6 @@ The persistence layer is in place and all 14 tools work end to end. The next pro
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · **Part 5** · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM](part-4-compliance-mcp-deterministic-rules.md) &nbsp;|&nbsp; [Part 6 — The Selector Pattern →](part-6-selector-pattern.md)
-
-*Medium: [← Part 4](MEDIUM_URL_PART_4) | [Part 6 →](MEDIUM_URL_PART_6)*
 
 ---
 

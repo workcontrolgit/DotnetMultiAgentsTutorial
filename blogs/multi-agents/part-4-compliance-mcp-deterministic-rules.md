@@ -8,8 +8,6 @@
 
 ← [Part 3 — Building the HR Data MCP Server](part-3-hr-data-mcp-server.md) &nbsp;|&nbsp; [Part 5 — Persisting AI Artifacts →](part-5-persisting-ai-artifacts.md)
 
-*Medium: [← Part 3](MEDIUM_URL_PART_3) | [Part 5 →](MEDIUM_URL_PART_5)*
-
 ---
 
 The most important architectural decision in the system is not which model to use or how to structure the agents. It is deciding where the LLM should not be involved at all.
@@ -266,8 +264,6 @@ Both MCP servers are running and tested. But `WriteJobDescription` returns a str
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · **Part 4** · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 3 — Building the HR Data MCP Server](part-3-hr-data-mcp-server.md) &nbsp;|&nbsp; [Part 5 — Persisting AI Artifacts →](part-5-persisting-ai-artifacts.md)
-
-*Medium: [← Part 3](MEDIUM_URL_PART_3) | [Part 5 →](MEDIUM_URL_PART_5)*
 
 ---
 

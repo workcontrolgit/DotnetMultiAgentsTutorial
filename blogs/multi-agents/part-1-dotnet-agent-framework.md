@@ -8,8 +8,6 @@
 
 ← [Preface](preface-why-one-agent-is-not-enough.md) &nbsp;|&nbsp; [Part 2 — Clean Architecture for AI Applications →](part-2-clean-architecture-for-ai.md)
 
-*Medium: [← Preface](MEDIUM_URL_PREFACE) | [Part 2 →](MEDIUM_URL_PART_2)*
-
 ---
 
 If you have built an agent before, you have used `IChatClient`. You may have treated it as a thin wrapper around an HTTP call to Ollama or OpenAI. In a multi-agent system, it is much more than that — it is the abstraction that lets you run 5 agents backed by 5 different model configurations, all with a single line of code change.
@@ -228,8 +226,6 @@ You now have the framework primitives: `IChatClient`, the `UseFunctionInvocation
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · **Part 1** · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Preface](preface-why-one-agent-is-not-enough.md) &nbsp;|&nbsp; [Part 2 — Clean Architecture for AI Applications →](part-2-clean-architecture-for-ai.md)
-
-*Medium: [← Preface](MEDIUM_URL_PREFACE) | [Part 2 →](MEDIUM_URL_PART_2)*
 
 ---
 

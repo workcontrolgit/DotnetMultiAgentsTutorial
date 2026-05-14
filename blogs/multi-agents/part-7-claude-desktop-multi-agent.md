@@ -8,8 +8,6 @@
 
 ← [Part 6 — The Selector Pattern](part-6-selector-pattern.md) &nbsp;|&nbsp; [Part 8 — The Pipe Pattern →](part-8-pipe-pattern.md)
 
-*Medium: [← Part 6](MEDIUM_URL_PART_6) | [Part 8 →](MEDIUM_URL_PART_8)*
-
 ---
 
 You have built a complete multi-agent system: two MCP servers, five specialist agents, an intent router, and an orchestrator loop. It works with Ollama running locally.
@@ -161,8 +159,6 @@ The Selector pattern routes each turn to one specialist. But some workflows are 
 **Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · **Part 7** · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 6 — The Selector Pattern](part-6-selector-pattern.md) &nbsp;|&nbsp; [Part 8 — The Pipe Pattern →](part-8-pipe-pattern.md)
-
-*Medium: [← Part 6](MEDIUM_URL_PART_6) | [Part 8 →](MEDIUM_URL_PART_8)*
 
 ---
 
