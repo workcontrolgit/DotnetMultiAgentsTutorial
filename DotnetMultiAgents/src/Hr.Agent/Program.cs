@@ -150,7 +150,8 @@ if (!Console.IsInputRedirected)
 AnsiConsole.MarkupLine($"[green]{style}[/]\n");
 
 IChatClient chatClient = CreateChatClient(configuration);
-var agent = new HrAgent(chatClient, mcpTools.Cast<AITool>().ToList(), style, numCtx);
+var exportFolder = configuration["Output:ExportFolder"] ?? "usajobs/output";
+var agent = new HrAgent(chatClient, mcpTools.Cast<AITool>().ToList(), style, numCtx, exportFolder);
 await agent.RunAsync();
 
 static async Task<IClientTransport> CreateClientTransportAsync(
