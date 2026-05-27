@@ -1,14 +1,10 @@
-# Part 2 — Clean Architecture for AI Applications
+﻿# Part 2 — Clean Architecture for AI Applications
 
-*Part 2 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · **Part 2** · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 1 — The .NET Agent Framework](part-1-dotnet-agent-framework.md) &nbsp;|&nbsp; [Part 3 — Building the HR Data MCP Server →](part-3-hr-data-mcp-server.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 1 introduced `IChatClient` and `McpClient` — the two abstractions that power every agent in this series. Before building specialist agents against them, the solution needs a structure that keeps domain logic, application services, and AI infrastructure in their correct layers. This part covers the clean architecture behind the HR system and the database setup that seeds the position data every agent will query.
 
 Clean architecture is not a new idea. You have probably applied it to REST APIs: domain entities at the center, application services in the next ring, infrastructure (databases, HTTP clients) at the edge. The dependency rule flows inward — inner layers know nothing about outer ones.
 
@@ -257,11 +253,11 @@ The solution file (`DotnetMultiAgents.slnx`) is the newer `.slnx` format — a c
 
 ---
 
+## What Comes Next
+
 The layer boundaries are in place and the `JobAnnouncement` lifecycle is designed on paper. Part 3 puts real tools behind the architecture: the HR Jobs MCP server with nine endpoints covering position search, job description generation, and announcement persistence.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · **Part 2** · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 1 — The .NET Agent Framework](part-1-dotnet-agent-framework.md) &nbsp;|&nbsp; [Part 3 — Building the HR Data MCP Server →](part-3-hr-data-mcp-server.md)
 

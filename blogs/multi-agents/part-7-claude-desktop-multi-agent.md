@@ -1,14 +1,10 @@
-# Part 7 — Claude Desktop as Your Multi-Agent Platform
+﻿# Part 7 — Claude Desktop as Your Multi-Agent Platform
 
-*Part 7 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · **Part 7** · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 6 — The Selector Pattern](part-6-selector-pattern.md) &nbsp;|&nbsp; [Part 8 — The Pipe Pattern →](part-8-pipe-pattern.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 6 built `Hr.SelectorOrchestrator` — an intent router, five specialist agents, and an orchestration loop that delegates each user query to the right specialist. That required a router class, five agent configurations, and custom C# glue code. This part shows the same two MCP servers producing the same results with none of that — by connecting them directly to Claude Desktop.
 
 You have built a complete multi-agent system: two MCP servers, five specialist agents, an intent router, and an orchestrator loop. It works with Ollama running locally.
 
@@ -155,8 +151,6 @@ For local development and demos, keep `EnableOidc: false`. The servers accept an
 The Selector pattern routes each turn to one specialist. But some workflows are inherently sequential — a job announcement must be drafted before it can be compliance-checked, and the compliance outcome must be recorded before the announcement moves forward. Part 8 introduces the Pipe pattern, where each agent's output becomes the next stage's input and no stage runs until the previous one completes.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · **Part 7** · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 6 — The Selector Pattern](part-6-selector-pattern.md) &nbsp;|&nbsp; [Part 8 — The Pipe Pattern →](part-8-pipe-pattern.md)
 

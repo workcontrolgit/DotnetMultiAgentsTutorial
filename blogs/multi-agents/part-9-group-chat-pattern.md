@@ -1,14 +1,10 @@
-# Part 9 — The Group Chat Pattern: Parallel Expert Review
+﻿# Part 9 — The Group Chat Pattern: Parallel Expert Review
 
-*Part 9 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · **Part 9** · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 8 — The Pipe Pattern](part-8-pipe-pattern.md) &nbsp;|&nbsp; [Part 10 — The Evaluator-Optimizer Pattern →](part-10-evaluator-optimizer-pattern.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 8 built the Pipe — three stages chained sequentially: a drafting agent writes the job announcement, a compliance agent checks it against OPM rules, and a persistence agent saves the result. Each stage depends on the previous, and the output flows forward automatically. But the pipeline has one perspective per stage, one reviewer per draft. This part adds breadth: the Group Chat pattern, where multiple specialist agents review the same draft in parallel before a moderator synthesizes their feedback.
 
 The Pipe pattern produces a draft, compliance-checks it, and records the outcome. One agent per stage, one perspective per draft. For many workflows that is enough.
 
@@ -299,8 +295,6 @@ The patterns compose naturally. Run the Pipe first to produce a compliant, persi
 Group Chat produces a better draft. But "better" is qualitative — how much better? And is it consistently above the quality bar required for publication? Part 10 introduces the Evaluator-Optimizer pattern, which quantifies draft quality on a 100-point rubric and keeps iterating until the score meets a defined threshold.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · **Part 9** · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 8 — The Pipe Pattern](part-8-pipe-pattern.md) &nbsp;|&nbsp; [Part 10 — The Evaluator-Optimizer Pattern →](part-10-evaluator-optimizer-pattern.md)
 

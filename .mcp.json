@@ -9,6 +9,11 @@
         "run-test-mcp-server"
       ],
       "cwd": "${workspaceFolder}/Playwright"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
     }
   }
 }

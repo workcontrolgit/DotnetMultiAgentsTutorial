@@ -1,14 +1,10 @@
-# Part 4 — The Compliance MCP Server: Deterministic Rules, Zero LLM
+﻿# Part 4 — The Compliance MCP Server: Deterministic Rules, Zero LLM
 
-*Part 4 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · **Part 4** · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 3 — Building the HR Data MCP Server](part-3-hr-data-mcp-server.md) &nbsp;|&nbsp; [Part 5 — Persisting AI Artifacts →](part-5-persisting-ai-artifacts.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 3 built `Hr.Jobs.Mcp` — nine tools that agents use to search positions, generate job descriptions, and list hiring organizations. Tools that create content are only useful if that content meets regulatory standards. This part adds the second server, `Hr.Compliance.Mcp` — a rule engine that checks OPM compliance in deterministic C# with zero LLM calls.
 
 The most important architectural decision in the system is not which model to use or how to structure the agents. It is deciding where the LLM should not be involved at all.
 
@@ -257,11 +253,11 @@ Testing at this level confirms the rule logic is correct before the compliance a
 
 ---
 
+## What Comes Next
+
 Both MCP servers are running and tested. But `WriteJobDescription` returns a string that disappears when the conversation ends. Part 5 introduces the `JobAnnouncement` entity and lifecycle — Draft, CompliancePassed, ComplianceFailed, Published — so every generated draft persists across sessions with a full audit trail.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · **Part 4** · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 3 — Building the HR Data MCP Server](part-3-hr-data-mcp-server.md) &nbsp;|&nbsp; [Part 5 — Persisting AI Artifacts →](part-5-persisting-ai-artifacts.md)
 

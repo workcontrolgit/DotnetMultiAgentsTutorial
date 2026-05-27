@@ -1,14 +1,10 @@
-# Part 5 — Persisting AI Artifacts: The JobAnnouncement Lifecycle
+﻿# Part 5 — Persisting AI Artifacts: The JobAnnouncement Lifecycle
 
-*Part 5 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · **Part 5** · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM](part-4-compliance-mcp-deterministic-rules.md) &nbsp;|&nbsp; [Part 6 — The Selector Pattern →](part-6-selector-pattern.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 4 completed the compliance MCP server — seven deterministic OPM rules, zero LLM calls, fully testable. Both servers are now running. The tooling works. But there is a gap in the workflow that no tool can fix on its own: the artifacts the agents generate are not being saved anywhere.
 
 `WriteJobDescription` returns a string. When the conversation ends, the string disappears.
 
@@ -240,11 +236,11 @@ The design principle at work: **the agent writes the artifact; the database owns
 
 ---
 
+## What Comes Next
+
 The persistence layer is in place and all 14 tools work end to end. The next problem is quality: a single agent holding all 14 tools writes worse job descriptions than one focused on writing alone. Part 6 introduces the Selector pattern — a router that classifies each user turn and delegates it to one specialist with a scoped tool set and a focused system prompt.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · **Part 5** · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 4 — Compliance MCP: Deterministic Rules, Zero LLM](part-4-compliance-mcp-deterministic-rules.md) &nbsp;|&nbsp; [Part 6 — The Selector Pattern →](part-6-selector-pattern.md)
 

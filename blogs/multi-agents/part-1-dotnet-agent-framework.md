@@ -1,12 +1,6 @@
-# Part 1 — The .NET Agent Framework: IChatClient and MCP Clients
+﻿# Part 1 — The .NET Agent Framework: IChatClient and MCP Clients
 
-*Part 1 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · **Part 1** · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Preface](preface-why-one-agent-is-not-enough.md) &nbsp;|&nbsp; [Part 2 — Clean Architecture for AI Applications →](part-2-clean-architecture-for-ai.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
 
@@ -222,8 +216,6 @@ The specialist agent's LLM context is 64% smaller for tool descriptions alone. T
 You now have the framework primitives: `IChatClient`, the `UseFunctionInvocation` middleware, and the MCP client that turns remote tool servers into local tool lists. The next step is to arrange these primitives into a codebase that is testable, maintainable, and swap-friendly at every layer. Part 2 applies clean architecture to the HR system and explains why the LLM belongs in the infrastructure layer, not the domain.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · **Part 1** · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Preface](preface-why-one-agent-is-not-enough.md) &nbsp;|&nbsp; [Part 2 — Clean Architecture for AI Applications →](part-2-clean-architecture-for-ai.md)
 

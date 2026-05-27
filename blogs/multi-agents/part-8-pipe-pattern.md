@@ -1,14 +1,10 @@
-# Part 8 — The Pipe Pattern: Sequential Agent Stages
+﻿# Part 8 — The Pipe Pattern: Sequential Agent Stages
 
-*Part 8 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · **Part 8** · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 7 — Claude Desktop as Multi-Agent Platform](part-7-claude-desktop-multi-agent.md) &nbsp;|&nbsp; [Part 9 — The Group Chat Pattern →](part-9-group-chat-pattern.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 7 showed Claude Desktop acting as the orchestrator — connecting the same two MCP servers with zero custom code. That works for ad hoc queries. But some workflows are not ad hoc: producing a compliant, persisted job announcement requires a draft, then a compliance check, then a status update — in that exact order, every time. This part introduces the Pipe pattern, where each agent stage feeds its output directly into the next.
 
 The Selector pattern answers one question per turn. Each user message is classified, delegated to one specialist, and answered independently. That works well when queries are discrete.
 
@@ -226,8 +222,6 @@ The two patterns compose. A Selector orchestrator can route "generate a complian
 A single pipeline produces one draft per run. When you need multiple expert perspectives on that draft before saving it, one reviewer is not enough. Part 9 introduces the Group Chat pattern, where three specialists critique the same draft in parallel and a moderator synthesizes their feedback into a revised version.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · **Part 8** · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 7 — Claude Desktop as Multi-Agent Platform](part-7-claude-desktop-multi-agent.md) &nbsp;|&nbsp; [Part 9 — The Group Chat Pattern →](part-9-group-chat-pattern.md)
 

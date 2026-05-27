@@ -1,14 +1,10 @@
-# Part 10 — The Evaluator-Optimizer Pattern: Quality-Gated Generation
+﻿# Part 10 — The Evaluator-Optimizer Pattern: Quality-Gated Generation
 
-*Part 10 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · **Part 10**
-
-← [Part 9 — The Group Chat Pattern](part-9-group-chat-pattern.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 9 built the Group Chat — three specialist reviewers running in parallel, each critiquing the draft from a different angle, with a moderator synthesizing their feedback into a single revised version. The revised draft is better than the original, but "better" is not a number. This part introduces the Evaluator-Optimizer pattern, which replaces subjective improvement with a measurable quality gate: a critic agent scores each draft on a 100-point rubric and loops until the threshold is met.
 
 The Group Chat produces an improved draft through multiple perspectives. But "improved" is relative — the revised draft is better than the original, but is it good enough? Without a quality threshold, you cannot know when to stop revising and when to publish.
 
@@ -254,7 +250,7 @@ The patterns compose: run the Evaluator-Optimizer first to reach a quality thres
 
 ---
 
-## The Four Patterns Together
+## What Comes Next
 
 This series covered all four multi-agent patterns using the same HR domain, the same two MCP servers, and the same `IChatClient` abstraction throughout:
 
@@ -268,8 +264,6 @@ None of these patterns requires a different infrastructure. The same `OllamaApiC
 The repository is open. Clone it, run it locally with Ollama, and extend it. Add a fourth reviewer to the Group Chat. Raise the Evaluator-Optimizer threshold to 90. Chain the Pipe into the Evaluator-Optimizer. The infrastructure is already there.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · **Part 10**
 
 ← [Part 9 — The Group Chat Pattern](part-9-group-chat-pattern.md)
 

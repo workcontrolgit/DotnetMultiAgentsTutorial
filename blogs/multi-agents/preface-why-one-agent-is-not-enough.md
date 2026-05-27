@@ -1,12 +1,24 @@
-# Why One Agent Is Not Enough
+﻿# Multi-Agent Systems with .NET 10: Why One Agent Is Not Enough
 
-*Preface to: Building Multi-Agent Systems with .NET 10*
+*Building Multi-Agent Systems with .NET 10 Blog Series*
 
 ---
 
-**Series:** **Preface** · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
+## Series Overview
 
-[Part 1 — The .NET Agent Framework →](part-1-dotnet-agent-framework.md)
+| # | Article | What It Covers |
+|---|---------|---------------|
+| Preface | **You are here** | Why single agents fail at complex tasks; the four patterns this series teaches |
+| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](part-1-dotnet-agent-framework.md) | `IChatClient`, `UseFunctionInvocation` middleware, MCP tool casting, `SpecialistAgent` wrapper |
+| 2 | [Clean Architecture for AI Applications](part-2-clean-architecture-for-ai.md) | Layer boundaries, why the LLM belongs in infrastructure, project structure and DB setup |
+| 3 | [Building the HR Data MCP Server](part-3-hr-data-mcp-server.md) | Nine MCP tools for position search, job description generation, and announcement persistence |
+| 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](part-4-compliance-mcp-deterministic-rules.md) | Seven OPM compliance rules in pure C#; no LLM calls; testable rule engine |
+| 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](part-5-persisting-ai-artifacts.md) | Draft → CompliancePassed → Published lifecycle; EF Core persistence; audit trail |
+| 6 | [The Selector Pattern: Routing to Specialists](part-6-selector-pattern.md) | LLM router + five specialist agents; scoped tool sets; focused system prompts |
+| 7 | [Claude Desktop as Your Multi-Agent Platform](part-7-claude-desktop-multi-agent.md) | Connect MCP servers to Claude Desktop; stdio mode; zero orchestrator code |
+| 8 | [The Pipe Pattern: Sequential Agent Stages](part-8-pipe-pattern.md) | Draft → compliance → persist pipeline; each stage's output feeds the next |
+| 9 | [The Group Chat Pattern: Parallel Expert Review](part-9-group-chat-pattern.md) | Three specialist reviewers run in parallel; moderator synthesizes feedback |
+| 10 | [The Evaluator-Optimizer Pattern: Quality-Gated Generation](part-10-evaluator-optimizer-pattern.md) | Critic scores drafts on a 100-point rubric; loops until quality threshold is met |
 
 ---
 
@@ -138,13 +150,15 @@ Expected output: `Build succeeded. 0 Warning(s). 0 Error(s).`
 
 ---
 
+## What Comes Next
+
 The four patterns this series covers — Selector, Pipe, Group Chat, and Evaluator-Optimizer — all share the same foundation: `IChatClient` as the universal agent primitive and MCP as the tool delivery layer. Before building the first multi-agent system, Part 1 unpacks exactly what those abstractions do and why they make it practical to run five specialist agents without duplicating infrastructure.
 
 ---
 
-**Series:** **Preface** · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · [Part 6](part-6-selector-pattern.md) · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
+[Part 1 — The .NET Agent Framework: IChatClient and MCP Clients →](part-1-dotnet-agent-framework.md)
 
-[Part 1 — The .NET Agent Framework →](part-1-dotnet-agent-framework.md)
+[View the repository](https://github.com/workcontrolgit/DotnetMultiAgentsTutorial)
 
 ---
 

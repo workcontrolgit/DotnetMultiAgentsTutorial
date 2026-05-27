@@ -1,16 +1,30 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-13T03:57:50.836Z
-> Files: 47 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-14T12:22:48.042Z
+> Files: 66 tracked | Anatomy hits: 0 | Misses: 0
+
+## ../../Users/Fuji Nguyen/.claude/plugins/
+
+- `installed_plugins.json` (~1105 tok)
+
+## ../../Users/Fuji Nguyen/.claude/plugins/cache/local/my-skills/1.0.0/
+
+- `package.json` — Node.js package manifest (~20 tok)
 
 ## ../../Users/Fuji Nguyen/.claude/projects/c--apps-DotnetMultiAgentsTutorial/memory/
 
 - `feedback_commit_messages.md` (~98 tok)
 - `MEMORY.md` — Memory Index (~33 tok)
 
+## ../DotnetMcpTutorial/tests/
+
+- `seed.spec.ts` (~35 tok)
+
 ## ./
 
-- `README.md` — Project documentation (~3003 tok)
+- `.mcp.json` (~104 tok)
+- `playwright.config.ts` (~25 tok)
+- `README.md` — Project documentation (~3061 tok)
 
 ## .wolf/
 
@@ -113,6 +127,20 @@
 ## blogs/
 
 
+## blogs/multi-agents/
+
+- `part-1-dotnet-agent-framework.md` — IChatClient: The Universal Agent Primitive (~2607 tok)
+- `part-10-evaluator-optimizer-pattern.md` — The Evaluator-Optimizer Pattern (~3393 tok)
+- `part-2-clean-architecture-for-ai.md` — The Layer Diagram (~2907 tok)
+- `part-3-hr-data-mcp-server.md` — Project Setup (~3021 tok)
+- `part-4-compliance-mcp-deterministic-rules.md` — Why Deterministic Rules, Not LLM Judgment (~3273 tok)
+- `part-5-persisting-ai-artifacts.md` — The Design Decision (~2867 tok)
+- `part-6-selector-pattern.md` — The Three Components (~3251 tok)
+- `part-7-claude-desktop-multi-agent.md` — How Claude Desktop Works with MCP (~2035 tok)
+- `part-8-pipe-pattern.md` — The Pipe Pattern (~2767 tok)
+- `part-9-group-chat-pattern.md` — The Group Chat Pattern (~3618 tok)
+- `preface-why-one-agent-is-not-enough.md` — Series Overview (~2648 tok)
+
 ## blogs/series-2-multi-agents/
 
 - `part-1-dotnet-agent-framework.md` — Part 1 — The .NET Agent Framework: IChatClient and MCP Clients (~2343 tok)
@@ -126,16 +154,22 @@
 
 ## docs/
 
-- `blog-series-plan.md` — Blog Series Plan — Building Multi-Agent Systems with .NET 10 (~2536 tok)
+- `blog-series-plan.md` — Blog Series Plan — Building Multi-Agent Systems with .NET 10 (~3602 tok)
 
 ## docs/superpowers/plans/
 
 - `2026-05-12-series-2b-patterns.md` — Series 2B — Multi-Agent Patterns Implementation Plan (~10215 tok)
+- `2026-05-13-blog-series-expansion.md` — Blog Series Expansion — Parts 8–10 + Retrofit Navigation Implementation Plan (~19839 tok)
 
 ## docs/superpowers/specs/
 
 - `2026-05-12-series-2b-patterns-design.md` — Series 2B — Multi-Agent Patterns Extension: Design Spec (~2099 tok)
+- `2026-05-13-blog-series-expansion-design.md` — Design: Blog Series Expansion — Parts 8–10 + Retrofit Navigation (~2962 tok)
 
 ## medium/
 
-- `medium-public-url.json` (~2324 tok)
+- `medium-public-url.json` (~2825 tok)
+
+## tests/
+
+- `seed.spec.ts` (~35 tok)

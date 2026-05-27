@@ -1,14 +1,10 @@
-# Part 6 — The Selector Pattern: Routing to Specialists
+﻿# Part 6 — The Selector Pattern: Routing to Specialists
 
-*Part 6 of: Building Multi-Agent Systems with .NET 10*
-
----
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · **Part 6** · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
-
-← [Part 5 — Persisting AI Artifacts](part-5-persisting-ai-artifacts.md) &nbsp;|&nbsp; [Part 7 — Claude Desktop as Multi-Agent Platform →](part-7-claude-desktop-multi-agent.md)
+*[Building Multi-Agent Systems with .NET 10 Blog Series](preface-why-one-agent-is-not-enough.md)*
 
 ---
+
+Part 5 added the `JobAnnouncement` entity and its lifecycle — Draft, CompliancePassed, ComplianceFailed, Published — giving every generated draft a persistent home in the database that survives beyond the session. With fourteen tools across two MCP servers and a persistence layer in place, the infrastructure is complete. This part wires all of it together into the first multi-agent system using the Selector pattern.
 
 Parts 3 through 5 built the tools — two MCP servers with 14 tools between them, covering HR data queries, job description generation, compliance checking, and announcement persistence. This post wires them together into a multi-agent system using the Selector pattern.
 
@@ -263,11 +259,11 @@ The `BuildClient` helper in `Program.cs` already separates the two client instan
 
 ---
 
+## What Comes Next
+
 The Selector orchestrator works — but it required writing a router, five specialist agents, and an orchestration loop. Part 7 shows an alternative: connect the same two MCP servers unchanged to Claude Desktop and let Claude act as the orchestrator. Same results, zero orchestrator code — and a clear picture of when each approach is the right choice.
 
 ---
-
-**Series:** [Preface](preface-why-one-agent-is-not-enough.md) · [Part 1](part-1-dotnet-agent-framework.md) · [Part 2](part-2-clean-architecture-for-ai.md) · [Part 3](part-3-hr-data-mcp-server.md) · [Part 4](part-4-compliance-mcp-deterministic-rules.md) · [Part 5](part-5-persisting-ai-artifacts.md) · **Part 6** · [Part 7](part-7-claude-desktop-multi-agent.md) · [Part 8](part-8-pipe-pattern.md) · [Part 9](part-9-group-chat-pattern.md) · [Part 10](part-10-evaluator-optimizer-pattern.md)
 
 ← [Part 5 — Persisting AI Artifacts](part-5-persisting-ai-artifacts.md) &nbsp;|&nbsp; [Part 7 — Claude Desktop as Multi-Agent Platform →](part-7-claude-desktop-multi-agent.md)
 
