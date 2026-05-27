@@ -151,7 +151,9 @@ static void ConfigureCommonServices(IServiceCollection services, IConfiguration 
 
     // IChatClient used by WriteJobDescription tool to generate LLM narratives
     services.AddSingleton<IChatClient>(
-        new OllamaApiClient(new Uri("http://localhost:11434"), "llama3.2"));
+        new OllamaApiClient(
+            new Uri(configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434"),
+            configuration["AI:Ollama:Model"] ?? "gemma4:latest"));
 }
 
 static async Task InitializeDatabaseAsync(IServiceProvider services)

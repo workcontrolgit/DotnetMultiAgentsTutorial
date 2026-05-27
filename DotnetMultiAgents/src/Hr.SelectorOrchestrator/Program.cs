@@ -4,75 +4,90 @@ using System.Text.Json;
 using Hr.SelectorOrchestrator.Agents;
 using Hr.SelectorOrchestrator.Orchestration;
 using Microsoft.Extensions.AI;
+using Microsoft.Extensions.Configuration;
 using ModelContextProtocol.Client;
 using OllamaSharp;
 
-// ---------------------------------------------------------------------------
-// 1. Acquire bearer token (client credentials)
-// ---------------------------------------------------------------------------
-using var tokenHandler = new HttpClientHandler
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: false)
+    .AddEnvironmentVariables()
+    .Build();
+
+var enableOidc = bool.TryParse(configuration["Features:EnableOidc"], out var oidcFlag) && oidcFlag;
+Dictionary<string, string> authHeaders = [];
+
+if (enableOidc)
 {
-    ServerCertificateCustomValidationCallback =
-        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-};
-using var tokenClient = new HttpClient(tokenHandler);
-
-var tokenResponse = await tokenClient.PostAsync(
-    "https://localhost:44310/connect/token",
-    new FormUrlEncodedContent(new Dictionary<string, string>
+    var tokenEndpoint = configuration["Oidc:TokenEndpoint"];
+    if (string.IsNullOrWhiteSpace(tokenEndpoint))
     {
-        ["grant_type"]    = "client_credentials",
-        ["client_id"]     = "hr-mcp-agent",
-        ["client_secret"] = "hr-mcp-agent-secret",
-        ["scope"]         = "hr-mcp-api",
-    }));
-tokenResponse.EnsureSuccessStatusCode();
+        var authority = configuration["Oidc:Authority"]
+            ?? throw new InvalidOperationException("Missing configuration: Oidc:Authority");
+        tokenEndpoint = $"{authority.TrimEnd('/')}/connect/token";
+    }
 
-var tokenDoc    = await tokenResponse.Content.ReadFromJsonAsync<JsonElement>();
-var accessToken = tokenDoc.GetProperty("access_token").GetString()!;
-Console.WriteLine("Token acquired.\n");
+    var clientId = configuration["Oidc:ClientId"]
+        ?? throw new InvalidOperationException("Missing configuration: Oidc:ClientId");
+    var clientSecret = configuration["Oidc:ClientSecret"]
+        ?? throw new InvalidOperationException("Missing configuration: Oidc:ClientSecret");
+    var scope = configuration["Oidc:Scope"]
+        ?? throw new InvalidOperationException("Missing configuration: Oidc:Scope");
 
-// ---------------------------------------------------------------------------
-// 2. Connect to Hr.Jobs.Mcp (HR data tools — port 5100)
-// ---------------------------------------------------------------------------
-var hrMcpUrl = Environment.GetEnvironmentVariable("HR_MCP_SERVER_URL") ?? "http://localhost:5100/mcp";
+    using var tokenHandler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+    using var tokenClient = new HttpClient(tokenHandler);
+
+    var tokenResponse = await tokenClient.PostAsync(
+        tokenEndpoint,
+        new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+            ["grant_type"] = "client_credentials",
+            ["client_id"] = clientId,
+            ["client_secret"] = clientSecret,
+            ["scope"] = scope,
+        }));
+    tokenResponse.EnsureSuccessStatusCode();
+
+    var tokenDoc = await tokenResponse.Content.ReadFromJsonAsync<JsonElement>();
+    var accessToken = tokenDoc.GetProperty("access_token").GetString()!;
+    Console.WriteLine("Token acquired.\n");
+    authHeaders["Authorization"] = $"Bearer {accessToken}";
+}
+
+var hrMcpUrl = configuration["McpServers:Hr:Url"]
+    ?? throw new InvalidOperationException("Missing configuration: McpServers:Hr:Url");
+var complianceMcpUrl = configuration["McpServers:Compliance:Url"]
+    ?? throw new InvalidOperationException("Missing configuration: McpServers:Compliance:Url");
 
 await using var hrMcpClient = await McpClient.CreateAsync(
     new HttpClientTransport(new HttpClientTransportOptions
     {
-        Endpoint          = new Uri(hrMcpUrl),
-        AdditionalHeaders = new Dictionary<string, string> { ["Authorization"] = $"Bearer {accessToken}" }
+        Endpoint = new Uri(hrMcpUrl),
+        AdditionalHeaders = authHeaders
     }));
 
 var hrTools = (await hrMcpClient.ListToolsAsync()).Cast<AITool>().ToList();
 Console.WriteLine($"HR MCP tools:         {string.Join(", ", hrTools.Select(t => t.Name))}");
 
-// ---------------------------------------------------------------------------
-// 3. Connect to Hr.Compliance.Mcp (OPM rule engine — port 5200)
-// ---------------------------------------------------------------------------
-var complianceMcpUrl = Environment.GetEnvironmentVariable("COMPLIANCE_MCP_SERVER_URL") ?? "http://localhost:5200/compliance";
-
 await using var complianceMcpClient = await McpClient.CreateAsync(
     new HttpClientTransport(new HttpClientTransportOptions
     {
         Endpoint = new Uri(complianceMcpUrl),
-        // ComplianceMcp uses same OIDC token when auth is enabled;
-        // remove the header when Features:EnableOidc = false on the compliance server.
-        AdditionalHeaders = new Dictionary<string, string> { ["Authorization"] = $"Bearer {accessToken}" }
+        AdditionalHeaders = authHeaders
     }));
 
 var complianceTools = (await complianceMcpClient.ListToolsAsync()).Cast<AITool>().ToList();
 Console.WriteLine($"Compliance MCP tools: {string.Join(", ", complianceTools.Select(t => t.Name))}\n");
 
-// ---------------------------------------------------------------------------
-// 4. Build chat clients
-//    - routerClient : pure text classification, no function invocation
-//    - agentClient  : full function-invocation pipeline for specialist agents
-// ---------------------------------------------------------------------------
 IChatClient BuildClient(bool withFunctionInvocation)
 {
     var builder = ((IChatClient)new OllamaApiClient(
-            new Uri("http://localhost:11434"), "llama3.2"))
+            new Uri(configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434"),
+            configuration["AI:Ollama:Model"] ?? "gemma4:latest"))
         .AsBuilder();
 
     if (withFunctionInvocation)
@@ -82,18 +97,10 @@ IChatClient BuildClient(bool withFunctionInvocation)
 }
 
 IChatClient routerClient = BuildClient(withFunctionInvocation: false);
-IChatClient agentClient  = BuildClient(withFunctionInvocation: true);
+IChatClient agentClient = BuildClient(withFunctionInvocation: true);
 
-// ---------------------------------------------------------------------------
-// 5. Create the router
-// ---------------------------------------------------------------------------
 var router = new AgentRouter(routerClient);
 
-// ---------------------------------------------------------------------------
-// 6. Define specialist agents — each gets focused tools and a focused prompt
-// ---------------------------------------------------------------------------
-
-// HR data tool subsets
 var positionTools = hrTools
     .Where(t => t.Name is "GetOpenPositions" or "GetPositionById"
                        or "GetPositionsByOrganization" or "GetHiringOrganizations")
@@ -109,8 +116,6 @@ var orgTools = hrTools
     .Where(t => t.Name is "GetHiringOrganizations" or "GetPositionsByOrganization")
     .ToList();
 
-// Compliance agent gets ALL compliance tools + GetPositionById + UpdateAnnouncementStatus
-// so it can record the compliance outcome against a saved draft.
 var complianceAgentTools = complianceTools
     .Concat(hrTools.Where(t => t.Name is "GetPositionById" or "UpdateAnnouncementStatus"))
     .ToList();
@@ -122,7 +127,7 @@ var positionSearchAgent = new SpecialistAgent(
         - Use GetOpenPositions to list all open roles.
         - Use GetHiringOrganizations then GetPositionsByOrganization to scope by department.
         - Use GetPositionById for full detail on a specific role.
-        - Present pay ranges in a readable format (e.g., "$68,000 – $107,000 per year").
+        - Present pay ranges in a readable format (e.g., "$68,000 - $107,000 per year").
         - Be concise; offer to go deeper when the user wants more detail.
         """,
     chatClient: agentClient,
@@ -132,10 +137,10 @@ var jobDescriptionAgent = new SpecialistAgent(
     name: "JobDescription",
     systemPrompt: """
         You are a federal HR writing specialist. Your job is to generate professional job descriptions.
-        - Always call WriteJobDescription with the position ID — never write a description yourself.
+        - Always call WriteJobDescription with the position ID - never write a description yourself.
         - If the user hasn't given you a position ID, ask them which role they want a description for,
           or use GetPositionById if they gave you the title.
-        - Keep your framing minimal — let the generated description speak for itself.
+        - Keep your framing minimal - let the generated description speak for itself.
         """,
     chatClient: agentClient,
     tools: jdTools);
@@ -187,9 +192,6 @@ var generalAgent = new SpecialistAgent(
     chatClient: agentClient,
     tools: []);
 
-// ---------------------------------------------------------------------------
-// 7. Run the orchestrator
-// ---------------------------------------------------------------------------
 var orchestrator = new HrOrchestrator(
     router,
     positionSearchAgent,
