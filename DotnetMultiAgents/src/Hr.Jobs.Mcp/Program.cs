@@ -64,6 +64,7 @@ try
             .AddMcpServer()
             .WithTools<PositionTools>()
             .WithTools<HiringOrganizationTools>()
+            .WithTools<ExportTools>()
             .WithTools<JobDescriptionTools>()
             .WithTools<JobAnnouncementTools>()
             .WithStdioServerTransport();
@@ -108,6 +109,7 @@ try
         .AddMcpServer()
         .WithTools<PositionTools>()
         .WithTools<HiringOrganizationTools>()
+        .WithTools<ExportTools>()
         .WithTools<JobDescriptionTools>()
         .WithTools<JobAnnouncementTools>()
         .WithHttpTransport();
