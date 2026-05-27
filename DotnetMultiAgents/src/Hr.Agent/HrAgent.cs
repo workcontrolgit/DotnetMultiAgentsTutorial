@@ -3,12 +3,13 @@ using Microsoft.Extensions.AI;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using System.Text;
+using System.Text.Json;
 
 namespace Hr.Agent;
 
 public enum UiStyle { Structured, Minimal, Panels }
 
-public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle style = UiStyle.Structured, int? numCtx = null)
+public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle style = UiStyle.Structured, int? numCtx = null, string outputFolder = "usajobs/output")
 {
     private const string SystemPrompt = """
         You are an HR assistant for a U.S. federal agency. Help users explore open job
@@ -18,6 +19,7 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
         - Always call GetHiringOrganizations before GetPositionsByOrganization.
         - Use GetOpenPositions for an overview; GetPositionById for full detail.
         - When asked to write a job description, call WriteJobDescription with the position ID.
+        - To export a position or draft, call the appropriate export tool and use the tool result directly.
         - Format pay ranges as "$85,000 - $110,000 per year".
         - When you receive position data, format it as a markdown table with columns:
           ID, Title, Grade, Salary, Location.
@@ -25,6 +27,16 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
         - Never present a numbered menu of options or ask the user what they want to do.
           Respond directly to what the user said, or call a tool immediately.
         """;
+
+    private static readonly HashSet<string> ExportToolNames =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            "ExportPositionToWord",
+            "ExportDraftToWord",
+            "ExportPositionsToExcel"
+        };
+
+    private readonly string _outputFolder = outputFolder;
 
     private readonly List<ChatMessage> _history =
     [
@@ -43,17 +55,105 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
 
             _history.Add(new ChatMessage(ChatRole.User, input));
 
-            var additional = new AdditionalPropertiesDictionary();
-            if (numCtx.HasValue)
-                additional["num_ctx"] = numCtx.Value;
+            var text = await RunToolLoopAsync(ct);
+            RenderResponse(text);
+        }
+    }
 
-            var response = await chatClient.GetResponseAsync(
-                _history,
-                new ChatOptions { Tools = tools, AdditionalProperties = additional },
-                ct);
+    private async Task<string> RunToolLoopAsync(CancellationToken ct)
+    {
+        var additional = new AdditionalPropertiesDictionary();
+        if (numCtx.HasValue)
+            additional["num_ctx"] = numCtx.Value;
 
-            _history.AddMessages(response);
-            RenderResponse(response.Text ?? string.Empty);
+        var options = new ChatOptions { Tools = tools, AdditionalProperties = additional };
+        var response = await chatClient.GetResponseAsync(_history, options, ct);
+
+        while (true)
+        {
+            var toolCalls = response.Messages
+                .SelectMany(m => m.Contents.OfType<FunctionCallContent>())
+                .ToList();
+
+            if (toolCalls.Count == 0)
+            {
+                _history.AddMessages(response);
+                return response.Text ?? string.Empty;
+            }
+
+            foreach (var msg in response.Messages)
+                _history.Add(msg);
+
+            foreach (var call in toolCalls)
+            {
+                var fn = tools.FirstOrDefault(t => t.Name == call.Name) as AIFunction;
+                object? rawResult;
+
+                if (fn is null)
+                {
+                    rawResult = $"Tool '{call.Name}' not found.";
+                }
+                else
+                {
+                    var fnArgs = call.Arguments is null ? null : new AIFunctionArguments(call.Arguments);
+                    try
+                    {
+                        rawResult = await fn.InvokeAsync(fnArgs, ct);
+                    }
+                    catch (Exception ex)
+                    {
+                        rawResult = $"Error: {ex.Message}";
+                    }
+                }
+
+                if (ExportToolNames.Contains(call.Name ?? string.Empty))
+                {
+                    var json = rawResult switch
+                    {
+                        string s => s,
+                        TextContent tc => tc.Text ?? string.Empty,
+                        JsonElement je when je.ValueKind == JsonValueKind.String => je.GetString() ?? string.Empty,
+                        JsonElement je => je.GetRawText(),
+                        _ => JsonSerializer.Serialize(rawResult)
+                    };
+
+                    var saved = TrySaveExportFile(json, _outputFolder);
+                    if (saved is not null)
+                        rawResult = saved;
+                }
+
+                _history.Add(new ChatMessage(ChatRole.Tool,
+                    [new FunctionResultContent(call.CallId ?? string.Empty, rawResult)]));
+            }
+
+            response = await chatClient.GetResponseAsync(_history, options, ct);
+        }
+    }
+
+    private static string? TrySaveExportFile(string json, string outputFolder)
+    {
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            if (!root.TryGetProperty("fileName", out var fileNameEl) ||
+                !root.TryGetProperty("content", out var contentEl))
+                return null;
+
+            var fileName = fileNameEl.GetString();
+            var base64 = contentEl.GetString();
+            if (string.IsNullOrWhiteSpace(fileName) || string.IsNullOrWhiteSpace(base64))
+                return null;
+
+            var bytes = Convert.FromBase64String(base64);
+            Directory.CreateDirectory(outputFolder);
+            var fullPath = Path.GetFullPath(Path.Combine(outputFolder, fileName));
+            File.WriteAllBytes(fullPath, bytes);
+            return $"Saved to: {fullPath}";
+        }
+        catch (Exception ex)
+        {
+            return $"Export save failed: {ex.Message}";
         }
     }
 

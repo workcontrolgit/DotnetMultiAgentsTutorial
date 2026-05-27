@@ -1,4 +1,3 @@
-// src/Hr.EvaluatorOrchestrator/Program.cs
 using Hr.EvaluatorOrchestrator.Agents;
 using Hr.EvaluatorOrchestrator.Loop;
 using Microsoft.Extensions.AI;
@@ -12,11 +11,13 @@ var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-var hrMcpUrl = configuration["McpServers:Hr:Url"]
-    ?? throw new InvalidOperationException("Missing configuration: McpServers:Hr:Url");
+var defaultTransport = args.Contains("--stream-http") ? "streamHttp"
+    : args.Contains("--stdio") ? "stdio"
+    : "streamHttp";
 
-await using var hrMcpClient = await McpClient.CreateAsync(
-    new HttpClientTransport(new HttpClientTransportOptions { Endpoint = new Uri(hrMcpUrl) }));
+var hrServer = new McpServerDefinition("Hr", "McpServers:Hr", configuration["McpServers:Hr:Transport:Type"] ?? defaultTransport);
+
+await using var hrMcpClient = await McpClient.CreateAsync(await CreateClientTransportAsync(configuration, hrServer));
 
 var hrTools = (await hrMcpClient.ListToolsAsync()).Cast<AITool>().ToList();
 Console.WriteLine($"HR tools: {string.Join(", ", hrTools.Select(t => t.Name))}\n");
@@ -58,3 +59,49 @@ var loop = new EvaluatorOptimizerLoop(
     saveAnnouncementTool);
 
 await loop.RunAsync(positionId);
+
+static async Task<IClientTransport> CreateClientTransportAsync(IConfiguration configuration, McpServerDefinition server)
+{
+    if (string.Equals(server.TransportType, "stdio", StringComparison.OrdinalIgnoreCase))
+    {
+        var command = configuration[$"{server.ConfigPath}:Transport:Stdio:Command"] ?? "dotnet";
+        var workingDirectory = configuration[$"{server.ConfigPath}:Transport:Stdio:WorkingDirectory"];
+        if (string.IsNullOrWhiteSpace(workingDirectory))
+            workingDirectory = FindWorkspaceRoot();
+
+        var projectPath = configuration[$"{server.ConfigPath}:Transport:Stdio:ProjectPath"]
+            ?? throw new InvalidOperationException($"Missing configuration: {server.ConfigPath}:Transport:Stdio:ProjectPath");
+
+        return new StdioClientTransport(new StdioClientTransportOptions
+        {
+            Command = command,
+            Arguments = ["run", "--project", projectPath, "--", "--stdio"],
+            WorkingDirectory = workingDirectory,
+            Name = $"{server.Name.ToLowerInvariant()}-mcp-stdio"
+        });
+    }
+
+    var url = configuration[$"{server.ConfigPath}:Transport:StreamHttp:Url"]
+        ?? throw new InvalidOperationException($"Missing configuration: {server.ConfigPath}:Transport:StreamHttp:Url");
+
+    return new HttpClientTransport(new HttpClientTransportOptions
+    {
+        Endpoint = new Uri(url),
+        TransportMode = HttpTransportMode.StreamableHttp,
+        Name = $"{server.Name.ToLowerInvariant()}-mcp-stream-http"
+    });
+}
+
+static string FindWorkspaceRoot()
+{
+    var dir = new DirectoryInfo(AppContext.BaseDirectory);
+    for (var i = 0; i < 8 && dir is not null; i++, dir = dir.Parent)
+    {
+        if (Directory.Exists(Path.Combine(dir.FullName, "DotnetMultiAgents")))
+            return dir.FullName;
+    }
+
+    return AppContext.BaseDirectory;
+}
+
+internal sealed record McpServerDefinition(string Name, string ConfigPath, string TransportType);
