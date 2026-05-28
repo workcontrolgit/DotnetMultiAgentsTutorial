@@ -72,6 +72,8 @@ await using var complianceMcpClient = await McpClient.CreateAsync(await CreateCl
 var complianceTools = (await complianceMcpClient.ListToolsAsync()).Cast<AITool>().ToList();
 Console.WriteLine($"Compliance MCP tools: {string.Join(", ", complianceTools.Select(t => t.Name))}\n");
 
+int? numCtx = int.TryParse(configuration["AI:Ollama:NumCtx"], out var parsedNumCtx) ? parsedNumCtx : null;
+
 IChatClient BuildClient(bool withFunctionInvocation)
 {
     var builder = ((IChatClient)new OllamaApiClient(
@@ -88,7 +90,7 @@ IChatClient BuildClient(bool withFunctionInvocation)
 IChatClient routerClient = BuildClient(withFunctionInvocation: false);
 IChatClient agentClient = BuildClient(withFunctionInvocation: true);
 
-var router = new AgentRouter(routerClient);
+var router = new AgentRouter(routerClient, numCtx);
 
 var positionTools = hrTools
     .Where(t => t.Name is "GetOpenPositions" or "GetPositionById"
@@ -117,10 +119,19 @@ var positionSearchAgent = new SpecialistAgent(
         - Use GetHiringOrganizations then GetPositionsByOrganization to scope by department.
         - Use GetPositionById for full detail on a specific role.
         - Present pay ranges in a readable format (e.g., "$68,000 - $107,000 per year").
+        - When listing positions, format the answer as a markdown table with columns:
+          ID | Title | Grade | Salary | Location
+        - When showing one position in detail, use exactly these markdown sections:
+          ## Position Overview
+          ## Compensation
+          ## Requirements
+          ## Application Details
+        - Under each detail section, prefer short bullet points instead of dense paragraphs.
         - Be concise; offer to go deeper when the user wants more detail.
         """,
     chatClient: agentClient,
-    tools: positionTools);
+    tools: positionTools,
+    numCtx: numCtx);
 
 var jobDescriptionAgent = new SpecialistAgent(
     name: "JobDescription",
@@ -132,7 +143,8 @@ var jobDescriptionAgent = new SpecialistAgent(
         - Keep your framing minimal - let the generated description speak for itself.
         """,
     chatClient: agentClient,
-    tools: jdTools);
+    tools: jdTools,
+    numCtx: numCtx);
 
 var orgSummaryAgent = new SpecialistAgent(
     name: "OrgSummary",
@@ -143,7 +155,8 @@ var orgSummaryAgent = new SpecialistAgent(
         - Summarize clearly: organization name, parent department, and any notable openings.
         """,
     chatClient: agentClient,
-    tools: orgTools);
+    tools: orgTools,
+    numCtx: numCtx);
 
 var complianceAgent = new SpecialistAgent(
     name: "OPMCompliance",
@@ -169,7 +182,8 @@ var complianceAgent = new SpecialistAgent(
         - Keep the tone professional and actionable.
         """,
     chatClient: agentClient,
-    tools: complianceAgentTools);
+    tools: complianceAgentTools,
+    numCtx: numCtx);
 
 var generalAgent = new SpecialistAgent(
     name: "General",
@@ -179,7 +193,8 @@ var generalAgent = new SpecialistAgent(
         organization summaries, and OPM compliance checks.
         """,
     chatClient: agentClient,
-    tools: []);
+    tools: [],
+    numCtx: numCtx);
 
 var orchestrator = new HrOrchestrator(
     router,

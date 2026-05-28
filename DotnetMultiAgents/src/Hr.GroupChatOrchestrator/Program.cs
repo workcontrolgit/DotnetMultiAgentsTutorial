@@ -24,6 +24,7 @@ Console.WriteLine($"HR tools: {string.Join(", ", hrTools.Select(t => t.Name))}\n
 
 var ollamaEndpoint = configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434";
 var ollamaModel = configuration["AI:Ollama:Model"] ?? "gemma4:latest";
+int? numCtx = int.TryParse(configuration["AI:Ollama:NumCtx"], out var parsedNumCtx) ? parsedNumCtx : null;
 
 IChatClient reviewerClient = ((IChatClient)new OllamaApiClient(new Uri(ollamaEndpoint), ollamaModel))
     .AsBuilder()
@@ -45,7 +46,8 @@ var hrSpecialist = new ReviewerAgent(
         qualification requirements alignment with OPM standards, and overall compliance
         with federal hiring language. Be specific - cite exact lines that need improvement.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 var legalReviewer = new ReviewerAgent(
     name: "Legal Reviewer",
@@ -55,7 +57,8 @@ var legalReviewer = new ReviewerAgent(
         reasonable accommodation language, and any phrases that could create legal risk.
         Flag any missing required legal statements. Be specific and cite exact text.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 var budgetAnalyst = new ReviewerAgent(
     name: "Budget Analyst",
@@ -65,7 +68,8 @@ var budgetAnalyst = new ReviewerAgent(
         benefits summary completeness, and whether the compensation package is competitive.
         Note any discrepancies between stated grade and salary figures.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 var moderator = new ReviewerAgent(
     name: "Moderator",
@@ -77,7 +81,8 @@ var moderator = new ReviewerAgent(
         reviewer - synthesize all perspectives. The output must be a complete, polished
         job announcement ready for publication.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 Console.Write("Enter announcement ID to review: ");
 if (!int.TryParse(Console.ReadLine(), out var announcementId))
@@ -95,7 +100,7 @@ if (!int.TryParse(Console.ReadLine(), out var positionId))
 
 var groupChat = new HrGroupChat(
     hrSpecialist, legalReviewer, budgetAnalyst, moderator,
-    mcpClient, getAnnouncementTool, saveAnnouncementTool);
+    mcpClient, getAnnouncementTool, saveAnnouncementTool, numCtx);
 
 await groupChat.RunAsync(announcementId, positionId);
 

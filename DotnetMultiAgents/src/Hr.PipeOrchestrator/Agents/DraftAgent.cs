@@ -7,7 +7,7 @@ namespace Hr.PipeOrchestrator.Agents;
 /// Stage 1 of the HR pipeline. Calls WriteJobDescription then SaveJobAnnouncement.
 /// Parses the saved announcement ID from the LLM reply.
 /// </summary>
-public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> tools)
+public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> tools, int? numCtx = null)
 {
     public async Task<(string Reply, int? AnnouncementId)> RunAsync(int positionId, CancellationToken ct = default)
     {
@@ -25,8 +25,9 @@ public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> too
             new(ChatRole.User, $"Generate and save a job announcement draft for position ID {positionId}."),
         };
 
+        var options = CreateChatOptions([.. tools], numCtx);
         var response = await chatClient.GetResponseAsync(
-            messages, new ChatOptions { Tools = [.. tools] }, ct);
+            messages, options, ct);
 
         var text = response.Text ?? string.Empty;
         return (text, ParseAnnouncementId(text));
@@ -39,5 +40,20 @@ public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> too
         if (idx < 0) return null;
         var token = text[(idx + prefix.Length)..].Trim().Split([' ', '\n', '\r'], 2)[0];
         return int.TryParse(token, out var id) ? id : null;
+    }
+
+    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
+    {
+        var options = new ChatOptions { Tools = [.. toolList] };
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

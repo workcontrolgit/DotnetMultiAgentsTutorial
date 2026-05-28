@@ -19,7 +19,8 @@ public sealed class HrGroupChat(
     ReviewerAgent moderator,
     IChatClient mcpClient,
     AITool getAnnouncementTool,
-    AITool saveAnnouncementTool)
+    AITool saveAnnouncementTool,
+    int? numCtx = null)
 {
     public async Task RunAsync(int announcementId, int positionId, CancellationToken ct = default)
     {
@@ -38,8 +39,9 @@ public sealed class HrGroupChat(
                 "Retrieve the job announcement with the given ID and return its full text verbatim. Do not add commentary."),
             new(ChatRole.User, $"Get job announcement ID {announcementId}."),
         };
+        var loadOptions = CreateChatOptions([getAnnouncementTool], numCtx);
         var loadResponse = await mcpClient.GetResponseAsync(
-            loadMessages, new ChatOptions { Tools = [getAnnouncementTool] }, ct);
+            loadMessages, loadOptions, ct);
         var draftText = loadResponse.Text ?? string.Empty;
 
         Console.WriteLine($"\n--- Current Draft ---\n{draftText}\n");
@@ -87,8 +89,9 @@ public sealed class HrGroupChat(
             new(ChatRole.User,
                 $"Save this announcement for position ID {positionId}:\n\n{revisedDraft}"),
         };
+        var saveOptions = CreateChatOptions([saveAnnouncementTool], numCtx);
         var saveResponse = await mcpClient.GetResponseAsync(
-            saveMessages, new ChatOptions { Tools = [saveAnnouncementTool] }, ct);
+            saveMessages, saveOptions, ct);
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"\nGroup chat complete. {saveResponse.Text}");
@@ -109,5 +112,20 @@ public sealed class HrGroupChat(
         Console.Write($"{prompt} (y/n): ");
         Console.ResetColor();
         return Console.ReadLine()?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true;
+    }
+
+    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
+    {
+        var options = new ChatOptions { Tools = [.. toolList] };
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

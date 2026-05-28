@@ -24,6 +24,7 @@ Console.WriteLine($"HR tools: {string.Join(", ", hrTools.Select(t => t.Name))}\n
 
 var ollamaEndpoint = configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434";
 var ollamaModel = configuration["AI:Ollama:Model"] ?? "gemma4:latest";
+int? numCtx = int.TryParse(configuration["AI:Ollama:NumCtx"], out var parsedNumCtx) ? parsedNumCtx : null;
 
 IChatClient generatorClient = ((IChatClient)new OllamaApiClient(new Uri(ollamaEndpoint), ollamaModel))
     .AsBuilder()
@@ -53,10 +54,11 @@ if (!int.TryParse(Console.ReadLine(), out var positionId))
 }
 
 var loop = new EvaluatorOptimizerLoop(
-    new GeneratorAgent(generatorClient, generatorTools),
-    new EvaluatorAgent(evaluatorClient),
+    new GeneratorAgent(generatorClient, generatorTools, numCtx),
+    new EvaluatorAgent(evaluatorClient, numCtx),
     saverClient,
-    saveAnnouncementTool);
+    saveAnnouncementTool,
+    numCtx);
 
 await loop.RunAsync(positionId);
 

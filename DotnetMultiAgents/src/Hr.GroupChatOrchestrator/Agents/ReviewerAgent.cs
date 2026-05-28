@@ -8,7 +8,7 @@ namespace Hr.GroupChatOrchestrator.Agents;
 /// Reviewers call ReviewAsync; the Moderator calls SynthesizeAsync.
 /// No MCP tools — all agents reason over draft text passed in the prompt.
 /// </summary>
-public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient chatClient)
+public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient chatClient, int? numCtx = null)
 {
     public string Name { get; } = name;
 
@@ -21,7 +21,7 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
             new(ChatRole.User, $"Review the following job announcement draft:\n\n{draftText}"),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
         return response.Text ?? string.Empty;
     }
 
@@ -52,7 +52,22 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
                 """),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
         return response.Text ?? string.Empty;
+    }
+
+    private static ChatOptions CreateChatOptions(int? numCtx)
+    {
+        var options = new ChatOptions();
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

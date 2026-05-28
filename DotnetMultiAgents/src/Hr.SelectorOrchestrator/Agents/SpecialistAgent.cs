@@ -11,7 +11,8 @@ public sealed class SpecialistAgent(
     string name,
     string systemPrompt,
     IChatClient chatClient,
-    IReadOnlyList<AITool> tools)
+    IReadOnlyList<AITool> tools,
+    int? numCtx = null)
 {
     public string Name { get; } = name;
 
@@ -23,11 +24,27 @@ public sealed class SpecialistAgent(
             new(ChatRole.User, userQuery),
         };
 
+        var options = CreateChatOptions([.. tools], numCtx);
         var response = await chatClient.GetResponseAsync(
             messages,
-            new ChatOptions { Tools = [.. tools] },
+            options,
             ct);
 
         return response.Text ?? string.Empty;
+    }
+
+    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
+    {
+        var options = new ChatOptions { Tools = [.. toolList] };
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

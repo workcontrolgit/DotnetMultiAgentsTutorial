@@ -27,6 +27,8 @@ var complianceTools = (await complianceMcpClient.ListToolsAsync()).Cast<AITool>(
 Console.WriteLine($"HR tools:         {string.Join(", ", hrTools.Select(t => t.Name))}");
 Console.WriteLine($"Compliance tools: {string.Join(", ", complianceTools.Select(t => t.Name))}\n");
 
+int? numCtx = int.TryParse(configuration["AI:Ollama:NumCtx"], out var parsedNumCtx) ? parsedNumCtx : null;
+
 IChatClient chatClient = ((IChatClient)new OllamaApiClient(
         new Uri(configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434"),
         configuration["AI:Ollama:Model"] ?? "gemma4:latest"))
@@ -52,10 +54,11 @@ if (!int.TryParse(Console.ReadLine(), out var positionId))
 }
 
 var pipeline = new HrPipeline(
-    new DraftAgent(chatClient, draftTools),
-    new ComplianceAgent(chatClient, complianceAgentTools),
+    new DraftAgent(chatClient, draftTools, numCtx),
+    new ComplianceAgent(chatClient, complianceAgentTools, numCtx),
     chatClient,
-    updateStatusTool);
+    updateStatusTool,
+    numCtx);
 
 await pipeline.RunAsync(positionId);
 

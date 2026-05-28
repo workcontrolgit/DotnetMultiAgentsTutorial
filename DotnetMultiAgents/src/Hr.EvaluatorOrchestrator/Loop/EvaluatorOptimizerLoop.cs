@@ -19,6 +19,7 @@ public sealed class EvaluatorOptimizerLoop(
     EvaluatorAgent evaluator,
     IChatClient saverClient,
     AITool saveAnnouncementTool,
+    int? numCtx = null,
     int maxIterations = 3,
     int threshold = 80)
 {
@@ -83,8 +84,9 @@ public sealed class EvaluatorOptimizerLoop(
             new(ChatRole.User,
                 $"Save this announcement for position ID {positionId}:\n\n{bestDraft}"),
         };
+        var saveOptions = CreateChatOptions([saveAnnouncementTool], numCtx);
         var saveResponse = await saverClient.GetResponseAsync(
-            saveMessages, new ChatOptions { Tools = [saveAnnouncementTool] }, ct);
+            saveMessages, saveOptions, ct);
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"\nDone. {saveResponse.Text}");
@@ -120,5 +122,20 @@ public sealed class EvaluatorOptimizerLoop(
     {
         var lines = result.Feedback.Select(kv => $"- {kv.Key}: {kv.Value}");
         return $"Previous attempt scored {result.Score}/100. Specific weaknesses to address:\n{string.Join("\n", lines)}";
+    }
+
+    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
+    {
+        var options = new ChatOptions { Tools = [.. toolList] };
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

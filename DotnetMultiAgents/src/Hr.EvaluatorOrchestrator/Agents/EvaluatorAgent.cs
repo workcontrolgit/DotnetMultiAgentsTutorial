@@ -10,7 +10,7 @@ namespace Hr.EvaluatorOrchestrator.Agents;
 /// Returns a structured <see cref="EvaluationResult"/> parsed from the LLM's JSON response.
 /// No MCP tools — reasons purely over the draft text passed in the prompt.
 /// </summary>
-public sealed class EvaluatorAgent(IChatClient chatClient)
+public sealed class EvaluatorAgent(IChatClient chatClient, int? numCtx = null)
 {
     private static readonly JsonSerializerOptions JsonOpts = new() { PropertyNameCaseInsensitive = true };
 
@@ -32,7 +32,7 @@ public sealed class EvaluatorAgent(IChatClient chatClient)
             new(ChatRole.User, $"Evaluate this job announcement:\n\n{draftText}"),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
         var json = (response.Text ?? "{}").Trim();
 
         try
@@ -50,6 +50,21 @@ public sealed class EvaluatorAgent(IChatClient chatClient)
                 ["Parse Error"] = $"Non-JSON response: {json[..Math.Min(json.Length, 200)]}"
             });
         }
+    }
+
+    private static ChatOptions CreateChatOptions(int? numCtx)
+    {
+        var options = new ChatOptions();
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 
     private sealed record EvaluationResultDto(int Score, Dictionary<string, string> Feedback);

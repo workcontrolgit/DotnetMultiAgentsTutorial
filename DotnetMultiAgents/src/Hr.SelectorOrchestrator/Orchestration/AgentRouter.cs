@@ -8,7 +8,7 @@ namespace Hr.SelectorOrchestrator.Orchestration;
 /// Keeping the router model-agnostic means you can swap in a smaller/faster model here
 /// while using a more capable model in the specialist agents.
 /// </summary>
-public sealed class AgentRouter(IChatClient chatClient)
+public sealed class AgentRouter(IChatClient chatClient, int? numCtx = null)
 {
     private static readonly string RouterSystemPrompt = """
         You are an intent classifier for an HR assistant application.
@@ -32,7 +32,7 @@ public sealed class AgentRouter(IChatClient chatClient)
         };
 
         // No tools here — pure text classification keeps latency low.
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
         var label = (response.Text ?? string.Empty).Trim().ToLowerInvariant();
 
         return label switch
@@ -43,5 +43,20 @@ public sealed class AgentRouter(IChatClient chatClient)
             "compliance"      => AgentIntent.Compliance,
             _                 => AgentIntent.General,
         };
+    }
+
+    private static ChatOptions CreateChatOptions(int? numCtx)
+    {
+        var options = new ChatOptions();
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

@@ -15,7 +15,8 @@ public sealed class HrPipeline(
     DraftAgent draftAgent,
     ComplianceAgent complianceAgent,
     IChatClient statusClient,
-    AITool updateStatusTool)
+    AITool updateStatusTool,
+    int? numCtx = null)
 {
     public async Task RunAsync(int positionId, CancellationToken ct = default)
     {
@@ -62,8 +63,9 @@ public sealed class HrPipeline(
                 $"Update announcement {announcementId} to status {statusLabel} with summary: {summary}"),
         };
 
+        var options = CreateChatOptions([updateStatusTool], numCtx);
         var statusResponse = await statusClient.GetResponseAsync(
-            statusMessages, new ChatOptions { Tools = [updateStatusTool] }, ct);
+            statusMessages, options, ct);
 
         Console.WriteLine($"\n{statusResponse.Text}\n");
 
@@ -85,5 +87,20 @@ public sealed class HrPipeline(
         Console.Write($"{prompt} (y/n): ");
         Console.ResetColor();
         return Console.ReadLine()?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true;
+    }
+
+    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
+    {
+        var options = new ChatOptions { Tools = [.. toolList] };
+        if (numCtx.HasValue)
+        {
+            var additional = new AdditionalPropertiesDictionary
+            {
+                ["num_ctx"] = numCtx.Value
+            };
+            options.AdditionalProperties = additional;
+        }
+
+        return options;
     }
 }

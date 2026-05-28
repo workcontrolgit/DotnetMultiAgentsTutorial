@@ -1,13 +1,11 @@
-// Orchestration/HrOrchestrator.cs
 using Hr.SelectorOrchestrator.Agents;
+using Hr.SelectorOrchestrator.Ui;
 
 namespace Hr.SelectorOrchestrator.Orchestration;
 
 /// <summary>
 /// Top-level orchestrator that routes each user query to the appropriate
-/// specialist agent and streams the response back to the console.
-///
-/// Pattern: selector multi-agent — one agent handles each turn, chosen by the router.
+/// specialist agent and renders the response to the console.
 /// </summary>
 public sealed class HrOrchestrator(
     AgentRouter router,
@@ -19,29 +17,24 @@ public sealed class HrOrchestrator(
 {
     public async Task RunAsync(CancellationToken ct = default)
     {
-        Console.WriteLine("HR Orchestrator ready. Multiple specialist agents are standing by.");
-        Console.WriteLine("Type 'exit' to quit.\n");
+        ConsoleRenderer.RenderWelcome();
 
         while (!ct.IsCancellationRequested)
         {
-            Console.Write("You: ");
-            var input = Console.ReadLine();
+            var input = ConsoleRenderer.ReadUserInput();
 
-            if (string.IsNullOrWhiteSpace(input)) continue;
-            if (input.Equals("exit", StringComparison.OrdinalIgnoreCase)) break;
+            if (string.IsNullOrWhiteSpace(input))
+                continue;
+            if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                break;
 
-            // Step 1 — classify intent
             var intent = await router.ClassifyAsync(input, ct);
             var agent = SelectAgent(intent);
 
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"[Router → {agent.Name}]");
-            Console.ResetColor();
+            ConsoleRenderer.RenderRoute(agent.Name);
 
-            // Step 2 — delegate to specialist
             var reply = await agent.HandleAsync(input, ct);
-
-            Console.WriteLine($"\nAssistant ({agent.Name}): {reply}\n");
+            ConsoleRenderer.RenderReply(agent.Name, reply);
         }
     }
 
@@ -49,8 +42,8 @@ public sealed class HrOrchestrator(
     {
         AgentIntent.PositionSearch => positionSearchAgent,
         AgentIntent.JobDescription => jobDescriptionAgent,
-        AgentIntent.OrgSummary     => orgSummaryAgent,
-        AgentIntent.Compliance     => complianceAgent,
-        _                          => generalAgent,
+        AgentIntent.OrgSummary => orgSummaryAgent,
+        AgentIntent.Compliance => complianceAgent,
+        _ => generalAgent,
     };
 }
