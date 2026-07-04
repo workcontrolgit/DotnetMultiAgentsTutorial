@@ -14,8 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hr.ConsoleShared\Hr.ConsoleShared.csproj" />
-    <ProjectReference Include="..\Hr.Mcp.Shared\Hr.Mcp.Shared.csproj" />
-  </ItemGroup>
+    </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
