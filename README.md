@@ -100,6 +100,8 @@ DotnetMultiAgentsTutorial/
 │       │   │   └── ComplianceResult.cs      # Pass / Warning / Fail per rule
 │       │   └── Tools/
 │       │       └── ComplianceTools.cs       # MCP tool definitions
+│       ├── Hr.ConsoleShared/                # Shared console helpers (banner, export, chat options)
+│       ├── Hr.Mcp.Shared/                   # Shared MCP client infra (transport factory, server definition)
 │       ├── Hr.Agent/                        # Single-agent baseline (for comparison)
 │       ├── Hr.SelectorOrchestrator/                 # ✅ Part 6 — Selector pattern
 │       │   ├── Agents/
@@ -143,8 +145,11 @@ DotnetMultiAgentsTutorial/
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (ships with Visual Studio)
-- [Ollama](https://ollama.com) with `llama3.2` pulled locally
-- [Duende IdentityServer](https://duendesoftware.com/products/identityserver) container (for OIDC auth on the MCP server — optional for local dev)
+- [Ollama](https://ollama.com) with `gemma4` pulled locally:
+  ```bash
+  ollama pull gemma4
+  ```
+- [Duende IdentityServer](https://duendesoftware.com/products/identityserver) container (optional — only needed when `Features:EnableOidc: true`)
 
 ---
 
@@ -162,19 +167,106 @@ dotnet build DotnetMultiAgents.slnx
 dotnet ef database update \
   --project src/Hr.Infrastructure \
   --startup-project src/Hr.Jobs.Mcp
+```
 
-# Terminal 1 — HR data MCP server (port 5100)
-dotnet run --project src/Hr.Jobs.Mcp
+All orchestrators and the agent use **stdio transport** by default — they auto-start the MCP servers as child processes. No separate terminal is needed for the MCP servers.
 
-# Terminal 2 — OPM compliance MCP server (port 5200)
-dotnet run --project src/Hr.Compliance.Mcp
+```bash
+# Single-agent (interactive chat)
+dotnet run --project src/Hr.Agent
 
-# Terminal 3 — multi-agent orchestrator (Selector pattern)
+# Selector orchestrator (interactive chat, routes to specialists)
 dotnet run --project src/Hr.SelectorOrchestrator
 ```
 
-> **Local dev without OIDC:** comment out the token acquisition block in `Hr.SelectorOrchestrator/Program.cs`
-> and remove `.RequireAuthorization()` from `Hr.Jobs.Mcp/Program.cs` to skip auth locally.
+> **OIDC auth** is disabled by default (`Features:EnableOidc: false` in each `appsettings.json`). Set it to `true` and configure the `Oidc` section to enable JWT Bearer protection on the MCP servers.
+
+---
+
+## Running the Orchestrators
+
+Each orchestrator demonstrates a different multi-agent pattern. They all auto-start the MCP servers they need via stdio.
+
+### Selector — interactive chat, routes to specialists
+
+```bash
+dotnet run --project src/Hr.SelectorOrchestrator
+```
+
+Type any HR-related question. The router classifies intent and delegates to the right specialist:
+
+- `"Show me all open positions"` → **PositionSearch** agent
+- `"Write a job description for position 5"` → **JobDescription** agent
+- `"Summarize the hiring organizations"` → **OrgSummary** agent
+- `"Run compliance check on position 3"` → **OPMCompliance** agent
+
+---
+
+### Pipe — sequential: draft → compliance check → status update
+
+```bash
+dotnet run --project src/Hr.PipeOrchestrator
+```
+
+Prompts for a **position ID**, then runs three chained stages automatically:
+
+1. **DraftAgent** — calls `WriteJobDescription` and saves the draft via `SaveJobAnnouncement`
+2. **ComplianceAgent** — runs `RunFullComplianceCheck` on the saved announcement
+3. **Status update** — calls `UpdateAnnouncementStatus` with `CompliancePassed` or `ComplianceFailed`
+
+Use when you need ordered, dependent transformation steps with a single entry point.
+
+---
+
+### Group Chat — parallel expert review + moderator synthesis
+
+```bash
+dotnet run --project src/Hr.GroupChatOrchestrator
+```
+
+Prompts for an **announcement ID** and **position ID** (the announcement must already exist — run the Pipe orchestrator first to generate one).
+
+Three reviewers critique the draft in parallel (no shared state, no anchoring bias):
+
+- **HR Specialist** — title accuracy, duties, OPM alignment
+- **Legal Reviewer** — EEO language, non-discriminatory phrasing, required legal statements
+- **Budget Analyst** — pay grade accuracy, salary range, benefits completeness
+
+A **Moderator** then synthesizes all critiques into a revised draft and saves it.
+
+Use when you need multi-perspective evaluation of a single artifact.
+
+---
+
+### Evaluator-Optimizer — scored generate/improve loop
+
+```bash
+dotnet run --project src/Hr.EvaluatorOrchestrator
+```
+
+Prompts for a **position ID**, then loops until quality threshold is met or max iterations reached:
+
+1. **GeneratorAgent** — produces (or improves) a job description draft
+2. **EvaluatorAgent** — scores it on 4 criteria (Clarity, OPM Language, Completeness, Tone), 25 pts each
+3. Loop repeats if score < 80/100, up to 3 iterations
+4. Best-scoring draft is saved via `SaveJobAnnouncement` regardless of whether threshold was reached
+
+Use when you need iterative quality improvement with an objective stopping criterion.
+
+---
+
+### Transport modes
+
+All orchestrators default to `stdio` (MCP servers start automatically). To use pre-running HTTP servers instead:
+
+```bash
+# Start servers manually
+dotnet run --project src/Hr.Jobs.Mcp       # :5100
+dotnet run --project src/Hr.Compliance.Mcp # :5200
+
+# Then run any orchestrator in streamHttp mode
+dotnet run --project src/Hr.SelectorOrchestrator -- --stream-http
+```
 
 ---
 
@@ -189,6 +281,10 @@ dotnet run --project src/Hr.SelectorOrchestrator
 | `GetPositionsByOrganization` | Positions filtered by hiring organization |
 | `GetHiringOrganizations` | All hiring organizations with position counts |
 | `WriteJobDescription` | AI-generated job description via Ollama |
+| `SaveJobAnnouncement` | Persist a generated draft linked to a position |
+| `GetJobAnnouncement` | Retrieve a saved announcement by ID |
+| `ListJobAnnouncements` | List all announcements (optionally filter by position) |
+| `UpdateAnnouncementStatus` | Advance status: Draft → CompliancePassed / ComplianceFailed / Published |
 
 ```bash
 npx @modelcontextprotocol/inspector http://localhost:5100/mcp
@@ -269,10 +365,10 @@ but no rule currently validates it. This is a natural extension point for a stri
 |-------|-----------|
 | Multi-agent orchestration | [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) |
 | Agent abstraction | `Microsoft.Extensions.AI` 10.* (`IChatClient`) |
-| Local LLM | `OllamaSharp` 5.* (`OllamaApiClient`) |
+| Local LLM | `OllamaSharp` 5.* (`OllamaApiClient`) — default model: `gemma4` |
 | MCP server SDK | [`ModelContextProtocol` 1.*](https://github.com/modelcontextprotocol/csharp-sdk) |
 | MCP client SDK | [`ModelContextProtocol.Core`](https://github.com/modelcontextprotocol/csharp-sdk) (via `ModelContextProtocol`) |
-| Auth | Duende IdentityServer — client credentials flow |
+| Auth | Duende IdentityServer — client credentials flow (optional) |
 | Persistence | EF Core 9 + SQL Server LocalDB |
 | Target framework | .NET 10 |
 
