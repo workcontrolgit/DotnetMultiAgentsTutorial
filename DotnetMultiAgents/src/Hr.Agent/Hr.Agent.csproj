@@ -1,11 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.*" />
+    <PackageReference Include="Azure.Identity" Version="1.*" />
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.*" />
     <PackageReference Include="OllamaSharp" Version="5.*" />
     <PackageReference Include="ModelContextProtocol" Version="1.*" />
+    <PackageReference Include="Spectre.Console" Version="0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hr.ConsoleShared\Hr.ConsoleShared.csproj" />
+    <ProjectReference Include="..\Hr.Mcp.Shared\Hr.Mcp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

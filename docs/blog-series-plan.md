@@ -27,13 +27,16 @@ What they do **not** yet know:
 | Post | Title | Pattern | Code project | Status |
 |------|-------|---------|--------------|--------|
 | Preface | Why One Agent Is Not Enough | — | — | pending |
-| Part 1 | The .NET Agent Framework | IChatClient + MCP | Hr.Orchestrator | pending |
+| Part 1 | The .NET Agent Framework | IChatClient + MCP | Hr.SelectorOrchestrator | pending |
 | Part 2 | Clean Architecture for AI Apps | Layered design | All projects | pending |
 | Part 3 | Building the HR Data MCP Server | MCP server + tools | Hr.Jobs.Mcp | pending |
 | Part 4 | Compliance MCP: Deterministic Rules, Zero LLM | Rule engine | Hr.Compliance.Mcp | pending |
 | Part 5 | Persisting AI Artifacts | JobAnnouncement lifecycle | Hr.Infrastructure | pending |
-| Part 6 | The Selector Pattern | Multi-agent routing | Hr.Orchestrator | pending |
+| Part 6 | The Selector Pattern | Multi-agent routing | Hr.SelectorOrchestrator | pending |
 | Part 7 | Claude Desktop as Multi-Agent Platform | Claude Desktop + MCP | Hr.Jobs.Mcp + Hr.Compliance.Mcp | pending |
+| Part 8 | The Pipe Pattern: Sequential Agent Stages | Pipe | Hr.PipeOrchestrator | pending |
+| Part 9 | The Group Chat Pattern: Parallel Expert Review | Group Chat | Hr.GroupChatOrchestrator | pending |
+| Part 10 | The Evaluator-Optimizer Pattern: Quality-Gated Generation | Evaluator-Optimizer | Hr.EvaluatorOrchestrator | pending |
 
 ---
 
@@ -68,8 +71,8 @@ But when you ask it to do all three in one conversation, quality collapses. Why?
 
 **Code references:**
 - `src/Hr.Agent/HrAgent.cs`
-- `src/Hr.Orchestrator/Agents/SpecialistAgent.cs`
-- `src/Hr.Orchestrator/Program.cs` (BuildClient helper)
+- `src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs`
+- `src/Hr.SelectorOrchestrator/Program.cs` (BuildClient helper)
 
 ---
 
@@ -170,11 +173,11 @@ But when you ask it to do all three in one conversation, quality collapses. Why?
 - General: no tools
 
 **Code references:**
-- `src/Hr.Orchestrator/Orchestration/AgentRouter.cs`
-- `src/Hr.Orchestrator/Orchestration/AgentIntent.cs`
-- `src/Hr.Orchestrator/Orchestration/HrOrchestrator.cs`
-- `src/Hr.Orchestrator/Agents/SpecialistAgent.cs`
-- `src/Hr.Orchestrator/Program.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/AgentRouter.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/AgentIntent.cs`
+- `src/Hr.SelectorOrchestrator/Orchestration/HrOrchestrator.cs`
+- `src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs`
+- `src/Hr.SelectorOrchestrator/Program.cs`
 
 ---
 
@@ -208,6 +211,66 @@ But when you ask it to do all three in one conversation, quality collapses. Why?
 
 ---
 
+### Part 8 — The Pipe Pattern: Sequential Agent Stages
+
+**Hook:** The Selector handles one question per turn. But generating a job announcement, compliance-checking it, and recording the outcome are three dependent steps — each requires the previous to complete. The Pipe pattern enforces this order.
+
+**Sections:**
+- The Pipe pattern defined: linear chain, each stage transforms and passes forward
+- Three-stage HR pipeline: DraftAgent → ComplianceAgent → status update
+- `DraftAgent`: calls `WriteJobDescription` + `SaveJobAnnouncement`, extracts announcement ID via `ANNOUNCEMENT_ID:<id>` token
+- `ComplianceAgent`: calls `RunFullComplianceCheck`, returns `(report, passed)` tuple
+- `HrPipeline`: user confirmation gates between stages — semi-automated by design
+- Stage 3: `UpdateAnnouncementStatus` with `CompliancePassed` or `ComplianceFailed`
+- When to use Pipe vs. Selector: ordered transformation vs. categorical routing
+
+**Code references:**
+- `src/Hr.PipeOrchestrator/Pipeline/HrPipeline.cs`
+- `src/Hr.PipeOrchestrator/Agents/DraftAgent.cs`
+- `src/Hr.PipeOrchestrator/Agents/ComplianceAgent.cs`
+
+---
+
+### Part 9 — The Group Chat Pattern: Parallel Expert Review
+
+**Hook:** A single reviewer misses things. Three domain experts reviewing independently — without seeing each other's feedback — catch more. A moderator synthesizes their critiques into a revised draft. This is the Group Chat (Debate) pattern.
+
+**Sections:**
+- The Group Chat pattern defined: N agents in parallel, one moderator synthesizes
+- Why parallel and blind: `Task.WhenAll` with no shared state eliminates anchoring bias
+- The three reviewers: HrSpecialist (terminology, structure), LegalReviewer (compliance language), BudgetAnalyst (pay grade justification)
+- `ReviewerAgent`: shared class, differentiated by system prompt; `ReviewAsync` and `SynthesizeAsync` methods
+- `HrGroupChat`: load draft → parallel review (Round 1) → moderator synthesis (Round 2) → save
+- When to use Group Chat vs. Pipe: multi-perspective evaluation vs. sequential transformation
+
+**Code references:**
+- `src/Hr.GroupChatOrchestrator/Chat/HrGroupChat.cs`
+- `src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs`
+
+---
+
+### Part 10 — The Evaluator-Optimizer Pattern: Quality-Gated Generation
+
+**Hook:** First drafts are rarely good enough. The Evaluator-Optimizer pattern runs a generate-evaluate-improve loop until a quality threshold is met — or until a maximum iteration count is reached, always saving the best draft.
+
+**Sections:**
+- The Evaluator-Optimizer pattern defined: generator + evaluator in a feedback loop
+- `GeneratorAgent`: first pass uses position data only; subsequent passes inject structured evaluator feedback
+- `EvaluatorAgent`: 4-criterion rubric (Clarity, OPM Language, Completeness, Tone), 25 pts each; returns JSON score
+- `EvaluationResult`: typed model parsed from LLM JSON; `JsonException` catch forces score 0 and retry
+- `EvaluatorOptimizerLoop`: threshold 80/100, max 3 iterations, tracks best draft across iterations
+- Save step: highest-scoring draft persisted via `SaveJobAnnouncement` regardless of threshold
+- When to use Evaluator-Optimizer vs. Group Chat: iterative quality improvement vs. multi-perspective synthesis
+- Series closing: all four patterns compose — mix and chain using the same MCP servers
+
+**Code references:**
+- `src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs`
+- `src/Hr.EvaluatorOrchestrator/Agents/GeneratorAgent.cs`
+- `src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs`
+- `src/Hr.EvaluatorOrchestrator/Models/EvaluationResult.cs`
+
+---
+
 ## Writing Guidelines for Medium.com
 
 - No markdown tables — use bullet lists or prose sections instead
@@ -232,4 +295,7 @@ Preface
                                               └── Part 5 (Persistence)
                                                     └── Part 6 (Selector Pattern)
                                                           └── Part 7 (Claude Desktop)
+                                                                └── Part 8 (Pipe)
+                                                                      └── Part 9 (Group Chat)
+                                                                            └── Part 10 (Evaluator-Optimizer)
 ```

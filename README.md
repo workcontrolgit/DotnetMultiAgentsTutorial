@@ -4,7 +4,7 @@ A hands-on tutorial repository for building **Multi-Agent Systems** with .NET 10
 
 Each part of the series implements a different multi-agent pattern — all using the same federal HR domain (positions, hiring organizations, job descriptions) as the running example.
 
-📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md)
+📖 **Blog Series:** [Building Multi-Agent Systems with .NET 10](blogs/multi-agents/preface-why-one-agent-is-not-enough.md)
 
 ---
 
@@ -30,7 +30,7 @@ flowchart TD
 
     User -->|query| Orchestrator
 
-    subgraph ORC["Hr.Orchestrator"]
+    subgraph ORC["Hr.SelectorOrchestrator"]
         direction TB
         Orchestrator["HrOrchestrator"]
         Router["AgentRouter - LLM intent classifier"]
@@ -100,16 +100,21 @@ DotnetMultiAgentsTutorial/
 │       │   │   └── ComplianceResult.cs      # Pass / Warning / Fail per rule
 │       │   └── Tools/
 │       │       └── ComplianceTools.cs       # MCP tool definitions
+│       ├── Hr.ConsoleShared/                # Shared console helpers (banner, export, chat options)
+│       ├── Hr.Mcp.Shared/                   # Shared MCP client infra (transport factory, server definition)
 │       ├── Hr.Agent/                        # Single-agent baseline (for comparison)
-│       └── Hr.Orchestrator/                 # ✅ Part 1 — Selector pattern
-│           ├── Agents/
-│           │   └── SpecialistAgent.cs       # Configurable specialist agent
-│           └── Orchestration/
-│               ├── AgentIntent.cs           # PositionSearch|JobDescription|OrgSummary|Compliance|General
-│               ├── AgentRouter.cs           # LLM-based intent classifier
-│               └── HrOrchestrator.cs        # Main selector loop
+│       ├── Hr.SelectorOrchestrator/                 # ✅ Part 6 — Selector pattern
+│       │   ├── Agents/
+│       │   │   └── SpecialistAgent.cs       # Configurable specialist agent
+│       │   └── Orchestration/
+│       │       ├── AgentIntent.cs           # PositionSearch|JobDescription|OrgSummary|Compliance|General
+│       │       ├── AgentRouter.cs           # LLM-based intent classifier
+│       │       └── HrOrchestrator.cs        # Main selector loop
+│       ├── Hr.PipeOrchestrator/                     # ✅ Part 8 — Pipe pattern
+│       ├── Hr.GroupChatOrchestrator/                # ✅ Part 9 — Group Chat pattern
+│       └── Hr.EvaluatorOrchestrator/                # ✅ Part 10 — Evaluator-Optimizer pattern
 ├── blogs/
-│   └── series-2-multi-agents/               # Blog posts (in progress)
+│   └── multi-agents/                        # Blog posts
 └── docs/
     └── blog-series-plan.md
 ```
@@ -118,26 +123,21 @@ DotnetMultiAgentsTutorial/
 
 ## Blog Series
 
-### Series 2 — Building Multi-Agent Systems with .NET 10
+### Building Multi-Agent Systems with .NET 10
 
 | Part | Title | Code Project |
 |------|-------|-------------|
-| Preface | [Why One Agent Is Not Enough](blogs/series-2-multi-agents/preface-why-one-agent-is-not-enough.md) | — |
-| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/series-2-multi-agents/part-1-dotnet-agent-framework.md) | `Hr.Orchestrator` |
-| 2 | [Clean Architecture for AI Applications](blogs/series-2-multi-agents/part-2-clean-architecture-for-ai.md) | `Hr.Core` / `Hr.Infrastructure` |
-| 3 | [Building the HR Data MCP Server](blogs/series-2-multi-agents/part-3-hr-data-mcp-server.md) | `Hr.Jobs.Mcp` |
-| 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](blogs/series-2-multi-agents/part-4-compliance-mcp-deterministic-rules.md) | `Hr.Compliance.Mcp` |
-| 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](blogs/series-2-multi-agents/part-5-persisting-ai-artifacts.md) | `Hr.Infrastructure` |
-| 6 | [The Selector Pattern: Routing to Specialists](blogs/series-2-multi-agents/part-6-selector-pattern.md) | `Hr.Orchestrator` |
-| 7 | [Claude Desktop as Your Multi-Agent Platform](blogs/series-2-multi-agents/part-7-claude-desktop-multi-agent.md) | — |
-
-### Coming Next
-
-| Pattern | Description | Code Project |
-|---------|-------------|-------------|
-| Pipe | Chain agents sequentially, each transforming the last output | `Hr.Pipeline` |
-| Group Chat | Run agents in parallel, synthesize with a moderator | `Hr.GroupChat` |
-| Evaluator-Optimizer | Critic loop — revise until quality threshold is met | `Hr.EvalOptimizer` |
+| Preface | [Why One Agent Is Not Enough](blogs/multi-agents/preface-why-one-agent-is-not-enough.md) | — |
+| 1 | [The .NET Agent Framework: IChatClient and MCP Clients](blogs/multi-agents/part-1-dotnet-agent-framework.md) | `Hr.SelectorOrchestrator` |
+| 2 | [Clean Architecture for AI Applications](blogs/multi-agents/part-2-clean-architecture-for-ai.md) | `Hr.Core` / `Hr.Infrastructure` |
+| 3 | [Building the HR Data MCP Server](blogs/multi-agents/part-3-hr-data-mcp-server.md) | `Hr.Jobs.Mcp` |
+| 4 | [The Compliance MCP Server: Deterministic Rules, Zero LLM](blogs/multi-agents/part-4-compliance-mcp-deterministic-rules.md) | `Hr.Compliance.Mcp` |
+| 5 | [Persisting AI Artifacts: The JobAnnouncement Lifecycle](blogs/multi-agents/part-5-persisting-ai-artifacts.md) | `Hr.Infrastructure` |
+| 6 | [The Selector Pattern: Routing to Specialists](blogs/multi-agents/part-6-selector-pattern.md) | `Hr.SelectorOrchestrator` |
+| 7 | [Claude Desktop as Your Multi-Agent Platform](blogs/multi-agents/part-7-claude-desktop-multi-agent.md) | — |
+| 8 | [The Pipe Pattern: Sequential Agent Stages](blogs/multi-agents/part-8-pipe-pattern.md) | `Hr.PipeOrchestrator` |
+| 9 | [The Group Chat Pattern: Parallel Expert Review](blogs/multi-agents/part-9-group-chat-pattern.md) | `Hr.GroupChatOrchestrator` |
+| 10 | [The Evaluator-Optimizer Pattern: Quality-Gated Generation](blogs/multi-agents/part-10-evaluator-optimizer-pattern.md) | `Hr.EvaluatorOrchestrator` |
 
 ---
 
@@ -145,8 +145,11 @@ DotnetMultiAgentsTutorial/
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (ships with Visual Studio)
-- [Ollama](https://ollama.com) with `llama3.2` pulled locally
-- [Duende IdentityServer](https://duendesoftware.com/products/identityserver) container (for OIDC auth on the MCP server — optional for local dev)
+- [Ollama](https://ollama.com) with `gemma4` pulled locally:
+  ```bash
+  ollama pull gemma4
+  ```
+- [Duende IdentityServer](https://duendesoftware.com/products/identityserver) container (optional — only needed when `Features:EnableOidc: true`)
 
 ---
 
@@ -164,19 +167,106 @@ dotnet build DotnetMultiAgents.slnx
 dotnet ef database update \
   --project src/Hr.Infrastructure \
   --startup-project src/Hr.Jobs.Mcp
-
-# Terminal 1 — HR data MCP server (port 5100)
-dotnet run --project src/Hr.Jobs.Mcp
-
-# Terminal 2 — OPM compliance MCP server (port 5200)
-dotnet run --project src/Hr.Compliance.Mcp
-
-# Terminal 3 — multi-agent orchestrator (Selector pattern)
-dotnet run --project src/Hr.Orchestrator
 ```
 
-> **Local dev without OIDC:** comment out the token acquisition block in `Hr.Orchestrator/Program.cs`
-> and remove `.RequireAuthorization()` from `Hr.Jobs.Mcp/Program.cs` to skip auth locally.
+All orchestrators and the agent use **stdio transport** by default — they auto-start the MCP servers as child processes. No separate terminal is needed for the MCP servers.
+
+```bash
+# Single-agent (interactive chat)
+dotnet run --project src/Hr.Agent
+
+# Selector orchestrator (interactive chat, routes to specialists)
+dotnet run --project src/Hr.SelectorOrchestrator
+```
+
+> **OIDC auth** is disabled by default (`Features:EnableOidc: false` in each `appsettings.json`). Set it to `true` and configure the `Oidc` section to enable JWT Bearer protection on the MCP servers.
+
+---
+
+## Running the Orchestrators
+
+Each orchestrator demonstrates a different multi-agent pattern. They all auto-start the MCP servers they need via stdio.
+
+### Selector — interactive chat, routes to specialists
+
+```bash
+dotnet run --project src/Hr.SelectorOrchestrator
+```
+
+Type any HR-related question. The router classifies intent and delegates to the right specialist:
+
+- `"Show me all open positions"` → **PositionSearch** agent
+- `"Write a job description for position 5"` → **JobDescription** agent
+- `"Summarize the hiring organizations"` → **OrgSummary** agent
+- `"Run compliance check on position 3"` → **OPMCompliance** agent
+
+---
+
+### Pipe — sequential: draft → compliance check → status update
+
+```bash
+dotnet run --project src/Hr.PipeOrchestrator
+```
+
+Prompts for a **position ID**, then runs three chained stages automatically:
+
+1. **DraftAgent** — calls `WriteJobDescription` and saves the draft via `SaveJobAnnouncement`
+2. **ComplianceAgent** — runs `RunFullComplianceCheck` on the saved announcement
+3. **Status update** — calls `UpdateAnnouncementStatus` with `CompliancePassed` or `ComplianceFailed`
+
+Use when you need ordered, dependent transformation steps with a single entry point.
+
+---
+
+### Group Chat — parallel expert review + moderator synthesis
+
+```bash
+dotnet run --project src/Hr.GroupChatOrchestrator
+```
+
+Prompts for an **announcement ID** and **position ID** (the announcement must already exist — run the Pipe orchestrator first to generate one).
+
+Three reviewers critique the draft in parallel (no shared state, no anchoring bias):
+
+- **HR Specialist** — title accuracy, duties, OPM alignment
+- **Legal Reviewer** — EEO language, non-discriminatory phrasing, required legal statements
+- **Budget Analyst** — pay grade accuracy, salary range, benefits completeness
+
+A **Moderator** then synthesizes all critiques into a revised draft and saves it.
+
+Use when you need multi-perspective evaluation of a single artifact.
+
+---
+
+### Evaluator-Optimizer — scored generate/improve loop
+
+```bash
+dotnet run --project src/Hr.EvaluatorOrchestrator
+```
+
+Prompts for a **position ID**, then loops until quality threshold is met or max iterations reached:
+
+1. **GeneratorAgent** — produces (or improves) a job description draft
+2. **EvaluatorAgent** — scores it on 4 criteria (Clarity, OPM Language, Completeness, Tone), 25 pts each
+3. Loop repeats if score < 80/100, up to 3 iterations
+4. Best-scoring draft is saved via `SaveJobAnnouncement` regardless of whether threshold was reached
+
+Use when you need iterative quality improvement with an objective stopping criterion.
+
+---
+
+### Transport modes
+
+All orchestrators default to `stdio` (MCP servers start automatically). To use pre-running HTTP servers instead:
+
+```bash
+# Start servers manually
+dotnet run --project src/Hr.Jobs.Mcp       # :5100
+dotnet run --project src/Hr.Compliance.Mcp # :5200
+
+# Then run any orchestrator in streamHttp mode
+dotnet run --project src/Hr.SelectorOrchestrator -- --stream-http
+```
 
 ---
 
@@ -191,6 +281,10 @@ dotnet run --project src/Hr.Orchestrator
 | `GetPositionsByOrganization` | Positions filtered by hiring organization |
 | `GetHiringOrganizations` | All hiring organizations with position counts |
 | `WriteJobDescription` | AI-generated job description via Ollama |
+| `SaveJobAnnouncement` | Persist a generated draft linked to a position |
+| `GetJobAnnouncement` | Retrieve a saved announcement by ID |
+| `ListJobAnnouncements` | List all announcements (optionally filter by position) |
+| `UpdateAnnouncementStatus` | Advance status: Draft → CompliancePassed / ComplianceFailed / Published |
 
 ```bash
 npx @modelcontextprotocol/inspector http://localhost:5100/mcp
@@ -271,10 +365,10 @@ but no rule currently validates it. This is a natural extension point for a stri
 |-------|-----------|
 | Multi-agent orchestration | [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) |
 | Agent abstraction | `Microsoft.Extensions.AI` 10.* (`IChatClient`) |
-| Local LLM | `OllamaSharp` 5.* (`OllamaApiClient`) |
+| Local LLM | `OllamaSharp` 5.* (`OllamaApiClient`) — default model: `gemma4` |
 | MCP server SDK | [`ModelContextProtocol` 1.*](https://github.com/modelcontextprotocol/csharp-sdk) |
 | MCP client SDK | [`ModelContextProtocol.Core`](https://github.com/modelcontextprotocol/csharp-sdk) (via `ModelContextProtocol`) |
-| Auth | Duende IdentityServer — client credentials flow |
+| Auth | Duende IdentityServer — client credentials flow (optional) |
 | Persistence | EF Core 9 + SQL Server LocalDB |
 | Target framework | .NET 10 |
 

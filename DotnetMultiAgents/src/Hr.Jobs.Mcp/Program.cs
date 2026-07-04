@@ -2,6 +2,7 @@
 using Hr.Application.Services;
 using Hr.Infrastructure;
 using Hr.Jobs.Mcp.Tools;
+using Hr.Mcp.Shared.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
@@ -10,8 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OllamaSharp;
 using Serilog;
-using System.Net;
-using System.Net.NetworkInformation;
 
 var isStdio = args.Contains("--stdio");
 
@@ -64,6 +63,7 @@ try
             .AddMcpServer()
             .WithTools<PositionTools>()
             .WithTools<HiringOrganizationTools>()
+            .WithTools<ExportTools>()
             .WithTools<JobDescriptionTools>()
             .WithTools<JobAnnouncementTools>()
             .WithStdioServerTransport();
@@ -108,6 +108,7 @@ try
         .AddMcpServer()
         .WithTools<PositionTools>()
         .WithTools<HiringOrganizationTools>()
+        .WithTools<ExportTools>()
         .WithTools<JobDescriptionTools>()
         .WithTools<JobAnnouncementTools>()
         .WithHttpTransport();
@@ -130,7 +131,7 @@ try
 
     await app.RunAsync();
 }
-catch (IOException ex) when (!isStdio && TryDescribePortConflict(ex, out var conflictMessage))
+catch (IOException ex) when (!isStdio && PortConflictHelper.TryDescribePortConflict(ex, "http://127.0.0.1:5100", out var conflictMessage))
 {
     Log.Fatal(ex, "{ConflictMessage}", conflictMessage);
     Console.Error.WriteLine(conflictMessage);
@@ -151,7 +152,9 @@ static void ConfigureCommonServices(IServiceCollection services, IConfiguration 
 
     // IChatClient used by WriteJobDescription tool to generate LLM narratives
     services.AddSingleton<IChatClient>(
-        new OllamaApiClient(new Uri("http://localhost:11434"), "llama3.2"));
+        new OllamaApiClient(
+            new Uri(configuration["AI:Ollama:Endpoint"] ?? "http://localhost:11434"),
+            configuration["AI:Ollama:Model"] ?? "gemma4:latest"));
 }
 
 static async Task InitializeDatabaseAsync(IServiceProvider services)
@@ -166,32 +169,3 @@ static async Task InitializeDatabaseAsync(IServiceProvider services)
     DbSeeder.Seed(db, seedPath);
 }
 
-static bool TryDescribePortConflict(IOException ex, out string message)
-{
-    const int defaultPort = 5100;
-    const string defaultUrl = "http://127.0.0.1:5100";
-
-    if (!ex.Message.Contains(defaultUrl, StringComparison.OrdinalIgnoreCase) &&
-        !ex.Message.Contains("address already in use", StringComparison.OrdinalIgnoreCase))
-    {
-        message = string.Empty;
-        return false;
-    }
-
-    var conflict = IPGlobalProperties.GetIPGlobalProperties()
-        .GetActiveTcpListeners()
-        .FirstOrDefault(endpoint =>
-            endpoint.Port == defaultPort &&
-            IPAddress.IsLoopback(endpoint.Address));
-
-    if (conflict is null)
-    {
-        message =
-            $"Port {defaultPort} is already in use. Stop the existing listener or change the configured MCP server URL.";
-        return true;
-    }
-
-    message =
-        $"Port {defaultPort} is already in use on a loopback interface. Stop the running server or change the configured URL before starting another instance.";
-    return true;
-}

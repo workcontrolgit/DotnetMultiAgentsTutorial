@@ -1,5 +1,6 @@
 // src/Hr.Jobs.Mcp/Tools/JobDescriptionTools.cs
 using System.ComponentModel;
+using System.Text;
 using Hr.Application.Services;
 using Hr.Core.Entities;
 using Microsoft.Extensions.AI;
@@ -11,7 +12,7 @@ namespace Hr.Jobs.Mcp.Tools;
 public sealed class JobDescriptionTools(PositionService positions, IChatClient chatClient)
 {
     // Minimum character count for a position's Duties+Qualifications to be considered
-    // "rich enough" that a same-grade sibling is not needed.
+    // rich enough that a same-grade sibling is not needed.
     private const int SparseThreshold = 300;
 
     [McpServerTool(Name = "WriteJobDescription"),
@@ -23,38 +24,58 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
         var p = await positions.GetPositionByIdAsync(positionId, ct);
         if (p is null) return $"Position {positionId} not found.";
 
-        // Build a grade-ladder context from sibling positions in the same series.
-        // At most 3 positions are selected — one per slot — regardless of how many
-        // records exist for that series in the database.
         var ladder = await BuildGradeLadderAsync(p, ct);
+        var supplementalContext = BuildSupplementalContext(p);
 
         var systemPrompt = """
             You are a senior federal HR specialist with 15 years of experience writing USAJobs announcements.
-            Your announcements are known for being clear, compelling, and compliant with OPM writing standards.
+            Your announcements are clear, compelling, and compliant with OPM writing standards.
 
             Rules you always follow:
-            - SYNTHESIZE duties into 5–8 concise active-voice bullet points. Never copy raw text verbatim.
-            - Qualifications must state a specific number of years of specialized experience at the next lower grade level (e.g., "one year of specialized experience equivalent to GS-11").
-            - Add education alternatives for GS-5 through GS-9 positions (e.g., bachelor's degree substitution).
-            - Security clearance and drug test requirements must appear in Qualifications if applicable.
-            - How to Apply must mention USAJOBS.gov and include a note about veterans' preference.
-            - Use second-person ("You will...") in the Duties section for approachability.
-            - Keep the Summary to 3–5 sentences: mission context, role impact, and what makes this opportunity compelling.
+            - Synthesize duties into 5-8 concise active-voice bullet points. Never copy raw text verbatim.
+            - Qualifications must state a specific amount of specialized experience at the next lower grade level when the grade requires it.
+            - Include education substitution only when the source material supports it or the grade range reasonably suggests it.
+            - Mention security clearance, drug testing, travel, relocation, telework/remote eligibility, and supervisory expectations when applicable.
+            - Use conditions of employment, required documents, and how-to-apply details when provided instead of inventing them.
+            - How to Apply must mention USAJOBS.gov and include a note about veterans' preference unless the source explicitly conflicts.
+            - Use second-person voice in the Duties section where natural.
+            - Keep the Summary to 3-5 sentences covering mission, role impact, and why the opportunity matters.
+            - Do not fabricate benefits, incentives, or requirements that are not grounded in the source context.
             """;
 
         var userPrompt = $"""
-            Write a complete USAJobs-style job announcement for this position:
+            Write a complete USAJobs-style job announcement for this position.
 
-            Title:              {p.Title}
-            Department:         {p.HiringOrganization?.DepartmentName}
-            Agency:             {p.HiringOrganization?.OrganizationName}
-            Occupational Series:{p.OccupationalSeries}
-            Pay Grade:          {p.PayGradeMin}–{p.PayGradeMax}
-            Salary:             ${p.PositionRemuneration?.MinimumRange:N0} – ${p.PositionRemuneration?.MaximumRange:N0} per year
-            Location:           {p.DutyLocation}
-            Telework:           {(p.TeleworkEligible ? "Eligible" : "Not eligible")}
-            Who May Apply:      {p.WhoMayApply}
-            Security Clearance: {p.SecurityClearance}
+            Core position facts:
+            Title:               {p.Title}
+            Announcement Number: {ValueOrNone(p.AnnouncementNumber)}
+            USAJobs Position ID: {ValueOrNone(p.UsaJobsId)}
+            Department:          {p.HiringOrganization?.DepartmentName}
+            Agency:              {p.HiringOrganization?.OrganizationName}
+            Sub-Agency:          {ValueOrNone(p.SubAgencyName)}
+            Occupational Series: {p.OccupationalSeries}
+            Series Title:        {ValueOrNone(p.OccupationalSeriesTitle)}
+            Pay Grade:           {p.PayGradeMin}-{p.PayGradeMax}
+            Salary:              ${p.PositionRemuneration?.MinimumRange:N0} - ${p.PositionRemuneration?.MaximumRange:N0} per year
+            Appointment Type:    {p.AppointmentType}
+            Service Type:        {ValueOrNone(p.ServiceType)}
+            Offering Type:       {ValueOrNone(p.PositionOfferingType)}
+            Work Schedule:       {p.WorkSchedule}
+            Open Date:           {p.OpenDate:yyyy-MM-dd}
+            Close Date:          {p.CloseDate:yyyy-MM-dd}
+            Hiring Path:         {ValueOrNone(p.HiringPath)}
+            Who May Apply:       {p.WhoMayApply}
+            Location:            {FormatLocation(p)}
+            Telework:            {(p.TeleworkEligible ? "Eligible" : "Not eligible")}
+            Remote:              {(p.RemoteEligible ? "Eligible" : "Not eligible")}
+            Travel Required:     {p.TravelRequired}
+            Security Clearance:  {p.SecurityClearance}
+            Supervisory:         {(p.SupervisoryStatus ? "Yes" : "No")}
+            Relocation:          {(p.RelocationAuthorized ? "Authorized" : "Not authorized")}
+            Drug Test:           {(p.DrugTestRequired ? "Required" : "Not required")}
+            Financial Disclosure:{(p.FinancialDisclosure ? "Required" : "Not required")}
+            Position Sensitivity:{ValueOrNone(p.PositionSensitivityAndRisk)}
+            Total Openings:      {ValueOrNone(p.TotalOpenings)}
 
             Source description (synthesize, do not copy):
             {p.Description}
@@ -62,8 +83,11 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
             Source duties (synthesize into bullets, do not copy):
             {p.Duties}
 
-            Source qualifications (use as a baseline; add grade-level experience statement):
+            Source qualifications baseline:
             {p.Qualifications}
+
+            Additional source context:
+            {supplementalContext}
 
             {ladder}
 
@@ -80,19 +104,48 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
                 new ChatMessage(ChatRole.User, userPrompt),
             ],
             cancellationToken: ct);
+
         return response.Text ?? $"Unable to generate description for position {positionId}.";
     }
 
-    // ── Grade-ladder helpers ──────────────────────────────────────────────────
+    private static string BuildSupplementalContext(Position p)
+    {
+        var sb = new StringBuilder();
 
-    /// <summary>
-    /// Fetches all positions in the same occupational series, then selects at most
-    /// 3 representatives (next-lower grade, next-higher grade, same-grade sibling)
-    /// to use as grade-ladder context in the prompt.
-    ///
-    /// Selection rule: among all positions at a given grade level, pick the one with
-    /// the longest combined Duties+Qualifications text — the richest record wins.
-    /// </summary>
+        AppendSection(sb, "Education", p.Education);
+        AppendSection(sb, "Evaluations", p.Evaluations);
+        AppendSection(sb, "Conditions of Employment", p.ConditionsOfEmployment);
+        AppendSection(sb, "Required Documents", p.RequiredDocuments);
+        AppendSection(sb, "How to Apply Source Notes", p.HowToApply);
+        AppendSection(sb, "Next Steps", p.NextSteps);
+        AppendSection(sb, "Additional Information", p.AdditionalInformation);
+        AppendSection(sb, "Promotion Potential", p.PromotionPotential);
+        AppendSection(sb, "Adjudication Type", p.AdjudicationType);
+        AppendSection(sb, "Contact", FormatContact(p));
+        AppendSection(sb, "Position URL", p.PositionUri);
+        AppendSection(sb, "Apply URL", p.ApplyUri);
+
+        if (!string.IsNullOrWhiteSpace(p.KeyRequirements))
+        {
+            sb.AppendLine("Key Requirements:");
+            foreach (var line in SplitLines(p.KeyRequirements))
+                sb.AppendLine($"- {line}");
+        }
+
+        return sb.Length == 0 ? "(none)" : sb.ToString().TrimEnd();
+    }
+
+    private static void AppendSection(StringBuilder sb, string label, string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return;
+        sb.AppendLine($"{label}:");
+        sb.AppendLine(value.Trim());
+        sb.AppendLine();
+    }
+
+    private static IEnumerable<string> SplitLines(string value) =>
+        value.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
     private async Task<string> BuildGradeLadderAsync(Position target, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(target.OccupationalSeries))
@@ -109,29 +162,25 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
         if (siblings.Count == 0)
             return string.Empty;
 
-        // Group by grade number; within each grade pick the richest record
         var byGrade = siblings
             .GroupBy(p => ParseGradeNumber(p.PayGradeMin))
             .Where(g => g.Key is not null)
             .ToDictionary(
                 g => g.Key!.Value,
-                g => g.OrderByDescending(p => Richness(p)).First());
+                g => g.OrderByDescending(Richness).First());
 
         var sections = new List<string>();
 
-        // Slot 1: next lower grade — used for the "specialized experience equiv. to GS-N" statement
         var lowerKeys = byGrade.Keys.Where(g => g < targetGrade).ToList();
         var lowerGrade = lowerKeys.Count > 0 ? lowerKeys.Max() : 0;
         if (lowerGrade > 0 && byGrade.TryGetValue(lowerGrade, out var lower))
             sections.Add(FormatLadderEntry("NEXT LOWER GRADE (experience baseline for qualifications)", lower));
 
-        // Slot 2: next higher grade — used to avoid overstating scope
         var higherKeys = byGrade.Keys.Where(g => g > targetGrade).ToList();
         var higherGrade = higherKeys.Count > 0 ? higherKeys.Min() : 0;
         if (higherGrade > 0 && byGrade.TryGetValue(higherGrade, out var higher))
-            sections.Add(FormatLadderEntry("NEXT HIGHER GRADE (scope ceiling — do not exceed)", higher));
+            sections.Add(FormatLadderEntry("NEXT HIGHER GRADE (scope ceiling; do not exceed)", higher));
 
-        // Slot 3: same-grade sibling — only when target's own text is sparse
         var isTargetSparse = Richness(target) < SparseThreshold;
         if (isTargetSparse && byGrade.TryGetValue(targetGrade.Value, out var peer))
             sections.Add(FormatLadderEntry("SAME GRADE PEER (supplement sparse duties)", peer));
@@ -140,10 +189,10 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
             return string.Empty;
 
         return $"""
-            --- GRADE LADDER CONTEXT (for reference only — do not copy verbatim) ---
+            --- GRADE LADDER CONTEXT (for reference only; do not copy verbatim) ---
             The following real positions from the same occupational series ({target.OccupationalSeries})
-            are provided to help you write accurate grade-level qualifications and appropriately
-            scope the duties. Use them as reference; synthesize, do not quote.
+            are provided to help write accurate grade-level qualifications and appropriately
+            scope the duties. Use them as reference and synthesize them.
 
             {string.Join("\n\n", sections)}
             --- END GRADE LADDER CONTEXT ---
@@ -153,17 +202,22 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
     private static string FormatLadderEntry(string slot, Position p) =>
         $"""
         [{slot}]
-        Title:          {p.Title}
-        Grade:          {p.PayGradeMin}–{p.PayGradeMax}
-        Duties:         {Truncate(p.Duties, 600)}
-        Qualifications: {Truncate(p.Qualifications, 400)}
+        Title:              {p.Title}
+        Series:             {p.OccupationalSeries} {ValueOrNone(p.OccupationalSeriesTitle)}
+        Grade:              {p.PayGradeMin}-{p.PayGradeMax}
+        Duties:             {Truncate(p.Duties, 600)}
+        Qualifications:     {Truncate(p.Qualifications, 400)}
+        Education:          {Truncate(p.Education, 200)}
+        Conditions:         {Truncate(p.ConditionsOfEmployment, 200)}
         """;
 
-    /// <summary>Richness score: total character count of Duties + Qualifications.</summary>
     private static int Richness(Position p) =>
-        (p.Duties?.Length ?? 0) + (p.Qualifications?.Length ?? 0);
+        (p.Duties?.Length ?? 0)
+        + (p.Qualifications?.Length ?? 0)
+        + (p.Education?.Length ?? 0)
+        + (p.ConditionsOfEmployment?.Length ?? 0)
+        + (p.HowToApply?.Length ?? 0);
 
-    /// <summary>Parses the numeric part from a grade string like "GS-12" or "GS-09".</summary>
     private static int? ParseGradeNumber(string? grade)
     {
         if (string.IsNullOrWhiteSpace(grade)) return null;
@@ -174,5 +228,28 @@ public sealed class JobDescriptionTools(PositionService positions, IChatClient c
     private static string Truncate(string? text, int maxChars) =>
         string.IsNullOrWhiteSpace(text) ? "(none)" :
         text.Length <= maxChars ? text :
-        text[..maxChars] + "…";
+        text[..maxChars] + "...";
+
+    private static string ValueOrNone(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? "(none)" : value;
+
+    private static string FormatLocation(Position p)
+    {
+        if (!string.IsNullOrWhiteSpace(p.DutyLocation) && !string.IsNullOrWhiteSpace(p.DutyLocationState))
+            return $"{p.DutyLocation}, {p.DutyLocationState}";
+        return ValueOrNone(p.DutyLocation);
+    }
+
+    private static string FormatContact(Position p)
+    {
+        var parts = new[]
+        {
+            p.ContactName,
+            p.ContactPhone,
+            p.ContactEmail,
+            p.ContactAddress
+        }.Where(v => !string.IsNullOrWhiteSpace(v)).ToList();
+
+        return parts.Count == 0 ? string.Empty : string.Join(" | ", parts);
+    }
 }
