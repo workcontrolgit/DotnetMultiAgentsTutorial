@@ -2,6 +2,7 @@
 using Azure.AI.OpenAI;
 using Azure.Identity;
 using Hr.Agent;
+using Hr.Mcp.Shared.Client;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -98,7 +99,7 @@ try
 {
     foreach (var server in serverDefinitions)
     {
-        var clientTransport = await CreateClientTransportAsync(configuration, server, additionalHeaders);
+        var clientTransport = await McpClientTransportFactory.CreateAsync(configuration, server, additionalHeaders);
         var mcpClient = await McpClient.CreateAsync(clientTransport, loggerFactory: mcpLoggerFactory);
         mcpClients.Add(mcpClient);
 
@@ -128,38 +129,7 @@ try
     Console.WriteLine();
 
     var style = UiStyle.Structured;
-
-    AnsiConsole.MarkupLine("[bold]Select UI style:[/]");
-    AnsiConsole.MarkupLine("  [cyan][[1]][/] Structured - tables, panels, rules [grey](default)[/]");
-    AnsiConsole.MarkupLine("  [cyan][[2]][/] Minimal    - rule-separated turns");
-    AnsiConsole.MarkupLine("  [cyan][[3]][/] Panels     - bordered panel per message");
-    AnsiConsole.Markup("[grey]Choice [[1]]:[/] ");
-
-    if (!Console.IsInputRedirected)
-    {
-        try
-        {
-            var deadline = DateTime.UtcNow.AddSeconds(2);
-            while (DateTime.UtcNow < deadline && !Console.KeyAvailable)
-                await Task.Delay(100);
-
-            if (Console.KeyAvailable)
-            {
-                var key = Console.ReadKey(intercept: true);
-                style = key.KeyChar switch
-                {
-                    '2' => UiStyle.Minimal,
-                    '3' => UiStyle.Panels,
-                    _ => UiStyle.Structured
-                };
-            }
-        }
-        catch (OperationCanceledException)
-        {
-        }
-    }
-
-    AnsiConsole.MarkupLine($"[green]{style}[/]\n");
+    AnsiConsole.MarkupLine("[green]Structured[/]\n");
 
     IChatClient chatClient = CreateChatClient(configuration);
     var exportFolder = configuration["Output:ExportFolder"] ?? "usajobs/output";
@@ -170,106 +140,6 @@ finally
 {
     foreach (var mcpClient in mcpClients)
         await mcpClient.DisposeAsync();
-}
-
-static async Task<IClientTransport> CreateClientTransportAsync(
-    IConfiguration configuration,
-    McpServerDefinition server,
-    Dictionary<string, string> additionalHeaders)
-{
-    if (string.Equals(server.TransportType, "stdio", StringComparison.OrdinalIgnoreCase))
-    {
-        var command = configuration[$"{server.ConfigPath}:Transport:Stdio:Command"] ?? "dotnet";
-        var workingDirectory = configuration[$"{server.ConfigPath}:Transport:Stdio:WorkingDirectory"];
-        if (string.IsNullOrWhiteSpace(workingDirectory))
-            workingDirectory = FindWorkspaceRoot();
-        var arguments = GetStdioArguments(configuration, server, workingDirectory);
-
-        return new StdioClientTransport(new StdioClientTransportOptions
-        {
-            Command = command,
-            Arguments = arguments,
-            WorkingDirectory = workingDirectory,
-            Name = $"{server.Name.ToLowerInvariant()}-mcp-stdio"
-        });
-    }
-
-    var mcpServerUrl =
-        configuration[$"{server.ConfigPath}:Transport:StreamHttp:Url"] ??
-        configuration[$"{server.ConfigPath}:Url"] ??
-        Environment.GetEnvironmentVariable("HR_MCP_SERVER_URL") ??
-        throw new InvalidOperationException($"Missing configuration for {server.Name} MCP URL.");
-
-    await WaitForHttpServerAsync(mcpServerUrl);
-
-    var httpClient = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
-    return new HttpClientTransport(new HttpClientTransportOptions
-    {
-        Endpoint = new Uri(mcpServerUrl),
-        AdditionalHeaders = additionalHeaders,
-        TransportMode = HttpTransportMode.StreamableHttp,
-        Name = $"{server.Name.ToLowerInvariant()}-mcp-stream-http"
-    }, httpClient, null, ownsHttpClient: true);
-}
-
-static async Task WaitForHttpServerAsync(string mcpServerUrl)
-{
-    var baseUrl = mcpServerUrl.Replace("/mcp", "").TrimEnd('/') + "/";
-    using var probe = new HttpClient { Timeout = TimeSpan.FromSeconds(3) };
-    const int maxAttempts = 30;
-
-    for (var attempt = 1; attempt <= maxAttempts; attempt++)
-    {
-        try
-        {
-            var resp = await probe.GetAsync(baseUrl);
-            AnsiConsole.MarkupLine($"[green]OK[/] MCP server is available (HTTP {(int)resp.StatusCode}).\n");
-            return;
-        }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
-        {
-        }
-
-        if (attempt == maxAttempts)
-            break;
-
-        AnsiConsole.MarkupLine($"[yellow]Waiting for MCP server... (attempt {attempt}/{maxAttempts})[/]");
-        await Task.Delay(2000);
-    }
-
-    throw new TimeoutException($"MCP server at {mcpServerUrl} did not become available after {maxAttempts} attempts.");
-}
-
-static IList<string> GetStdioArguments(IConfiguration configuration, McpServerDefinition server, string workingDirectory)
-{
-    var configuredArgs = configuration
-        .GetSection($"{server.ConfigPath}:Transport:Stdio:Arguments")
-        .GetChildren()
-        .Select(section => section.Value)
-        .Where(value => !string.IsNullOrWhiteSpace(value))
-        .Cast<string>()
-        .ToList();
-
-    if (configuredArgs.Count > 0)
-        return configuredArgs;
-
-    var projectPath = configuration[$"{server.ConfigPath}:Transport:Stdio:ProjectPath"];
-    if (string.IsNullOrWhiteSpace(projectPath))
-        projectPath = Path.Combine(
-            workingDirectory,
-            "DotnetMultiAgents",
-            "src",
-            server.Name == "Compliance" ? "Hr.Compliance.Mcp" : "Hr.Jobs.Mcp",
-            server.Name == "Compliance" ? "Hr.Compliance.Mcp.csproj" : "Hr.Jobs.Mcp.csproj");
-
-    return
-    [
-        "run",
-        "--project",
-        projectPath,
-        "--",
-        "--stdio"
-    ];
 }
 
 static List<McpServerDefinition> GetServerDefinitions(IConfiguration configuration, string defaultTransportType)
@@ -289,18 +159,6 @@ static List<McpServerDefinition> GetServerDefinitions(IConfiguration configurati
             $"McpServers:{section.Key}",
             configuration[$"McpServers:{section.Key}:Transport:Type"] ?? defaultTransportType))
         .ToList();
-}
-
-static string FindWorkspaceRoot()
-{
-    var dir = new DirectoryInfo(AppContext.BaseDirectory);
-    for (var i = 0; i < 8 && dir is not null; i++, dir = dir.Parent)
-    {
-        if (Directory.Exists(Path.Combine(dir.FullName, "DotnetMultiAgents")))
-            return dir.FullName;
-    }
-
-    return AppContext.BaseDirectory;
 }
 
 static int? ParseIntArg(string[] args, string flag)
@@ -339,5 +197,3 @@ static IChatClient CreateChatClient(IConfiguration configuration)
         .UseFunctionInvocation()
         .Build();
 }
-
-internal sealed record McpServerDefinition(string Name, string ConfigPath, string TransportType);

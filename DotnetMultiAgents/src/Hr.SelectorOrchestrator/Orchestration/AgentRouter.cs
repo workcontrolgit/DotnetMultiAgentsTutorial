@@ -1,5 +1,6 @@
 // Orchestration/AgentRouter.cs
 using Microsoft.Extensions.AI;
+using Hr.ConsoleShared.Ai;
 
 namespace Hr.SelectorOrchestrator.Orchestration;
 
@@ -32,7 +33,7 @@ public sealed class AgentRouter(IChatClient chatClient, int? numCtx = null)
         };
 
         // No tools here — pure text classification keeps latency low.
-        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         var label = (response.Text ?? string.Empty).Trim().ToLowerInvariant();
 
         return label switch
@@ -43,20 +44,5 @@ public sealed class AgentRouter(IChatClient chatClient, int? numCtx = null)
             "compliance"      => AgentIntent.Compliance,
             _                 => AgentIntent.General,
         };
-    }
-
-    private static ChatOptions CreateChatOptions(int? numCtx)
-    {
-        var options = new ChatOptions();
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

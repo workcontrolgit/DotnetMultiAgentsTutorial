@@ -11,6 +11,11 @@
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.*" />
     <PackageReference Include="OllamaSharp" Version="5.*" />
     <PackageReference Include="ModelContextProtocol" Version="1.*" />
+    <PackageReference Include="Spectre.Console" Version="0.54.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hr.ConsoleShared\Hr.ConsoleShared.csproj" />
+    <ProjectReference Include="..\Hr.Mcp.Shared\Hr.Mcp.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

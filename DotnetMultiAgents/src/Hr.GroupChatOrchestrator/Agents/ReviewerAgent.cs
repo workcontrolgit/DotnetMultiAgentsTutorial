@@ -1,5 +1,6 @@
 // src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs
 using Microsoft.Extensions.AI;
+using Hr.ConsoleShared.Ai;
 
 namespace Hr.GroupChatOrchestrator.Agents;
 
@@ -21,7 +22,7 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
             new(ChatRole.User, $"Review the following job announcement draft:\n\n{draftText}"),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         return response.Text ?? string.Empty;
     }
 
@@ -52,22 +53,7 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
                 """),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         return response.Text ?? string.Empty;
-    }
-
-    private static ChatOptions CreateChatOptions(int? numCtx)
-    {
-        var options = new ChatOptions();
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

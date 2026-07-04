@@ -1,5 +1,6 @@
 // src/Hr.PipeOrchestrator/Pipeline/HrPipeline.cs
 using Hr.PipeOrchestrator.Agents;
+using Hr.ConsoleShared.Ai;
 using Microsoft.Extensions.AI;
 
 namespace Hr.PipeOrchestrator.Pipeline;
@@ -63,7 +64,7 @@ public sealed class HrPipeline(
                 $"Update announcement {announcementId} to status {statusLabel} with summary: {summary}"),
         };
 
-        var options = CreateChatOptions([updateStatusTool], numCtx);
+        var options = ChatOptionsFactory.Create([updateStatusTool], numCtx);
         var statusResponse = await statusClient.GetResponseAsync(
             statusMessages, options, ct);
 
@@ -87,20 +88,5 @@ public sealed class HrPipeline(
         Console.Write($"{prompt} (y/n): ");
         Console.ResetColor();
         return Console.ReadLine()?.Trim().Equals("y", StringComparison.OrdinalIgnoreCase) == true;
-    }
-
-    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
-    {
-        var options = new ChatOptions { Tools = [.. toolList] };
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

@@ -1,5 +1,6 @@
 // src/Hr.PipeOrchestrator/Agents/ComplianceAgent.cs
 using Microsoft.Extensions.AI;
+using Hr.ConsoleShared.Ai;
 
 namespace Hr.PipeOrchestrator.Agents;
 
@@ -23,27 +24,12 @@ public sealed class ComplianceAgent(IChatClient chatClient, IReadOnlyList<AITool
             new(ChatRole.User, $"Run a full OPM compliance check for position ID {positionId}."),
         };
 
-        var options = CreateChatOptions([.. tools], numCtx);
+        var options = ChatOptionsFactory.Create([.. tools], numCtx);
         var response = await chatClient.GetResponseAsync(
             messages, options, ct);
 
         var text = response.Text ?? string.Empty;
         var passed = text.Contains("COMPLIANCE_RESULT:PASSED", StringComparison.OrdinalIgnoreCase);
         return (text, passed);
-    }
-
-    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
-    {
-        var options = new ChatOptions { Tools = [.. toolList] };
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

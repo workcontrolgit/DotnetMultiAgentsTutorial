@@ -125,8 +125,20 @@ internal static class ConsoleRenderer
                 continue;
             }
 
+            if (IsHorizontalRule(line))
+            {
+                lines.Add(new Rule().RuleStyle("grey"));
+                continue;
+            }
+
+            if (TryBuildHeading(line, out var heading))
+            {
+                lines.Add(heading);
+                continue;
+            }
+
             if (IsBulletLine(line, out var bulletContent))
-                lines.Add(new Markup("  [grey]•[/] " + ConvertInlineBold(bulletContent)));
+                lines.Add(new Markup("  [grey]-[/] " + ConvertInlineBold(bulletContent)));
             else
                 lines.Add(new Markup(ConvertInlineBold(line)));
         }
@@ -147,14 +159,61 @@ internal static class ConsoleRenderer
         return false;
     }
 
+    private static bool IsHorizontalRule(string line)
+    {
+        var trimmed = line.Trim();
+        return trimmed.Length >= 3 && trimmed.All(c => c == '*' || c == '-' || char.IsWhiteSpace(c));
+    }
+
+    private static bool TryBuildHeading(string line, out IRenderable heading)
+    {
+        var trimmed = line.TrimStart();
+        var level = 0;
+        while (level < trimmed.Length && trimmed[level] == '#')
+            level++;
+
+        if (level is < 1 or > 6 || level >= trimmed.Length || !char.IsWhiteSpace(trimmed[level]))
+        {
+            heading = Text.Empty;
+            return false;
+        }
+
+        var headingText = trimmed[level..].Trim().Trim('*').Trim();
+        var color = level <= 3 ? "deepskyblue1" : "grey70";
+        heading = new Markup($"[bold {color}]{Markup.Escape(headingText)}[/]");
+        return true;
+    }
+
     private static string ConvertInlineBold(string text)
     {
-        var parts = text.Split("**");
+        var normalized = ConvertInlineEmphasis(text);
+        var parts = normalized.Split("**");
         var sb = new StringBuilder();
         for (var i = 0; i < parts.Length; i++)
             sb.Append(i % 2 == 0
                 ? Markup.Escape(parts[i])
                 : $"[bold]{Markup.Escape(parts[i])}[/]");
+        return sb.ToString();
+    }
+
+    private static string ConvertInlineEmphasis(string text)
+    {
+        var sb = new StringBuilder(text.Length);
+        var inEmphasis = false;
+
+        for (var i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '*' &&
+                (i == 0 || text[i - 1] != '*') &&
+                (i == text.Length - 1 || text[i + 1] != '*'))
+            {
+                inEmphasis = !inEmphasis;
+                continue;
+            }
+
+            sb.Append(text[i]);
+        }
+
         return sb.ToString();
     }
 

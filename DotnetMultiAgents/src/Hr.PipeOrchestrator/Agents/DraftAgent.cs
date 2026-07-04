@@ -1,5 +1,6 @@
 // src/Hr.PipeOrchestrator/Agents/DraftAgent.cs
 using Microsoft.Extensions.AI;
+using Hr.ConsoleShared.Ai;
 
 namespace Hr.PipeOrchestrator.Agents;
 
@@ -25,7 +26,7 @@ public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> too
             new(ChatRole.User, $"Generate and save a job announcement draft for position ID {positionId}."),
         };
 
-        var options = CreateChatOptions([.. tools], numCtx);
+        var options = ChatOptionsFactory.Create([.. tools], numCtx);
         var response = await chatClient.GetResponseAsync(
             messages, options, ct);
 
@@ -40,20 +41,5 @@ public sealed class DraftAgent(IChatClient chatClient, IReadOnlyList<AITool> too
         if (idx < 0) return null;
         var token = text[(idx + prefix.Length)..].Trim().Split([' ', '\n', '\r'], 2)[0];
         return int.TryParse(token, out var id) ? id : null;
-    }
-
-    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
-    {
-        var options = new ChatOptions { Tools = [.. toolList] };
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

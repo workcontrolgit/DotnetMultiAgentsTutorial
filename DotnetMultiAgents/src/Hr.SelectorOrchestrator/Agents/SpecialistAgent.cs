@@ -1,5 +1,6 @@
 // Agents/SpecialistAgent.cs
 using Microsoft.Extensions.AI;
+using Hr.ConsoleShared.Ai;
 
 namespace Hr.SelectorOrchestrator.Agents;
 
@@ -24,27 +25,12 @@ public sealed class SpecialistAgent(
             new(ChatRole.User, userQuery),
         };
 
-        var options = CreateChatOptions([.. tools], numCtx);
+        var options = ChatOptionsFactory.Create([.. tools], numCtx);
         var response = await chatClient.GetResponseAsync(
             messages,
             options,
             ct);
 
         return response.Text ?? string.Empty;
-    }
-
-    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
-    {
-        var options = new ChatOptions { Tools = [.. toolList] };
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

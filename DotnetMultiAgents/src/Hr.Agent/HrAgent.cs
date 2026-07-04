@@ -2,6 +2,7 @@
 using Microsoft.Extensions.AI;
 using Spectre.Console;
 using Spectre.Console.Rendering;
+using Hr.ConsoleShared.Exports;
 using System.Text;
 using System.Text.Json;
 
@@ -117,7 +118,7 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
                         _ => JsonSerializer.Serialize(rawResult)
                     };
 
-                    var saved = TrySaveExportFile(json, _outputFolder);
+                    var saved = ExportFileSaver.TrySaveExportFile(json, _outputFolder);
                     if (saved is not null)
                         rawResult = saved;
                 }
@@ -127,33 +128,6 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
             }
 
             response = await chatClient.GetResponseAsync(_history, options, ct);
-        }
-    }
-
-    private static string? TrySaveExportFile(string json, string outputFolder)
-    {
-        try
-        {
-            using var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
-            if (!root.TryGetProperty("fileName", out var fileNameEl) ||
-                !root.TryGetProperty("content", out var contentEl))
-                return null;
-
-            var fileName = fileNameEl.GetString();
-            var base64 = contentEl.GetString();
-            if (string.IsNullOrWhiteSpace(fileName) || string.IsNullOrWhiteSpace(base64))
-                return null;
-
-            var bytes = Convert.FromBase64String(base64);
-            Directory.CreateDirectory(outputFolder);
-            var fullPath = Path.GetFullPath(Path.Combine(outputFolder, fileName));
-            File.WriteAllBytes(fullPath, bytes);
-            return $"Saved to: {fullPath}";
-        }
-        catch (Exception ex)
-        {
-            return $"Export save failed: {ex.Message}";
         }
     }
 
@@ -304,8 +278,20 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
                 continue;
             }
 
+            if (IsHorizontalRule(line))
+            {
+                AnsiConsole.Write(new Rule().RuleStyle("grey"));
+                continue;
+            }
+
+            if (TryGetHeadingMarkup(line, out var headingMarkup))
+            {
+                AnsiConsole.MarkupLine(headingMarkup);
+                continue;
+            }
+
             if (IsBulletLine(line, out var bulletContent))
-                AnsiConsole.MarkupLine("  [grey]•[/] " + ConvertInlineBold(bulletContent));
+                AnsiConsole.MarkupLine("  [grey]-[/] " + ConvertInlineBold(bulletContent));
             else
                 AnsiConsole.MarkupLine(ConvertInlineBold(line));
         }
@@ -316,7 +302,7 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
     private static bool IsBulletLine(string line, out string content)
     {
         var t = line.TrimStart();
-        if (t.Length >= 2 && t[0] == '*' && char.IsWhiteSpace(t[1]))
+        if (t.Length >= 2 && (t[0] == '*' || t[0] == '-') && char.IsWhiteSpace(t[1]))
         {
             content = t[1..].TrimStart();
             return true;
@@ -326,14 +312,61 @@ public sealed class HrAgent(IChatClient chatClient, IList<AITool> tools, UiStyle
         return false;
     }
 
+    private static bool IsHorizontalRule(string line)
+    {
+        var trimmed = line.Trim();
+        return trimmed.Length >= 3 && trimmed.All(c => c == '*' || c == '-' || char.IsWhiteSpace(c));
+    }
+
+    private static bool TryGetHeadingMarkup(string line, out string headingMarkup)
+    {
+        var trimmed = line.TrimStart();
+        var level = 0;
+        while (level < trimmed.Length && trimmed[level] == '#')
+            level++;
+
+        if (level is < 1 or > 6 || level >= trimmed.Length || !char.IsWhiteSpace(trimmed[level]))
+        {
+            headingMarkup = string.Empty;
+            return false;
+        }
+
+        var headingText = trimmed[level..].Trim().Trim('*').Trim();
+        var color = level <= 3 ? "deepskyblue1" : "grey70";
+        headingMarkup = $"[bold {color}]{Markup.Escape(headingText)}[/]";
+        return true;
+    }
+
     private static string ConvertInlineBold(string text)
     {
-        var parts = text.Split("**");
+        var normalized = ConvertInlineEmphasis(text);
+        var parts = normalized.Split("**");
         var sb = new StringBuilder();
         for (var i = 0; i < parts.Length; i++)
             sb.Append(i % 2 == 0
                 ? Markup.Escape(parts[i])
                 : $"[bold]{Markup.Escape(parts[i])}[/]");
+        return sb.ToString();
+    }
+
+    private static string ConvertInlineEmphasis(string text)
+    {
+        var sb = new StringBuilder(text.Length);
+        var inEmphasis = false;
+
+        for (var i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '*' &&
+                (i == 0 || text[i - 1] != '*') &&
+                (i == text.Length - 1 || text[i + 1] != '*'))
+            {
+                inEmphasis = !inEmphasis;
+                continue;
+            }
+
+            sb.Append(text[i]);
+        }
+
         return sb.ToString();
     }
 

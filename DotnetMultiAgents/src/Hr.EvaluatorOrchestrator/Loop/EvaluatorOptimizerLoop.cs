@@ -1,6 +1,7 @@
 // src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs
 using Hr.EvaluatorOrchestrator.Agents;
 using Hr.EvaluatorOrchestrator.Models;
+using Hr.ConsoleShared.Ai;
 using Microsoft.Extensions.AI;
 
 namespace Hr.EvaluatorOrchestrator.Loop;
@@ -84,7 +85,7 @@ public sealed class EvaluatorOptimizerLoop(
             new(ChatRole.User,
                 $"Save this announcement for position ID {positionId}:\n\n{bestDraft}"),
         };
-        var saveOptions = CreateChatOptions([saveAnnouncementTool], numCtx);
+        var saveOptions = ChatOptionsFactory.Create([saveAnnouncementTool], numCtx);
         var saveResponse = await saverClient.GetResponseAsync(
             saveMessages, saveOptions, ct);
 
@@ -122,20 +123,5 @@ public sealed class EvaluatorOptimizerLoop(
     {
         var lines = result.Feedback.Select(kv => $"- {kv.Key}: {kv.Value}");
         return $"Previous attempt scored {result.Score}/100. Specific weaknesses to address:\n{string.Join("\n", lines)}";
-    }
-
-    private static ChatOptions CreateChatOptions(IReadOnlyList<AITool> toolList, int? numCtx)
-    {
-        var options = new ChatOptions { Tools = [.. toolList] };
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
     }
 }

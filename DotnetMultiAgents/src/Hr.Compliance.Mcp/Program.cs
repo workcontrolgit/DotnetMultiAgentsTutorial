@@ -4,6 +4,7 @@ using Hr.Application.Services;
 using Hr.Compliance.Mcp.Rules;
 using Hr.Compliance.Mcp.Tools;
 using Hr.Infrastructure;
+using Hr.Mcp.Shared.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -112,7 +113,7 @@ try
 
     await app.RunAsync();
 }
-catch (IOException ex) when (!useStdio && TryDescribePortConflict(ex, tempConfig, out var conflictMessage))
+catch (IOException ex) when (!useStdio && PortConflictHelper.TryDescribePortConflict(ex, tempConfig, "McpServer:Transport:StreamHttp:Url", "http://localhost:5200", out var conflictMessage))
 {
     Log.Fatal(ex, "{ConflictMessage}", conflictMessage);
     Console.Error.WriteLine(conflictMessage);
@@ -137,40 +138,3 @@ static void ConfigureCommonServices(IServiceCollection services, IConfiguration 
     services.AddSingleton<OpmRuleEngine>();
 }
 
-static bool TryDescribePortConflict(IOException ex, IConfiguration configuration, out string message)
-{
-    var mcpUrl =
-        configuration["McpServer:Transport:StreamHttp:Url"] ??
-        configuration["Urls"] ??
-        "http://localhost:5200";
-
-    if (!Uri.TryCreate(mcpUrl.Split(';', StringSplitOptions.RemoveEmptyEntries)[0], UriKind.Absolute, out var uri))
-    {
-        message = "The MCP stream HTTP URL is invalid. Check McpServer:Transport:StreamHttp:Url or Urls.";
-        return true;
-    }
-
-    if (!ex.Message.Contains(uri.ToString(), StringComparison.OrdinalIgnoreCase) &&
-        !ex.Message.Contains("address already in use", StringComparison.OrdinalIgnoreCase))
-    {
-        message = string.Empty;
-        return false;
-    }
-
-    var conflict = IPGlobalProperties.GetIPGlobalProperties()
-        .GetActiveTcpListeners()
-        .FirstOrDefault(endpoint =>
-            endpoint.Port == uri.Port &&
-            (IPAddress.IsLoopback(endpoint.Address) || endpoint.Address.Equals(IPAddress.Any) || endpoint.Address.Equals(IPAddress.IPv6Any)));
-
-    if (conflict is null)
-    {
-        message =
-            $"Port {uri.Port} is already in use. Stop the existing listener or change the configured MCP server URL.";
-        return true;
-    }
-
-    message =
-        $"Port {uri.Port} is already in use. Stop the running server or change the configured URL before starting another instance.";
-    return true;
-}

@@ -1,6 +1,7 @@
 // src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs
 using System.Text.Json;
 using Hr.EvaluatorOrchestrator.Models;
+using Hr.ConsoleShared.Ai;
 using Microsoft.Extensions.AI;
 
 namespace Hr.EvaluatorOrchestrator.Agents;
@@ -32,7 +33,7 @@ public sealed class EvaluatorAgent(IChatClient chatClient, int? numCtx = null)
             new(ChatRole.User, $"Evaluate this job announcement:\n\n{draftText}"),
         };
 
-        var response = await chatClient.GetResponseAsync(messages, CreateChatOptions(numCtx), ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         var json = (response.Text ?? "{}").Trim();
 
         try
@@ -51,21 +52,5 @@ public sealed class EvaluatorAgent(IChatClient chatClient, int? numCtx = null)
             });
         }
     }
-
-    private static ChatOptions CreateChatOptions(int? numCtx)
-    {
-        var options = new ChatOptions();
-        if (numCtx.HasValue)
-        {
-            var additional = new AdditionalPropertiesDictionary
-            {
-                ["num_ctx"] = numCtx.Value
-            };
-            options.AdditionalProperties = additional;
-        }
-
-        return options;
-    }
-
     private sealed record EvaluationResultDto(int Score, Dictionary<string, string> Feedback);
 }
