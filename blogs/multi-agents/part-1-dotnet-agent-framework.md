@@ -30,7 +30,7 @@ In this project, the local Ollama backend is provided by `OllamaSharp`:
 IChatClient BuildClient(bool withFunctionInvocation)
 {
     var builder = ((IChatClient)new OllamaApiClient(
-            new Uri("http://localhost:11434"), "llama3.2"))
+            new Uri("http://localhost:11434"), "gemma4"))
         .AsBuilder();
 
     if (withFunctionInvocation)
@@ -66,13 +66,11 @@ The agent's tools come from two MCP servers. Connecting to each is three lines:
 
 ```csharp
 // src/Hr.SelectorOrchestrator/Program.cs
+var hrServer = new McpServerDefinition("Hr", "McpServers:Hr",
+    configuration["McpServers:Hr:Transport:Type"] ?? "stdio");
+
 await using var hrMcpClient = await McpClient.CreateAsync(
-    new HttpClientTransport(new HttpClientTransportOptions
-    {
-        Endpoint          = new Uri("http://localhost:5100/mcp"),
-        AdditionalHeaders = new Dictionary<string, string>
-            { ["Authorization"] = $"Bearer {accessToken}" }
-    }));
+    await McpClientTransportFactory.CreateAsync(configuration, hrServer));
 
 var hrTools = (await hrMcpClient.ListToolsAsync()).Cast<AITool>().ToList();
 ```
@@ -89,6 +87,22 @@ Console.WriteLine($"HR tools: {string.Join(", ", hrTools.Select(t => t.Name))}")
 ```
 
 The same pattern repeats for the compliance server at port 5200, yielding 5 more tools.
+
+---
+
+## Transport Abstraction: McpClientTransportFactory
+
+The `McpClientTransportFactory` in `Hr.Mcp.Shared` decouples the orchestrator from transport details. It reads `Transport:Type` from `appsettings.json` — `"stdio"` or `"streamHttp"` — and constructs the right `IClientTransport`:
+
+- `"stdio"` — spawns the MCP server as a child process using `StdioClientTransport`. The server starts when the orchestrator starts and dies when it exits. No separate terminal needed.
+- `"streamHttp"` — connects to a pre-running server using `HttpClientTransport` with `HttpTransportMode.StreamableHttp`.
+
+```csharp
+// Hr.Mcp.Shared/Client/McpServerDefinition.cs
+public sealed record McpServerDefinition(string Name, string ConfigPath, string TransportType);
+```
+
+Switching from stdio to HTTP is a one-line config change. Orchestrator code is identical in both modes.
 
 ---
 
@@ -111,7 +125,8 @@ public sealed class SpecialistAgent(
     string name,
     string systemPrompt,
     IChatClient chatClient,
-    IReadOnlyList<AITool> tools)
+    IReadOnlyList<AITool> tools,
+    int? numCtx = null)
 {
     public string Name { get; } = name;
 
@@ -122,10 +137,8 @@ public sealed class SpecialistAgent(
             new(ChatRole.System, systemPrompt),
             new(ChatRole.User, userQuery),
         };
-        var response = await chatClient.GetResponseAsync(
-            messages,
-            new ChatOptions { Tools = [.. tools] },
-            ct);
+        var options = ChatOptionsFactory.Create([.. tools], numCtx);
+        var response = await chatClient.GetResponseAsync(messages, options, ct);
         return response.Text ?? string.Empty;
     }
 }
@@ -154,7 +167,8 @@ var jobDescriptionAgent = new SpecialistAgent(
           or use GetPositionById if they gave you the title.
         """,
     chatClient: agentClient,
-    tools: jdTools);
+    tools: jdTools,
+    numCtx: numCtx);
 ```
 
 Five tools. A 60-word system prompt. That is the entire job description specialist.
@@ -178,7 +192,8 @@ var complianceAgent = new SpecialistAgent(
         - For failures, suggest specific corrections.
         """,
     chatClient: agentClient,
-    tools: complianceAgentTools);
+    tools: complianceAgentTools,
+    numCtx: numCtx);
 ```
 
 Seven compliance tools plus two HR tools. A different 70-word prompt. The two agents share the same `agentClient` instance — the underlying `IChatClient` is stateless.

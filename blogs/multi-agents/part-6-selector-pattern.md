@@ -32,11 +32,10 @@ private static readonly string RouterSystemPrompt = """
     You are an intent classifier for an HR assistant application.
     Given a user's message, classify it into exactly one of these categories:
 
-    position_search  — The user wants to list, find, filter, or read job positions.
-    job_description  — The user wants to write, draft, or generate a job description.
-    org_summary      — The user wants information about hiring organizations or departments.
-    compliance       — The user wants to check OPM compliance, validate pay grades,
-                       or verify a job posting meets federal standards.
+    position_search  — The user wants to list, find, filter, or read details about job positions or openings.
+    job_description  — The user wants to write, draft, generate, or review a job description for a role.
+    org_summary      — The user wants information about hiring organizations, departments, or agency structures.
+    compliance       — The user wants to check OPM compliance, validate a pay grade, check announcement rules, or verify a job posting meets federal standards.
     general          — Anything else: greetings, clarifications, off-topic messages.
 
     Reply with ONLY the category label — no explanation, no punctuation, no extra words.
@@ -50,7 +49,7 @@ public async Task<AgentIntent> ClassifyAsync(string userQuery, CancellationToken
         new(ChatRole.User, userQuery),
     };
 
-    var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+    var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
     var label = (response.Text ?? string.Empty).Trim().ToLowerInvariant();
 
     return label switch
@@ -97,7 +96,8 @@ var positionSearchAgent = new SpecialistAgent(
         - Be concise; offer to go deeper when the user wants more detail.
         """,
     chatClient: agentClient,
-    tools: positionTools);
+    tools: positionTools,
+    numCtx: numCtx);
 ```
 
 The compliance specialist:
@@ -119,7 +119,8 @@ var complianceAgent = new SpecialistAgent(
         - For failures, suggest specific corrections.
         """,
     chatClient: agentClient,
-    tools: complianceAgentTools);
+    tools: complianceAgentTools,
+    numCtx: numCtx);
 ```
 
 The full tool assignment across all five agents:
@@ -182,13 +183,6 @@ The loop is 30 lines. The complexity is in the configuration — the prompts and
 Start all three components:
 
 ```bash
-# Terminal 1
-dotnet run --project src/Hr.Jobs.Mcp
-
-# Terminal 2
-dotnet run --project src/Hr.Compliance.Mcp
-
-# Terminal 3
 dotnet run --project src/Hr.SelectorOrchestrator
 ```
 

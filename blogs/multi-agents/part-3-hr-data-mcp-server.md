@@ -4,9 +4,9 @@
 
 ---
 
-Part 2 defined the clean architecture — domain at the center, AI infrastructure at the edge — and set up the SQL Server database with seeded HR position data. With the layer boundaries in place and the data ready, the next step is building the tools agents will actually call. This part walks through `Hr.Jobs.Mcp`, the HR data MCP server that exposes nine tools across position queries, job description generation, and announcement persistence.
+Part 2 defined the clean architecture — domain at the center, AI infrastructure at the edge — and set up the SQL Server database with seeded HR position data. With the layer boundaries in place and the data ready, the next step is building the tools agents will actually call. This part walks through `Hr.Jobs.Mcp`, the HR data MCP server that exposes fourteen tools across position queries, export utilities, job description generation, and announcement persistence.
 
-The HR data MCP server (`Hr.Jobs.Mcp`) is the workhorse of the system. It exposes 9 tools across three categories: position queries, job description generation, and announcement persistence. It runs on port 5100, and every specialist agent that touches HR data connects to it.
+The HR data MCP server (`Hr.Jobs.Mcp`) is the workhorse of the system. It exposes tools across four categories: position queries, export utilities, job description generation, and announcement persistence. It runs on port 5100, and every specialist agent that touches HR data connects to it.
 
 This post walks through how it is built — from project setup through tool definitions — and shows how to test every tool with MCP Inspector before writing a single line of orchestrator code.
 
@@ -32,12 +32,15 @@ builder.Services
     .AddMcpServer()
     .WithTools<PositionTools>()
     .WithTools<HiringOrganizationTools>()
+    .WithTools<ExportTools>()
     .WithTools<JobDescriptionTools>()
     .WithTools<JobAnnouncementTools>()
     .WithHttpTransport();
 ```
 
-Each tool class is registered separately. MCP Inspector and any MCP client will see all 9 tools from all 4 classes as a flat list.
+Each tool class is registered separately. MCP Inspector and any MCP client will see all tools from all 5 classes as a flat list.
+
+`ExportTools` provides three additional tools — `ExportPositionToWord`, `ExportDraftToWord`, and `ExportPositionsToExcel` — that convert HR data and announcement drafts to Office document formats. They are used by the `Hr.Agent` baseline but are available to any connected client.
 
 ---
 
@@ -218,7 +221,7 @@ Open MCP Inspector:
 npx @modelcontextprotocol/inspector http://localhost:5100/mcp
 ```
 
-You will see all 9 tools listed. Test the core workflow:
+You will see all 14 tools listed. Test the core workflow:
 
 **1. List open positions**
 
