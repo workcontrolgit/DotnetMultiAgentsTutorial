@@ -221,7 +221,7 @@ Open MCP Inspector:
 npx @modelcontextprotocol/inspector http://localhost:5100/mcp
 ```
 
-You will see all 9 tools listed. Test the core workflow:
+You will see all 14 tools listed. Test the core workflow:
 
 **1. List open positions**
 
