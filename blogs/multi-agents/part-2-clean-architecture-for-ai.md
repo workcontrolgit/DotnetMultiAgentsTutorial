@@ -209,7 +209,7 @@ This is the same service boundary principle you use with microservices, applied 
 
 ```
 Hr.SelectorOrchestrator
-  ├── connects to Hr.Jobs.Mcp :5100  (9 tools)
+  ├── connects to Hr.Jobs.Mcp :5100  (14 tools)
   └── connects to Hr.Compliance.Mcp :5200  (5 tools)
 
 Hr.Jobs.Mcp                    Hr.Compliance.Mcp
@@ -217,6 +217,25 @@ Hr.Jobs.Mcp                    Hr.Compliance.Mcp
 ```
 
 Both servers point to the same LocalDB connection string. In production you would use a shared SQL Server instance or separate the schemas. For local development, one database instance is simpler.
+
+---
+
+## Shared Infrastructure Libraries
+
+Two library projects sit between the domain layer and the orchestrators, extracting shared concerns so they are not duplicated across all four orchestrator `Program.cs` files.
+
+`Hr.ConsoleShared` provides:
+- `StartupBannerWriter` — prints the transport mode, model, and loaded tool list on startup
+- `ExportFileSaver` — saves base64-encoded export payloads from MCP tool responses to disk
+- `ChatOptionsFactory` — creates `ChatOptions` with a tool list and optional `num_ctx` context window in one call
+
+`Hr.Mcp.Shared` provides:
+- `McpServerDefinition` — a record holding a server's name, config path, and transport type
+- `McpClientTransportFactory` — reads `Transport:Type` from config and constructs either `StdioClientTransport` or `HttpClientTransport`
+- `WorkspaceRootLocator` — resolves the repository root path for stdio transport's working directory
+- `PortConflictHelper` — produces a clear error message when an HTTP server port is already in use
+
+Every orchestrator and the standalone agent reference both projects. The domain and application layers do not — they have no dependency on console or transport concerns.
 
 ---
 
@@ -240,7 +259,7 @@ The LLM being infrastructure means it is also mockable. A test that verifies `Jo
 git clone https://github.com/workcontrolgit/DotnetMultiAgentsTutorial.git
 cd DotnetMultiAgentsTutorial/DotnetMultiAgents
 
-# Build all 7 projects
+# Build all 9 projects
 dotnet build DotnetMultiAgents.slnx
 
 # Apply EF migrations and seed data
