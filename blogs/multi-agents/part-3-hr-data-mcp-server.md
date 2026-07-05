@@ -4,7 +4,7 @@
 
 ---
 
-Part 2 defined the clean architecture — domain at the center, AI infrastructure at the edge — and set up the SQL Server database with seeded HR position data. With the layer boundaries in place and the data ready, the next step is building the tools agents will actually call. This part walks through `Hr.Jobs.Mcp`, the HR data MCP server that exposes nine tools across position queries, job description generation, and announcement persistence.
+Part 2 defined the clean architecture — domain at the center, AI infrastructure at the edge — and set up the SQL Server database with seeded HR position data. With the layer boundaries in place and the data ready, the next step is building the tools agents will actually call. This part walks through `Hr.Jobs.Mcp`, the HR data MCP server that exposes fourteen tools across position queries, export utilities, job description generation, and announcement persistence.
 
 The HR data MCP server (`Hr.Jobs.Mcp`) is the workhorse of the system. It exposes tools across four categories: position queries, export utilities, job description generation, and announcement persistence. It runs on port 5100, and every specialist agent that touches HR data connects to it.
 
