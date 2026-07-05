@@ -49,8 +49,8 @@ public async Task<string> GenerateAsync(
         new(ChatRole.User, $"Generate a job announcement for position ID {positionId}."),
     };
 
-    var response = await chatClient.GetResponseAsync(
-        messages, new ChatOptions { Tools = [.. tools] }, ct);
+    var options = ChatOptionsFactory.Create([.. tools], numCtx);
+    var response = await chatClient.GetResponseAsync(messages, options, ct);
     return response.Text ?? string.Empty;
 }
 ```
@@ -83,7 +83,7 @@ The response is parsed into a typed model:
 ```csharp
 public async Task<EvaluationResult> EvaluateAsync(string draftText, CancellationToken ct = default)
 {
-    var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+    var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
     var json = (response.Text ?? "{}").Trim();
 
     try
@@ -176,10 +176,6 @@ The threshold (80) and max iterations (3) are constructor parameters. Tighten th
 ## A Full Demo Run
 
 ```bash
-# Terminal 1
-dotnet run --project src/Hr.Jobs.Mcp
-
-# Terminal 2
 dotnet run --project src/Hr.EvaluatorOrchestrator
 ```
 
