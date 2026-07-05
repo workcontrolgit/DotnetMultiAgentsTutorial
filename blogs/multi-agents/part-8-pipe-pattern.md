@@ -71,12 +71,11 @@ The return type `(string Reply, int? AnnouncementId)` makes the null case explic
 ```csharp
 // The agent's system prompt instructs it to produce a structured reply:
 new(ChatRole.System, """
-    You are a federal HR compliance checker operating in an automated pipeline.
-    When given a position ID:
-    1. Call RunFullComplianceCheck to run all 7 OPM compliance rules.
-    2. Return the full compliance report.
-    3. On its own line at the end, write either: COMPLIANCE_RESULT:PASSED or COMPLIANCE_RESULT:FAILED
-    Do not ask questions. Run the check and report immediately.
+    You are a federal HR compliance specialist operating in an automated pipeline.
+    Run RunFullComplianceCheck for the given position ID and report all results clearly.
+    End your reply with exactly one of these lines (no extra text after it):
+    COMPLIANCE_RESULT:PASSED
+    COMPLIANCE_RESULT:FAILED
     """),
 ```
 
@@ -125,7 +124,7 @@ public async Task RunAsync(int positionId, CancellationToken ct = default)
     };
 
     var statusResponse = await statusClient.GetResponseAsync(
-        statusMessages, new ChatOptions { Tools = [updateStatusTool] }, ct);
+        statusMessages, ChatOptionsFactory.Create([updateStatusTool], numCtx), ct);
 
     Console.WriteLine($"\n{statusResponse.Text}\n");
     Console.ForegroundColor = passed ? ConsoleColor.Green : ConsoleColor.Red;
@@ -147,13 +146,6 @@ The `statusClient` and `updateStatusTool` are injected separately from the Stage
 ## Running the Pipeline
 
 ```bash
-# Terminal 1
-dotnet run --project src/Hr.Jobs.Mcp
-
-# Terminal 2
-dotnet run --project src/Hr.Compliance.Mcp
-
-# Terminal 3
 dotnet run --project src/Hr.PipeOrchestrator
 ```
 
