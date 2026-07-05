@@ -1,0 +1,196 @@
+<h3>Part 6 — The Selector Pattern: Routing to Specialists</h3>
+<p><em><a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Building Multi-Agent Systems with .NET 10 Blog Series</a></em></p>
+<p>Part 5 added the <code>JobAnnouncement</code> entity and its lifecycle — Draft, CompliancePassed, ComplianceFailed, Published — giving every generated draft a persistent home in the database that survives beyond the session. With fourteen tools across two MCP servers and a persistence layer in place, the infrastructure is complete. This part wires all of it together into the first multi-agent system using the Selector pattern.</p>
+<p>Parts 3 through 5 built the tools — two MCP servers with 14 tools between them, covering HR data queries, job description generation, compliance checking, and announcement persistence. This post wires them together into a multi-agent system using the Selector pattern.</p>
+<p>The Selector pattern is the simplest of the four multi-agent patterns and the right starting point for most real systems. One router classifies each user message. One specialist handles each turn. No parallelism, no feedback loops — just clean delegation.</p>
+<h3>The Three Components</h3>
+<p><strong>AgentRouter</strong> — classifies intent. Uses the LLM as a text classifier: no tools, low latency, single label output.</p>
+<p><strong>SpecialistAgent</strong> — handles one category of query. Focused system prompt, small tool subset, full function invocation.</p>
+<p><strong>HrOrchestrator</strong> — the selector loop. Reads user input, asks the router which agent should handle it, delegates, returns the response.</p>
+<h3>AgentRouter: LLM as a Classifier</h3>
+<p>The router's system prompt defines exactly 5 categories and demands a single label in return:</p>
+<pre><code>// src/Hr.SelectorOrchestrator/Orchestration/AgentRouter.cs
+private static readonly string RouterSystemPrompt = """
+    You are an intent classifier for an HR assistant application.
+    Given a user's message, classify it into exactly one of these categories:
+
+    position_search  — The user wants to list, find, filter, or read details about job positions or openings.
+    job_description  — The user wants to write, draft, generate, or review a job description for a role.
+    org_summary      — The user wants information about hiring organizations, departments, or agency structures.
+    compliance       — The user wants to check OPM compliance, validate a pay grade, check announcement rules, or verify a job posting meets federal standards.
+    general          — Anything else: greetings, clarifications, off-topic messages.
+
+    Reply with ONLY the category label — no explanation, no punctuation, no extra words.
+    """;
+
+public async Task&lt;AgentIntent&gt; ClassifyAsync(string userQuery, CancellationToken ct = default)
+{
+    var messages = new List&lt;ChatMessage&gt;
+    {
+        new(ChatRole.System, RouterSystemPrompt),
+        new(ChatRole.User, userQuery),
+    };
+
+    var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
+    var label = (response.Text ?? string.Empty).Trim().ToLowerInvariant();
+
+    return label switch
+    {
+        "position_search" =&gt; AgentIntent.PositionSearch,
+        "job_description" =&gt; AgentIntent.JobDescription,
+        "org_summary"     =&gt; AgentIntent.OrgSummary,
+        "compliance"      =&gt; AgentIntent.Compliance,
+        _                 =&gt; AgentIntent.General,
+    };
+}</code></pre>
+<p>Three design choices to notice:</p>
+<p><strong>No tools on the router.</strong> The router <code>IChatClient</code> is built without <code>UseFunctionInvocation()</code>. This saves the overhead of scanning tool definitions on every classification call.</p>
+<p><strong>Fallback to General.</strong> Any label the LLM returns that is not one of the four known labels maps to <code>AgentIntent.General</code>. Unexpected model behavior degrades gracefully.</p>
+<p><strong>Separate model budget.</strong> The router and the specialist agents use the same <code>OllamaApiClient</code> configuration here, but they are built as separate <code>IChatClient</code> instances. In production you could route classification to a smaller, faster model (e.g., llama3.2:1b) while specialists use a larger, more capable one — one line change per client.</p>
+<h3>SpecialistAgent: Focused Prompt, Scoped Tools</h3>
+<p>All five specialists share the same <code>SpecialistAgent</code> class. The difference between them is entirely in what you pass to the constructor.</p>
+<p>The position search specialist:</p>
+<pre><code>var positionTools = hrTools
+    .Where(t =&gt; t.Name is "GetOpenPositions" or "GetPositionById"
+                       or "GetPositionsByOrganization" or "GetHiringOrganizations")
+    .ToList();  // 4 tools
+
+var positionSearchAgent = new SpecialistAgent(
+    name: "PositionSearch",
+    systemPrompt: """
+        You are a federal job search assistant. Help users find and understand open positions.
+        - Use GetOpenPositions to list all open roles.
+        - Use GetHiringOrganizations then GetPositionsByOrganization to scope by department.
+        - Use GetPositionById for full detail on a specific role.
+        - Present pay ranges in a readable format (e.g., "$68,000 – $107,000 per year").
+        - Be concise; offer to go deeper when the user wants more detail.
+        """,
+    chatClient: agentClient,
+    tools: positionTools,
+    numCtx: numCtx);</code></pre>
+<p>The compliance specialist:</p>
+<pre><code>var complianceAgentTools = complianceTools  // 5 compliance tools
+    .Concat(hrTools.Where(t =&gt; t.Name is "GetPositionById" or "UpdateAnnouncementStatus"))
+    .ToList();  // 7 tools total
+
+var complianceAgent = new SpecialistAgent(
+    name: "OPMCompliance",
+    systemPrompt: """
+        You are a federal HR compliance specialist. Check whether positions meet OPM standards.
+        - Use RunFullComplianceCheck for a complete 7-rule report.
+        - If the user provides an announcement ID, call UpdateAnnouncementStatus after
+          the check completes — set status to CompliancePassed or ComplianceFailed
+          and include a brief compliance summary.
+        - Clearly state PASS, WARNING, or FAIL for each rule.
+        - For failures, suggest specific corrections.
+        """,
+    chatClient: agentClient,
+    tools: complianceAgentTools,
+    numCtx: numCtx);</code></pre>
+<p>The full tool assignment across all five agents:</p>
+<ul><li><strong>PositionSearch</strong>: GetOpenPositions, GetPositionById, GetPositionsByOrganization, GetHiringOrganizations — 4 tools</li><li><strong>JobDescription</strong>: WriteJobDescription, GetPositionById, SaveJobAnnouncement, GetJobAnnouncement, ListJobAnnouncements — 5 tools</li><li><strong>OrgSummary</strong>: GetHiringOrganizations, GetPositionsByOrganization — 2 tools</li><li><strong>OPMCompliance</strong>: RunFullComplianceCheck, ValidatePayGrade, CheckApplicationPeriod, GetOPMStandard, ListOPMSeries, GetPositionById, UpdateAnnouncementStatus — 7 tools</li><li><strong>General</strong>: no tools — answers from LLM knowledge only</li></ul>
+<p>Maximum tools any single agent sees: 7. Total tools across both servers: 14. The agents collectively cover all 14, but no individual agent is burdened with the full set.</p>
+<h3>HrOrchestrator: The Selector Loop</h3>
+<pre><code>// src/Hr.SelectorOrchestrator/Orchestration/HrOrchestrator.cs
+public async Task RunAsync(CancellationToken ct = default)
+{
+    Console.WriteLine("HR Orchestrator ready. Type 'exit' to quit.\n");
+
+    while (!ct.IsCancellationRequested)
+    {
+        Console.Write("You: ");
+        var input = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(input)) continue;
+        if (input.Equals("exit", StringComparison.OrdinalIgnoreCase)) break;
+
+        // Step 1 — classify intent
+        var intent = await router.ClassifyAsync(input, ct);
+        var agent  = SelectAgent(intent);
+
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine($"[Router → {agent.Name}]");
+        Console.ResetColor();
+
+        // Step 2 — delegate to specialist
+        var reply = await agent.HandleAsync(input, ct);
+        Console.WriteLine($"\nAssistant ({agent.Name}): {reply}\n");
+    }
+}
+
+private SpecialistAgent SelectAgent(AgentIntent intent) =&gt; intent switch
+{
+    AgentIntent.PositionSearch =&gt; positionSearchAgent,
+    AgentIntent.JobDescription =&gt; jobDescriptionAgent,
+    AgentIntent.OrgSummary     =&gt; orgSummaryAgent,
+    AgentIntent.Compliance     =&gt; complianceAgent,
+    _                          =&gt; generalAgent,
+};</code></pre>
+<p>The loop is 30 lines. The complexity is in the configuration — the prompts and tool subsets — not in the orchestration logic.</p>
+<h3>A Full Demo Conversation</h3>
+<p>Start all three components:</p>
+<pre><code>dotnet run --project src/Hr.SelectorOrchestrator</code></pre>
+<pre><code>HR Orchestrator ready. Type 'exit' to quit.
+
+You: What IT Specialist positions are currently open?
+[Router → PositionSearch]
+Assistant (PositionSearch): I found 12 open IT Specialist positions. Here are the highlights:
+  - IT Specialist (APPSW), GS-11–12, $73,000–$115,000, Washington DC, DHS
+  - IT Specialist (INFOSEC), GS-12–13, $89,000–$136,000, Arlington VA, DoD
+  ...
+
+You: Write a job description for position 7 and save it
+[Router → JobDescription]
+Assistant (JobDescription): I've generated and saved the job announcement for position 7.
+
+  Announcement ID: 4 | Status: Draft | Generated: 2026-05-08 06:14 UTC
+
+  ## Summary
+  Join the Department of Homeland Security as an IT Specialist (APPSW) at the GS-12 level...
+
+  ## Duties
+  - You will design and implement enterprise software applications...
+  - You will lead code reviews and mentor junior developers...
+  ...
+
+You: Check if position 7 passes OPM compliance — announcement ID is 4
+[Router → OPMCompliance]
+Assistant (OPMCompliance): I ran the full OPM compliance check for position 7.
+
+  Overall: PASS
+
+  RequiredFields:        PASS
+  PayGradeRange:         PASS
+  PayGradeAlignment:     PASS — GS-12 is within allowed range for series 2210 (GS-05 to GS-15)
+  ApplicationPeriod:     PASS — 22 business days (well above the 5-day minimum)
+  QualificationsGrade:   PASS — qualifications text references GS-12
+  SecurityClearance:     PASS — Secret clearance disclosed in qualifications
+  WhoMayApply:           PASS — "U.S. Citizens" is a recognized category
+
+  I've updated announcement 4 to CompliancePassed.
+
+You: How many organizations are hiring for IT roles?
+[Router → OrgSummary]
+Assistant (OrgSummary): 8 organizations currently have open IT Specialist positions:
+  - Department of Homeland Security: 12 open IT roles
+  - Department of Defense: 9 open IT roles
+  ...
+
+You: Thanks, that's all for now
+[Router → General]
+Assistant (General): You're welcome! I can help with position searches, job description
+writing, OPM compliance checks, and organization summaries whenever you need.</code></pre>
+<p>Five queries. Five different agents. The router got every one right. The draft was generated, saved, and compliance-checked — and announcement 4 is in the database with status <code>CompliancePassed</code>, ready for the next session.</p>
+<h3>Cost Optimisation Notes</h3>
+<p>In this implementation, router and specialists use the same Ollama model. In production you would differentiate:</p>
+<p>The router's classification task is simple. A 1B parameter model handles it reliably. The specialist agents handle complex tool selection and multi-step reasoning — they benefit from a larger, more capable model. Routing 100% of classification calls to a smaller model while only specialist calls use the larger model can cut token spend significantly without visible quality loss on routing.</p>
+<p>The <code>BuildClient</code> helper in <code>Program.cs</code> already separates the two client instances. Swapping the router to a different model is a one-line change.</p>
+<h3>What Comes Next</h3>
+<p>The Selector orchestrator works — but it required writing a router, five specialist agents, and an orchestration loop. Part 7 shows an alternative: connect the same two MCP servers unchanged to Claude Desktop and let Claude act as the orchestrator. Same results, zero orchestrator code — and a clear picture of when each approach is the right choice.</p>
+<p>← <a href="https://medium.com/scrum-and-coke/part-5-persisting-ai-artifacts-the-jobannouncement-lifecycle-d51ac226ff82">Part 5 — Persisting AI Artifacts</a> &nbsp;|&nbsp; <a href="https://medium.com/scrum-and-coke/part-7-claude-desktop-as-your-multi-agent-platform-fb51901e7cc3">Part 7 — Claude Desktop as Multi-Agent Platform →</a></p>
+<h3>References</h3>
+<h4>NuGet Packages</h4>
+<ul><li><a href="https://www.nuget.org/packages/Microsoft.Extensions.AI">Microsoft.Extensions.AI</a> — <code>IChatClient</code>, <code>UseFunctionInvocation</code> middleware, <code>AITool</code></li><li><a href="https://www.nuget.org/packages/OllamaSharp">OllamaSharp</a> — <code>OllamaApiClient</code> for router and specialist agents</li><li><a href="https://www.nuget.org/packages/ModelContextProtocol.Core">ModelContextProtocol.Core</a> — <code>McpClient.CreateAsync</code>, <code>HttpClientTransport</code>, <code>McpClientTool</code></li></ul>
+<h4>Microsoft Documentation</h4>
+<ul><li><a href="https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai">Microsoft.Extensions.AI overview</a> — IChatClient, middleware pipeline</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.ai.ichatclient">IChatClient interface</a> — Full API reference including <code>GetResponseAsync</code></li></ul>
+<h4>GitHub</h4>
+<ul><li><a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a> — Full source for all patterns in this series</li><li><a href="https://github.com/modelcontextprotocol/csharp-sdk">modelcontextprotocol/csharp-sdk</a> — Official C# MCP SDK</li></ul>

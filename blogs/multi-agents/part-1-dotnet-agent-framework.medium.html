@@ -1,0 +1,149 @@
+<h3>Part 1 — The .NET Agent Framework: IChatClient and MCP Clients</h3>
+<p><em><a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Building Multi-Agent Systems with .NET 10 Blog Series</a></em></p>
+<p>If you have built an agent before, you have used <code>IChatClient</code>. You may have treated it as a thin wrapper around an HTTP call to Ollama or OpenAI. In a multi-agent system, it is much more than that — it is the abstraction that lets you run 5 agents backed by 5 different model configurations, all with a single line of code change.</p>
+<p>This post unpacks the abstractions beneath a multi-agent system: <code>IChatClient</code>, the <code>UseFunctionInvocation</code> middleware, and the MCP client that turns remote tool servers into local tool lists. By the end you will understand exactly what happens between "user types a message" and "agent calls a tool."</p>
+<h3>IChatClient: The Universal Agent Primitive</h3>
+<p><code>IChatClient</code> is the core interface from <code>Microsoft.Extensions.AI</code>. Its fundamental method is:</p>
+<pre><code>Task&lt;ChatResponse&gt; GetResponseAsync(
+    IEnumerable&lt;ChatMessage&gt; messages,
+    ChatOptions? options = null,
+    CancellationToken cancellationToken = default);</code></pre>
+<p>That is the entire contract. Messages in, response out. Every LLM backend — Ollama, OpenAI, Azure OpenAI, Anthropic — implements this interface identically from the caller's perspective.</p>
+<p>In this project, the local Ollama backend is provided by <code>OllamaSharp</code>:</p>
+<pre><code>// src/Hr.SelectorOrchestrator/Program.cs
+IChatClient BuildClient(bool withFunctionInvocation)
+{
+    var builder = ((IChatClient)new OllamaApiClient(
+            new Uri("http://localhost:11434"), "gemma4"))
+        .AsBuilder();
+
+    if (withFunctionInvocation)
+        builder.UseFunctionInvocation();
+
+    return builder.Build();
+}</code></pre>
+<p>Two things to notice here.</p>
+<p><strong>The cast is required.</strong> <code>OllamaApiClient</code> implements both <code>IChatClient</code> and <code>IEmbeddingGenerator</code>. Without the explicit cast to <code>IChatClient</code>, the compiler cannot resolve which <code>.AsBuilder()</code> overload to call and throws an ambiguity error. This is a known gotcha with <code>OllamaSharp</code> 5.x — cast first, then chain.</p>
+<p><strong>Two client configurations.</strong> The router client skips <code>UseFunctionInvocation</code>. The agent client includes it. This is intentional and important.</p>
+<h3>The UseFunctionInvocation Middleware</h3>
+<p><code>UseFunctionInvocation()</code> adds a middleware layer that intercepts the LLM response, detects tool call requests, executes the corresponding .NET methods, and feeds results back to the model — automatically, in a loop, until the model produces a final text response.</p>
+<p>Without it, your code receives a <code>ChatResponse</code> containing a tool call request and you have to handle execution manually. With it, tool calls are transparent: you send a message, you get a text response, everything in between is handled.</p>
+<p>The router does not use this middleware because it never calls tools. It classifies intent and returns a label. Adding <code>UseFunctionInvocation</code> to the router would add overhead for a capability it will never use.</p>
+<h3>MCP Tools as AITool</h3>
+<p>The agent's tools come from two MCP servers. Connecting to each is three lines:</p>
+<pre><code>// src/Hr.SelectorOrchestrator/Program.cs
+var hrServer = new McpServerDefinition("Hr", "McpServers:Hr",
+    configuration["McpServers:Hr:Transport:Type"] ?? "stdio");
+
+await using var hrMcpClient = await McpClient.CreateAsync(
+    await McpClientTransportFactory.CreateAsync(configuration, hrServer));
+
+var hrTools = (await hrMcpClient.ListToolsAsync()).Cast&lt;AITool&gt;().ToList();</code></pre>
+<p><code>ListToolsAsync()</code> returns <code>IList<McpClientTool></code>. The <code>.Cast<AITool>()</code> converts them to the standard <code>AITool</code> type that <code>ChatOptions.Tools</code> accepts.</p>
+<p>This is the key architectural insight: <strong>once cast, an MCP tool is indistinguishable from a local tool.</strong> The agent has no idea whether <code>GetOpenPositions</code> runs in-process or on a server at port 5100. The <code>UseFunctionInvocation</code> middleware handles both identically.</p>
+<pre><code>Console.WriteLine($"HR tools: {string.Join(", ", hrTools.Select(t =&gt; t.Name))}");
+// HR tools: GetOpenPositions, GetPositionById, GetPositionsByOrganization,
+//           GetHiringOrganizations, WriteJobDescription, SaveJobAnnouncement,
+//           GetJobAnnouncement, ListJobAnnouncements, UpdateAnnouncementStatus</code></pre>
+<p>The same pattern repeats for the compliance server at port 5200, yielding 5 more tools.</p>
+<h3>Transport Abstraction: McpClientTransportFactory</h3>
+<p>The <code>McpClientTransportFactory</code> in <code>Hr.Mcp.Shared</code> decouples the orchestrator from transport details. It reads <code>Transport:Type</code> from <code>appsettings.json</code> — <code>"stdio"</code> or <code>"streamHttp"</code> — and constructs the right <code>IClientTransport</code>:</p>
+<ul><li><code>"stdio"</code> — spawns the MCP server as a child process using <code>StdioClientTransport</code>. The server starts when the orchestrator starts and dies when it exits. No separate terminal needed.</li><li><code>"streamHttp"</code> — connects to a pre-running server using <code>HttpClientTransport</code> with <code>HttpTransportMode.StreamableHttp</code>.</li></ul>
+<pre><code>// Hr.Mcp.Shared/Client/McpServerDefinition.cs
+public sealed record McpServerDefinition(string Name, string ConfigPath, string TransportType);</code></pre>
+<p>Switching from stdio to HTTP is a one-line config change. Orchestrator code is identical in both modes.</p>
+<h3>From One Agent to Many: The SpecialistAgent Wrapper</h3>
+<p>The single-agent baseline (<code>Hr.Agent</code>) passes all 14 tools to one <code>IChatClient</code>:</p>
+<pre><code>// src/Hr.Agent/HrAgent.cs  (simplified)
+var response = await chatClient.GetResponseAsync(
+    messages,
+    new ChatOptions { Tools = [.. allHrTools, .. allComplianceTools] });</code></pre>
+<p>The multi-agent orchestrator wraps the same <code>IChatClient</code> in a <code>SpecialistAgent</code> that scopes the tool list and pins the system prompt:</p>
+<pre><code>// src/Hr.SelectorOrchestrator/Agents/SpecialistAgent.cs
+public sealed class SpecialistAgent(
+    string name,
+    string systemPrompt,
+    IChatClient chatClient,
+    IReadOnlyList&lt;AITool&gt; tools,
+    int? numCtx = null)
+{
+    public string Name { get; } = name;
+
+    public async Task&lt;string&gt; HandleAsync(string userQuery, CancellationToken ct = default)
+    {
+        var messages = new List&lt;ChatMessage&gt;
+        {
+            new(ChatRole.System, systemPrompt),
+            new(ChatRole.User, userQuery),
+        };
+        var options = ChatOptionsFactory.Create([.. tools], numCtx);
+        var response = await chatClient.GetResponseAsync(messages, options, ct);
+        return response.Text ?? string.Empty;
+    }
+}</code></pre>
+<p>This is the entirety of a specialist agent. The power comes from what you pass in, not from any framework magic.</p>
+<p>The job description specialist is created like this:</p>
+<pre><code>// src/Hr.SelectorOrchestrator/Program.cs
+var jdTools = hrTools
+    .Where(t =&gt; t.Name is "WriteJobDescription" or "GetPositionById"
+                       or "SaveJobAnnouncement" or "GetJobAnnouncement"
+                       or "ListJobAnnouncements")
+    .ToList();
+
+var jobDescriptionAgent = new SpecialistAgent(
+    name: "JobDescription",
+    systemPrompt: """
+        You are a federal HR writing specialist. Your job is to generate professional
+        job descriptions.
+        - Always call WriteJobDescription with the position ID.
+        - After generating, call SaveJobAnnouncement to persist the draft.
+        - If the user hasn't given you a position ID, ask which role they want,
+          or use GetPositionById if they gave you the title.
+        """,
+    chatClient: agentClient,
+    tools: jdTools,
+    numCtx: numCtx);</code></pre>
+<p>Five tools. A 60-word system prompt. That is the entire job description specialist.</p>
+<p>Compare that to the compliance specialist:</p>
+<pre><code>var complianceAgentTools = complianceTools
+    .Concat(hrTools.Where(t =&gt; t.Name is "GetPositionById" or "UpdateAnnouncementStatus"))
+    .ToList();
+
+var complianceAgent = new SpecialistAgent(
+    name: "OPMCompliance",
+    systemPrompt: """
+        You are a federal HR compliance specialist. Check whether positions
+        meet OPM standards before announcement.
+        - Use RunFullComplianceCheck for a complete report.
+        - If the user provides an announcement ID, call UpdateAnnouncementStatus
+          after the check completes.
+        - Clearly state PASS, WARNING, or FAIL for each rule.
+        - For failures, suggest specific corrections.
+        """,
+    chatClient: agentClient,
+    tools: complianceAgentTools,
+    numCtx: numCtx);</code></pre>
+<p>Seven compliance tools plus two HR tools. A different 70-word prompt. The two agents share the same <code>agentClient</code> instance — the underlying <code>IChatClient</code> is stateless.</p>
+<h3>Side-by-Side: Single Agent vs. Specialist Agent</h3>
+<p>The difference at runtime is stark. Here is what the tool list looks like for each approach:</p>
+<p><strong>Single agent (Hr.Agent):</strong></p>
+<pre><code>Tools in context: GetOpenPositions, GetPositionById, GetPositionsByOrganization,
+GetHiringOrganizations, WriteJobDescription, SaveJobAnnouncement, GetJobAnnouncement,
+ListJobAnnouncements, UpdateAnnouncementStatus, RunFullComplianceCheck, ValidatePayGrade,
+CheckApplicationPeriod, GetOPMStandard, ListOPMSeries
+Total: 14 tools</code></pre>
+<p><strong>JobDescription specialist:</strong></p>
+<pre><code>Tools in context: WriteJobDescription, GetPositionById, SaveJobAnnouncement,
+GetJobAnnouncement, ListJobAnnouncements
+Total: 5 tools</code></pre>
+<p>The specialist agent's LLM context is 64% smaller for tool descriptions alone. The model does not have to consider compliance tools when writing a job description. It cannot accidentally call <code>RunFullComplianceCheck</code> mid-draft.</p>
+<h3>What Comes Next</h3>
+<p>You now have the framework primitives: <code>IChatClient</code>, the <code>UseFunctionInvocation</code> middleware, and the MCP client that turns remote tool servers into local tool lists. The next step is to arrange these primitives into a codebase that is testable, maintainable, and swap-friendly at every layer. Part 2 applies clean architecture to the HR system and explains why the LLM belongs in the infrastructure layer, not the domain.</p>
+<p>← <a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Preface</a> &nbsp;|&nbsp; <a href="https://medium.com/scrum-and-coke/part-2-clean-architecture-for-ai-applications-63bac0acdd34">Part 2 — Clean Architecture for AI Applications →</a></p>
+<h3>References</h3>
+<h4>NuGet Packages</h4>
+<ul><li><a href="https://www.nuget.org/packages/Microsoft.Extensions.AI">Microsoft.Extensions.AI</a> — <code>IChatClient</code>, <code>ChatMessage</code>, <code>AITool</code>, and the <code>UseFunctionInvocation</code> middleware</li><li><a href="https://www.nuget.org/packages/OllamaSharp">OllamaSharp</a> — <code>OllamaApiClient</code> implements <code>IChatClient</code>; cast to <code>IChatClient</code> before calling <code>.AsBuilder()</code></li><li><a href="https://www.nuget.org/packages/ModelContextProtocol">ModelContextProtocol</a> — MCP server SDK</li><li><a href="https://www.nuget.org/packages/ModelContextProtocol.Core">ModelContextProtocol.Core</a> — MCP client API (<code>McpClient</code>, <code>HttpClientTransport</code>, <code>McpClientTool</code>)</li></ul>
+<h4>Microsoft Documentation</h4>
+<ul><li><a href="https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai">Microsoft.Extensions.AI overview</a> — IChatClient, middleware pipeline, function invocation</li><li><a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.ai.ichatclient">IChatClient interface</a> — Full API reference</li></ul>
+<h4>GitHub</h4>
+<ul><li><a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a> — Full source for all patterns in this series</li><li><a href="https://github.com/modelcontextprotocol/csharp-sdk">modelcontextprotocol/csharp-sdk</a> — Official C# MCP SDK</li></ul>

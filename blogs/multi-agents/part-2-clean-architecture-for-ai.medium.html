@@ -1,0 +1,173 @@
+<h3>Part 2 — Clean Architecture for AI Applications</h3>
+<p><em><a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Building Multi-Agent Systems with .NET 10 Blog Series</a></em></p>
+<p>Part 1 introduced <code>IChatClient</code> and <code>McpClient</code> — the two abstractions that power every agent in this series. Before building specialist agents against them, the solution needs a structure that keeps domain logic, application services, and AI infrastructure in their correct layers. This part covers the clean architecture behind the HR system and the database setup that seeds the position data every agent will query.</p>
+<p>Clean architecture is not a new idea. You have probably applied it to REST APIs: domain entities at the center, application services in the next ring, infrastructure (databases, HTTP clients) at the edge. The dependency rule flows inward — inner layers know nothing about outer ones.</p>
+<p>AI applications follow the same rule, with one addition: <strong>the LLM is infrastructure.</strong> It belongs at the edge, not in the center. Your domain entities, business rules, and application services must never import <code>Microsoft.Extensions.AI</code>.</p>
+<p>This post walks through exactly how the HR multi-agent system is structured, why each layer boundary exists, and how to set up the database and seed data that powers the whole thing.</p>
+<h3>The Layer Diagram</h3>
+<p>Dependency arrows point inward only. <code>Hr.Jobs.Mcp</code> knows about <code>Hr.Application</code>. <code>Hr.Application</code> knows about <code>Hr.Core</code>. <code>Hr.Core</code> knows about nothing outside itself.</p>
+<h3>Hr.Core — The Domain Layer</h3>
+<p><code>Hr.Core</code> has no NuGet dependencies beyond the .NET BCL. It contains:</p>
+<p><strong>Entities</strong> — the business objects:</p>
+<pre><code>// src/Hr.Core/Entities/Position.cs
+public class Position
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string OccupationalSeries { get; set; } = string.Empty;
+    public string PayGradeMin { get; set; } = string.Empty;
+    public string PayGradeMax { get; set; } = string.Empty;
+    public string Duties { get; set; } = string.Empty;
+    public string Qualifications { get; set; } = string.Empty;
+    // ... navigation properties, location, schedule, clearance
+}</code></pre>
+<pre><code>// src/Hr.Core/Entities/JobAnnouncement.cs
+public class JobAnnouncement
+{
+    public int Id { get; set; }
+    public int PositionId { get; set; }
+    public Position Position { get; set; } = null!;
+    public string DraftText { get; set; } = string.Empty;
+    public AnnouncementStatus Status { get; set; } = AnnouncementStatus.Draft;
+    public DateTime GeneratedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? ComplianceCheckedAt { get; set; }
+    public string? ComplianceSummary { get; set; }
+}</code></pre>
+<p><strong>Enums</strong> — domain vocabulary:</p>
+<pre><code>// src/Hr.Core/Enums/AnnouncementStatus.cs
+public enum AnnouncementStatus
+{
+    Draft,
+    CompliancePassed,
+    ComplianceFailed,
+    Published
+}</code></pre>
+<p><strong>Interfaces</strong> — repository contracts:</p>
+<pre><code>// src/Hr.Core/Interfaces/IPositionRepository.cs
+public interface IPositionRepository
+{
+    Task&lt;IEnumerable&lt;Position&gt;&gt; GetAllAsync(CancellationToken ct = default);
+    Task&lt;IEnumerable&lt;Position&gt;&gt; GetOpenPositionsAsync(CancellationToken ct = default);
+    Task&lt;Position?&gt; GetByIdAsync(int id, CancellationToken ct = default);
+    Task&lt;IEnumerable&lt;Position&gt;&gt; GetByOrganizationAsync(int organizationId, CancellationToken ct = default);
+    Task&lt;IEnumerable&lt;Position&gt;&gt; GetBySeriesAsync(string occupationalSeries, CancellationToken ct = default);
+}</code></pre>
+<p>The interfaces live in <code>Hr.Core</code>. The implementations live in <code>Hr.Infrastructure</code>. The domain layer never sees EF Core.</p>
+<h3>Hr.Application — The Use Case Layer</h3>
+<p><code>Hr.Application</code> references only <code>Hr.Core</code>. Its services are thin facades that delegate to repository interfaces:</p>
+<pre><code>// src/Hr.Application/Services/PositionService.cs
+public class PositionService(IPositionRepository repo)
+{
+    public Task&lt;IEnumerable&lt;Position&gt;&gt; GetOpenPositionsAsync(CancellationToken ct = default)
+        =&gt; repo.GetOpenPositionsAsync(ct);
+
+    public Task&lt;Position?&gt; GetPositionByIdAsync(int id, CancellationToken ct = default)
+        =&gt; repo.GetByIdAsync(id, ct);
+
+    public Task&lt;IEnumerable&lt;Position&gt;&gt; GetPositionsBySeriesAsync(
+        string occupationalSeries, CancellationToken ct = default)
+        =&gt; repo.GetBySeriesAsync(occupationalSeries, ct);
+}</code></pre>
+<pre><code>// src/Hr.Application/Services/JobAnnouncementService.cs
+public class JobAnnouncementService(IJobAnnouncementRepository repo)
+{
+    public Task&lt;JobAnnouncement&gt; SaveDraftAsync(int positionId, string draftText, CancellationToken ct = default)
+        =&gt; repo.SaveAsync(new JobAnnouncement
+        {
+            PositionId  = positionId,
+            DraftText   = draftText,
+            Status      = AnnouncementStatus.Draft,
+            GeneratedAt = DateTime.UtcNow,
+        }, ct);
+
+    public Task&lt;JobAnnouncement?&gt; UpdateStatusAsync(
+        int id, AnnouncementStatus status, string? complianceSummary, CancellationToken ct = default)
+        =&gt; repo.UpdateStatusAsync(id, status, complianceSummary, ct);
+}</code></pre>
+<p>No LLM calls. No HTTP clients. No EF Core. Pure business logic.</p>
+<h3>Hr.Infrastructure — The Persistence Layer</h3>
+<p><code>Hr.Infrastructure</code> implements the repository interfaces using EF Core:</p>
+<pre><code>// src/Hr.Infrastructure/HrDbContext.cs
+public class HrDbContext(DbContextOptions&lt;HrDbContext&gt; options) : DbContext(options)
+{
+    public DbSet&lt;HiringOrganization&gt;   HiringOrganizations   =&gt; Set&lt;HiringOrganization&gt;();
+    public DbSet&lt;Position&gt;             Positions             =&gt; Set&lt;Position&gt;();
+    public DbSet&lt;PositionRemuneration&gt; PositionRemunerations =&gt; Set&lt;PositionRemuneration&gt;();
+    public DbSet&lt;JobAnnouncement&gt;      JobAnnouncements      =&gt; Set&lt;JobAnnouncement&gt;();
+}</code></pre>
+<p>Registration is handled by a single extension method:</p>
+<pre><code>// src/Hr.Infrastructure/DependencyInjection.cs
+public static IServiceCollection AddPersistence(
+    this IServiceCollection services, string connectionString)
+{
+    services.AddDbContext&lt;HrDbContext&gt;(options =&gt;
+        options.UseSqlServer(connectionString));
+
+    services.AddScoped&lt;IPositionRepository, PositionRepository&gt;();
+    services.AddScoped&lt;IHiringOrganizationRepository, HiringOrganizationRepository&gt;();
+    services.AddScoped&lt;IJobAnnouncementRepository, JobAnnouncementRepository&gt;();
+
+    return services;
+}</code></pre>
+<p>Any MCP server that needs database access calls <code>AddPersistence(connectionString)</code> in its <code>Program.cs</code>. Both <code>Hr.Jobs.Mcp</code> and <code>Hr.Compliance.Mcp</code> connect to the same <code>HrMcpDb</code> database.</p>
+<h3>The Seed Pipeline</h3>
+<p>The database is populated from real USAJobs data, not hardcoded fixtures. The pipeline is:</p>
+<p><strong>Step 1 — Fetch from USAJobs API</strong> (<code>tools/UsaJobsFetcher/Program.cs</code>)</p>
+<p>The fetcher loops through 8 OPM occupational series — IT Management (2210), HR Management (0201), Contracting (1102), and 5 others — and pages through results up to a cap of 300 positions. It writes <code>data/usajobs-seed.json</code>. This file is committed to the repository so readers can skip the API key setup.</p>
+<pre><code>dotnet run --project tools/UsaJobsFetcher
+# Output:
+# Fetching series 2210...
+#   page 1: ... → 25 items, kept 23
+#   page 2: ... → 25 items, kept 21
+# ...
+# Wrote 287 positions from 31 organizations</code></pre>
+<p><strong>Step 2 — Seed on startup</strong> (<code>Hr.Infrastructure/DbSeeder.cs</code>)</p>
+<p>When <code>Hr.Jobs.Mcp</code> starts, it calls <code>db.Database.MigrateAsync()</code> then <code>DbSeeder.Seed(db, seedPath)</code>. The seeder reads the JSON file and inserts any organizations and positions not already present, so it is safe to run repeatedly.</p>
+<p><strong>Step 3 — Apply migrations manually when needed</strong></p>
+<pre><code>dotnet ef database update \
+  --project src/Hr.Infrastructure \
+  --startup-project src/Hr.Jobs.Mcp</code></pre>
+<h3>MCP as a Service Boundary</h3>
+<p>The two MCP servers are deployed independently. <code>Hr.Jobs.Mcp</code> owns HR data and announcement persistence. <code>Hr.Compliance.Mcp</code> owns OPM rule evaluation. They share the database but have no code dependency on each other.</p>
+<p>This is the same service boundary principle you use with microservices, applied to AI tool servers. The orchestrator is the only component that connects to both — it composes their capabilities at runtime without coupling them at compile time.</p>
+<pre><code>Hr.SelectorOrchestrator
+  ├── connects to Hr.Jobs.Mcp :5100  (14 tools)
+  └── connects to Hr.Compliance.Mcp :5200  (5 tools)
+
+Hr.Jobs.Mcp                    Hr.Compliance.Mcp
+  └── HrMcpDb (EF Core)          └── HrMcpDb (EF Core)</code></pre>
+<p>Both servers point to the same LocalDB connection string. In production you would use a shared SQL Server instance or separate the schemas. For local development, one database instance is simpler.</p>
+<h3>Shared Infrastructure Libraries</h3>
+<p>Two library projects sit between the domain layer and the orchestrators, extracting shared concerns so they are not duplicated across all four orchestrator <code>Program.cs</code> files.</p>
+<p><code>Hr.ConsoleShared</code> provides:</p>
+<ul><li><code>StartupBannerWriter</code> — prints the transport mode, model, and loaded tool list on startup</li><li><code>ExportFileSaver</code> — saves base64-encoded export payloads from MCP tool responses to disk</li><li><code>ChatOptionsFactory</code> — creates <code>ChatOptions</code> with a tool list and optional <code>num_ctx</code> context window in one call</li></ul>
+<p><code>Hr.Mcp.Shared</code> provides:</p>
+<ul><li><code>McpServerDefinition</code> — a record holding a server's name, config path, and transport type</li><li><code>McpClientTransportFactory</code> — reads <code>Transport:Type</code> from config and constructs either <code>StdioClientTransport</code> or <code>HttpClientTransport</code></li><li><code>WorkspaceRootLocator</code> — resolves the repository root path for stdio transport's working directory</li><li><code>PortConflictHelper</code> — produces a clear error message when an HTTP server port is already in use</li></ul>
+<p>Every orchestrator and the standalone agent reference both projects. The domain and application layers do not — they have no dependency on console or transport concerns.</p>
+<h3>The Payoff: Swappable at Every Layer</h3>
+<p>Clean architecture earns its keep when requirements change:</p>
+<ul><li><strong>Swap Ollama for Claude</strong>: change one line in <code>BuildClient()</code> in <code>Hr.SelectorOrchestrator/Program.cs</code>. No domain or application code changes.</li><li><strong>Swap SQL Server for PostgreSQL</strong>: change <code>UseSqlServer</code> to <code>UseNpgsql</code> in <code>DependencyInjection.cs</code>. No domain or MCP tool code changes.</li><li><strong>Add a new specialist agent</strong>: add a new <code>SpecialistAgent</code> in <code>Program.cs</code> with a different tool subset and system prompt. The existing agents are untouched.</li><li><strong>Test application logic</strong>: inject mock implementations of <code>IPositionRepository</code> and <code>IJobAnnouncementRepository</code> in <code>Hr.Application</code> tests. No MCP server, no database, no LLM needed.</li></ul>
+<p>The LLM being infrastructure means it is also mockable. A test that verifies <code>JobAnnouncementService.SaveDraftAsync</code> stores the right data does not need Ollama running.</p>
+<h3>Setting Up the Project</h3>
+<pre><code># Clone
+git clone https://github.com/workcontrolgit/DotnetMultiAgentsTutorial.git
+cd DotnetMultiAgentsTutorial/DotnetMultiAgents
+
+# Build all 9 projects
+dotnet build DotnetMultiAgents.slnx
+
+# Apply EF migrations and seed data
+dotnet ef database update \
+  --project src/Hr.Infrastructure \
+  --startup-project src/Hr.Jobs.Mcp</code></pre>
+<p>The solution file (<code>DotnetMultiAgents.slnx</code>) is the newer <code>.slnx</code> format — a clean XML alternative to <code>.sln</code>. Visual Studio 2022 17.10+ and the .NET 10 CLI both support it.</p>
+<h3>What Comes Next</h3>
+<p>The layer boundaries are in place and the <code>JobAnnouncement</code> lifecycle is designed on paper. Part 3 puts real tools behind the architecture: the HR Jobs MCP server with nine endpoints covering position search, job description generation, and announcement persistence.</p>
+<p>← <a href="https://medium.com/scrum-and-coke/part-1-the-net-agent-framework-ichatclient-and-mcp-clients-4b52cc179e26">Part 1 — The .NET Agent Framework</a> &nbsp;|&nbsp; <a href="https://medium.com/scrum-and-coke/part-3-building-the-hr-data-mcp-server-47b5690f938e">Part 3 — Building the HR Data MCP Server →</a></p>
+<h3>References</h3>
+<h4>NuGet Packages</h4>
+<ul><li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore">Microsoft.EntityFrameworkCore</a> — ORM for <code>HrDbContext</code>, entities, and migrations</li><li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer">Microsoft.EntityFrameworkCore.SqlServer</a> — SQL Server LocalDB provider</li><li><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools">Microsoft.EntityFrameworkCore.Tools</a> — <code>dotnet ef</code> CLI for migrations</li></ul>
+<h4>Microsoft Documentation</h4>
+<ul><li><a href="https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app">EF Core — Getting Started</a> — DbContext, entities, and DbSet configuration</li><li><a href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures">Common web application architectures</a> — Clean Architecture layers and dependency rule</li></ul>
+<h4>GitHub</h4>
+<ul><li><a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a> — Full source for all patterns in this series</li></ul>

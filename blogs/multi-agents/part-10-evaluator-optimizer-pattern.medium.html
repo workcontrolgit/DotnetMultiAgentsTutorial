@@ -1,0 +1,192 @@
+<h3>Part 10 — The Evaluator-Optimizer Pattern: Quality-Gated Generation</h3>
+<p><em><a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Building Multi-Agent Systems with .NET 10 Blog Series</a></em></p>
+<p>Part 9 built the Group Chat — three specialist reviewers running in parallel, each critiquing the draft from a different angle, with a moderator synthesizing their feedback into a single revised version. The revised draft is better than the original, but "better" is not a number. This part introduces the Evaluator-Optimizer pattern, which replaces subjective improvement with a measurable quality gate: a critic agent scores each draft on a 100-point rubric and loops until the threshold is met.</p>
+<p>The Group Chat produces an improved draft through multiple perspectives. But "improved" is relative — the revised draft is better than the original, but is it good enough? Without a quality threshold, you cannot know when to stop revising and when to publish.</p>
+<p>The Evaluator-Optimizer pattern introduces a measurable quality gate. A generator agent produces a draft. An evaluator agent scores it. If the score meets the threshold, the loop exits. If not, the evaluator's feedback becomes the generator's next prompt, and the loop runs again — up to a configurable maximum.</p>
+<h3>The Evaluator-Optimizer Pattern</h3>
+<p>The loop has three components:</p>
+<ul><li><code>GeneratorAgent</code> — produces or improves a draft, optionally incorporating feedback from the previous iteration</li><li><code>EvaluatorAgent</code> — scores the draft against a fixed rubric and returns structured feedback</li><li><code>EvaluatorOptimizerLoop</code> — controls iteration: compare score to threshold, inject feedback, decide whether to continue</li></ul>
+<p>The loop exits on one of two conditions: the score meets or exceeds the threshold, or the maximum iteration count is reached. The highest-scoring draft is saved regardless of whether the threshold was met.</p>
+<h3>GeneratorAgent: First Pass and Feedback Pass</h3>
+<p><a href="../../DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/GeneratorAgent.cs">GeneratorAgent.cs</a> handles both cases with a single method. On the first iteration, <code>previousFeedback</code> is null and the system prompt contains no improvement guidance. On subsequent iterations, the feedback is injected directly into the system prompt:</p>
+<pre><code>// src/Hr.EvaluatorOrchestrator/Agents/GeneratorAgent.cs
+public async Task&lt;string&gt; GenerateAsync(
+    int positionId,
+    string? previousFeedback = null,
+    CancellationToken ct = default)
+{
+    var improvementGuidance = previousFeedback is null
+        ? string.Empty
+        : $"\n\nPrevious attempt feedback — address all points:\n{previousFeedback}";
+
+    var messages = new List&lt;ChatMessage&gt;
+    {
+        new(ChatRole.System, $"""
+            You are a federal HR writing specialist.
+            Call WriteJobDescription with the given position ID to generate a job announcement draft.
+            Return the full draft text and nothing else — no commentary, no preamble.{improvementGuidance}
+            """),
+        new(ChatRole.User, $"Generate a job announcement for position ID {positionId}."),
+    };
+
+    var options = ChatOptionsFactory.Create([.. tools], numCtx);
+    var response = await chatClient.GetResponseAsync(messages, options, ct);
+    return response.Text ?? string.Empty;
+}</code></pre>
+<p>The feedback is injected into the system prompt, not as a separate user turn. This means the generator sees the quality expectations before it starts writing, not after. The model can weight the improvement guidance from the start of generation rather than trying to reconcile it with an already-formed draft.</p>
+<h3>EvaluatorAgent: The 4-Criterion Rubric</h3>
+<p><a href="../../DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs">EvaluatorAgent.cs</a> scores the draft against four criteria, 25 points each, for a maximum of 100. It returns a structured JSON object — no narrative, no preamble:</p>
+<pre><code>// src/Hr.EvaluatorOrchestrator/Agents/EvaluatorAgent.cs
+new(ChatRole.System, """
+    You are an expert evaluator of federal job announcement drafts.
+    Score the draft on these four criteria (0–25 points each, 100 total):
+    - Clarity:       Is the writing clear, concise, and professionally structured?
+    - OPM Language:  Does it use correct federal HR terminology and OPM style?
+    - Completeness:  Does it include all standard sections: duties, qualifications, pay, how to apply?
+    - Tone:          Is the tone formal, inclusive, and appropriate for a federal posting?
+
+    Reply with ONLY a valid JSON object — no markdown fences, no extra text:
+    {"score":&lt;0-100&gt;,"feedback":{"Clarity":"&lt;note&gt;","OPM Language":"&lt;note&gt;","Completeness":"&lt;note&gt;","Tone":"&lt;note&gt;"}}
+    """),</code></pre>
+<p>The response is parsed into a typed model:</p>
+<pre><code>public async Task&lt;EvaluationResult&gt; EvaluateAsync(string draftText, CancellationToken ct = default)
+{
+    var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
+    var json = (response.Text ?? "{}").Trim();
+
+    try
+    {
+        var dto = JsonSerializer.Deserialize&lt;EvaluationResultDto&gt;(json, JsonOpts);
+        return new EvaluationResult(
+            dto?.Score ?? 0,
+            dto?.Feedback ?? []);
+    }
+    catch (JsonException)
+    {
+        // LLM returned non-JSON — score 0 forces another iteration
+        return new EvaluationResult(0, new Dictionary&lt;string, string&gt;
+        {
+            ["Parse Error"] = $"Non-JSON response: {json[..Math.Min(json.Length, 200)]}"
+        });
+    }
+}</code></pre>
+<p>The <code>JsonException</code> catch is a deliberate design choice. If the LLM returns a narrative instead of JSON — which happens with weaker models under load — the score is set to 0, which forces another iteration. The loop does not crash; it retries with the same feedback structure. This makes the evaluator robust to model misbehavior without special-casing it in the loop.</p>
+<h3>EvaluatorOptimizerLoop: The Control Flow</h3>
+<p><a href="../../DotnetMultiAgents/src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs">EvaluatorOptimizerLoop.cs</a> manages the generate-evaluate-improve cycle:</p>
+<pre><code>// src/Hr.EvaluatorOrchestrator/Loop/EvaluatorOptimizerLoop.cs
+public async Task RunAsync(int positionId, CancellationToken ct = default)
+{
+    string bestDraft    = string.Empty;
+    int    bestScore    = -1;
+    string? lastFeedback = null;
+
+    for (var i = 1; i &lt;= maxIterations; i++)
+    {
+        // Generate (or improve) the draft
+        var draft = await generator.GenerateAsync(positionId, lastFeedback, ct);
+
+        // Evaluate
+        var result = await evaluator.EvaluateAsync(draft, ct);
+
+        // Track the best draft regardless of threshold
+        if (result.Score &gt; bestScore)
+        {
+            bestScore = result.Score;
+            bestDraft = draft;
+        }
+
+        // Exit if threshold met
+        if (result.MeetsThreshold)
+        {
+            Console.WriteLine($"\nQuality threshold met ({result.Score}/100). Exiting loop.\n");
+            break;
+        }
+
+        // Prepare feedback for next iteration
+        if (i &lt; maxIterations)
+        {
+            lastFeedback = BuildFeedbackPrompt(result);
+            if (!Confirm("Continue to next iteration with feedback?")) break;
+        }
+    }
+
+    // Always save the best draft
+    await SaveBestDraftAsync(positionId, bestDraft, ct);
+}
+
+private static string BuildFeedbackPrompt(EvaluationResult result)
+{
+    var lines = result.Feedback.Select(kv =&gt; $"- {kv.Key}: {kv.Value}");
+    return $"Previous attempt scored {result.Score}/100. Specific weaknesses to address:\n{string.Join("\n", lines)}";
+}</code></pre>
+<p>Four design choices to notice:</p>
+<p><code>bestDraft</code> and <code>bestScore</code> track the highest-scoring output across all iterations. If the loop reaches max iterations without meeting the threshold, the best draft seen is still saved — the loop always produces output.</p>
+<p><code>lastFeedback</code> is null on iteration 1, populated from the evaluator on every subsequent iteration. The generator sees exactly what to improve, framed as specific weaknesses rather than a generic "try again".</p>
+<p>The confirmation prompt between iterations is optional for production. In this implementation it is present to let you observe each iteration's score and decide whether to continue. Remove the <code>Confirm</code> call for a fully automated loop.</p>
+<p>The threshold (80) and max iterations (3) are constructor parameters. Tighten the threshold for quality-critical workflows; increase max iterations if the model needs more passes.</p>
+<h3>A Full Demo Run</h3>
+<pre><code>dotnet run --project src/Hr.EvaluatorOrchestrator</code></pre>
+<pre><code>============================================================
+  Evaluator-Optimizer — Position 7
+  Threshold: 80/100 | Max iterations: 3
+============================================================
+
+[Iteration 1/3] Generating draft...
+[Iteration 1/3] Evaluating draft...
+
+--- Draft (Iteration 1) ---
+IT Specialist (APPSW), GS-12, Department of Homeland Security
+
+Summary: The Department of Homeland Security seeks an IT Specialist...
+[truncated at 500 chars]
+
+--- Evaluation Score: 64/100 ---
+  Clarity         : Writing is clear but uses passive voice in duties section
+  OPM Language    : Missing "Supervisory Status" declaration; grade language informal
+  Completeness    : All four required sections present
+  Tone            : Formal and inclusive; minor improvement possible
+
+Score 64/100 — below threshold.
+Continue to next iteration with feedback? (y/n): y
+
+[Iteration 2/3] Generating draft...
+[Iteration 2/3] Evaluating draft...
+
+--- Draft (Iteration 2) ---
+IT Specialist (APPSW), GS-12 | Supervisory Status: No
+Department of Homeland Security
+
+Summary: Join DHS as an IT Specialist (APPSW) at the GS-12 level...
+[truncated at 500 chars]
+
+--- Evaluation Score: 83/100 ---
+  Clarity         : Active voice throughout; well-structured
+  OPM Language    : Supervisory status added; grade language correct
+  Completeness    : All required sections present and complete
+  Tone            : Formal, inclusive, appropriate for federal posting
+
+Quality threshold met (83/100). Exiting loop.
+
+Saving best draft to database...
+
+Done. Job announcement saved. ID: 7</code></pre>
+<p>Two iterations to reach 83/100. The generator received the Clarity and OPM Language notes from iteration 1 and addressed both specifically in iteration 2.</p>
+<h3>Evaluator-Optimizer vs. Group Chat</h3>
+<p>Use the Group Chat pattern when:</p>
+<ul><li>Multiple domain perspectives improve quality (HR, legal, budget each catch different issues)</li><li>Parallel execution matters — three reviewers in the time of one</li><li>You want synthesis of conflicting feedback from different expert angles</li></ul>
+<p>Use the Evaluator-Optimizer pattern when:</p>
+<ul><li>Quality is measurable on a consistent rubric</li><li>You want a defined exit condition — "good enough" is a number, not a judgment call</li><li>Iterative improvement is more valuable than breadth of perspective</li></ul>
+<p>The patterns compose: run the Evaluator-Optimizer first to reach a quality threshold, then run the Group Chat to refine the passing draft from multiple expert perspectives before publication.</p>
+<h3>What Comes Next</h3>
+<p>This series covered all four multi-agent patterns using the same HR domain, the same two MCP servers, and the same <code>IChatClient</code> abstraction throughout:</p>
+<ul><li><strong>Selector</strong> — routes each user turn to one specialist; best for discrete, categorised queries</li><li><strong>Pipe</strong> — chains agents sequentially; best for ordered workflows where each step depends on the previous</li><li><strong>Group Chat</strong> — runs agents in parallel, synthesizes results; best for multi-perspective quality improvement</li><li><strong>Evaluator-Optimizer</strong> — loops until a quality threshold is met; best for generation tasks where consistency matters</li></ul>
+<p>None of these patterns requires a different infrastructure. The same <code>OllamaApiClient</code>, the same two MCP servers, the same <code>McpClient.CreateAsync</code> setup from Part 1. The pattern is the orchestration logic — how agents are connected and when they run. The tools, the models, and the domain knowledge stay the same.</p>
+<p>The repository is open. Clone it, run it locally with Ollama, and extend it. Add a fourth reviewer to the Group Chat. Raise the Evaluator-Optimizer threshold to 90. Chain the Pipe into the Evaluator-Optimizer. The infrastructure is already there.</p>
+<p>← <a href="https://medium.com/scrum-and-coke/part-9-the-group-chat-pattern-parallel-expert-review-300bb960263d">Part 9 — The Group Chat Pattern</a></p>
+<h3>References</h3>
+<h4>NuGet Packages</h4>
+<ul><li><a href="https://www.nuget.org/packages/Microsoft.Extensions.AI">Microsoft.Extensions.AI</a> — <code>IChatClient</code>, <code>ChatMessage</code>, <code>ChatOptions</code>, <code>AITool</code></li><li><a href="https://www.nuget.org/packages/OllamaSharp">OllamaSharp</a> — <code>OllamaApiClient</code> for generator and evaluator agents</li><li><a href="https://www.nuget.org/packages/ModelContextProtocol.Core">ModelContextProtocol.Core</a> — <code>McpClient.CreateAsync</code>, <code>HttpClientTransport</code> for <code>WriteJobDescription</code> and <code>SaveJobAnnouncement</code></li><li><a href="https://www.nuget.org/packages/System.Text.Json">System.Text.Json</a> — <code>JsonSerializer.Deserialize</code> for parsing structured evaluator output</li></ul>
+<h4>Microsoft Documentation</h4>
+<ul><li><a href="https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai">Microsoft.Extensions.AI overview</a> — IChatClient, function invocation, structured output patterns</li><li><a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview">System.Text.Json serialization overview</a> — <code>JsonSerializer</code>, <code>JsonSerializerOptions</code>, handling deserialization errors</li></ul>
+<h4>GitHub</h4>
+<ul><li><a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a> — Full source including <code>Hr.EvaluatorOrchestrator</code></li><li><a href="https://github.com/modelcontextprotocol/csharp-sdk">modelcontextprotocol/csharp-sdk</a> — Official C# MCP SDK</li></ul>
