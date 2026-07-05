@@ -1,0 +1,179 @@
+<h3>Part 3 — Building the HR Data MCP Server</h3>
+<p><em><a href="https://medium.com/scrum-and-coke/why-one-agent-is-not-enough-9872c10a2a70">Building Multi-Agent Systems with .NET 10 Blog Series</a></em></p>
+<p>Part 2 defined the clean architecture — domain at the center, AI infrastructure at the edge — and set up the SQL Server database with seeded HR position data. With the layer boundaries in place and the data ready, the next step is building the tools agents will actually call. This part walks through <code>Hr.Jobs.Mcp</code>, the HR data MCP server that exposes fourteen tools across position queries, export utilities, job description generation, and announcement persistence.</p>
+<p>The HR data MCP server (<code>Hr.Jobs.Mcp</code>) is the workhorse of the system. It exposes tools across four categories: position queries, export utilities, job description generation, and announcement persistence. It runs on port 5100, and every specialist agent that touches HR data connects to it.</p>
+<p>This post walks through how it is built — from project setup through tool definitions — and shows how to test every tool with MCP Inspector before writing a single line of orchestrator code.</p>
+<h3>Project Setup</h3>
+<p>The server is an ASP.NET Core application with three NuGet packages beyond the standard SDK:</p>
+<pre><code>&lt;!-- src/Hr.Jobs.Mcp/Hr.Jobs.Mcp.csproj --&gt;
+&lt;PackageReference Include="ModelContextProtocol" Version="1.*" /&gt;
+&lt;PackageReference Include="OllamaSharp" Version="5.*" /&gt;
+&lt;PackageReference Include="Serilog.AspNetCore" Version="9.*" /&gt;</code></pre>
+<p><code>ModelContextProtocol</code> provides <code>[McpServerToolType]</code>, <code>[McpServerTool]</code>, and <code>.AddMcpServer()</code>. <code>OllamaSharp</code> provides the <code>IChatClient</code> used inside <code>WriteJobDescription</code>. Serilog handles structured logging with a file sink (stdout is suppressed in stdio mode to keep the JSON-RPC channel clean).</p>
+<p>The MCP server is registered in <code>Program.cs</code>:</p>
+<pre><code>builder.Services
+    .AddMcpServer()
+    .WithTools&lt;PositionTools&gt;()
+    .WithTools&lt;HiringOrganizationTools&gt;()
+    .WithTools&lt;ExportTools&gt;()
+    .WithTools&lt;JobDescriptionTools&gt;()
+    .WithTools&lt;JobAnnouncementTools&gt;()
+    .WithHttpTransport();</code></pre>
+<p>Each tool class is registered separately. MCP Inspector and any MCP client will see all tools from all 5 classes as a flat list.</p>
+<p><code>ExportTools</code> provides three additional tools — <code>ExportPositionToWord</code>, <code>ExportDraftToWord</code>, and <code>ExportPositionsToExcel</code> — that convert HR data and announcement drafts to Office document formats. They are used by the <code>Hr.Agent</code> baseline but are available to any connected client.</p>
+<h3>Tool Class Pattern</h3>
+<p>Every tool class follows the same pattern: a record with constructor-injected services and methods decorated with <code>[McpServerTool]</code>:</p>
+<pre><code>[McpServerToolType]
+public sealed class PositionTools(PositionService positions)
+{
+    [McpServerTool(Name = "GetOpenPositions"),
+     Description("Returns all currently open federal job positions.")]
+    public async Task&lt;string&gt; GetOpenPositions(CancellationToken ct = default)
+    {
+        var all = await positions.GetOpenPositionsAsync(ct);
+        // format and return
+    }
+}</code></pre>
+<p><code>[McpServerToolType]</code> marks the class for discovery. <code>[McpServerTool]</code> marks individual methods. The <code>Description</code> attribute text is what the LLM reads when deciding whether to call the tool — write it for the model, not for humans.</p>
+<p>Parameter descriptions matter equally:</p>
+<pre><code>[McpServerTool(Name = "GetPositionById"),
+ Description("Returns full details for a specific position including duties, qualifications, pay grade, and salary.")]
+public async Task&lt;string&gt; GetPositionById(
+    [Description("The numeric database ID of the position")] int positionId,
+    CancellationToken ct = default)</code></pre>
+<p>When the LLM sees <code>"The numeric database ID of the position"</code> it knows not to pass a title string.</p>
+<h3>WriteJobDescription: An LLM Tool Inside an MCP Server</h3>
+<p><code>WriteJobDescription</code> is unusual: it is a tool that internally calls a language model. The MCP server is both a tool server (from the orchestrator's perspective) and an LLM client (from Ollama's perspective).</p>
+<pre><code>[McpServerToolType]
+public sealed class JobDescriptionTools(PositionService positions, IChatClient chatClient)
+{
+    [McpServerTool(Name = "WriteJobDescription"),
+     Description("Generates a USAJobs-style job announcement using AI.")]
+    public async Task&lt;string&gt; WriteJobDescription(
+        [Description("The numeric ID of the position")] int positionId,
+        CancellationToken ct = default)
+    {
+        var p = await positions.GetPositionByIdAsync(positionId, ct);
+        if (p is null) return $"Position {positionId} not found.";
+
+        var ladder = await BuildGradeLadderAsync(p, ct);
+
+        var systemPrompt = """
+            You are a senior federal HR specialist. Synthesize duties into 5–8 active-voice
+            bullet points. Qualifications must state specialized experience at the next lower
+            grade level. Never copy source text verbatim.
+            """;
+
+        var userPrompt = $"""
+            Write a USAJobs announcement for:
+            Title: {p.Title} | Series: {p.OccupationalSeries} | Grade: {p.PayGradeMin}–{p.PayGradeMax}
+            Salary: ${p.PositionRemuneration?.MinimumRange:N0}–${p.PositionRemuneration?.MaximumRange:N0}
+            ...
+            {ladder}
+
+            Sections: ## Summary | ## Duties | ## Qualifications Required | ## How to Apply
+            """;
+
+        var response = await chatClient.GetResponseAsync(
+            [new ChatMessage(ChatRole.System, systemPrompt),
+             new ChatMessage(ChatRole.User, userPrompt)], ct);
+
+        return response.Text ?? $"Unable to generate description for position {positionId}.";
+    }
+}</code></pre>
+<p>The <code>IChatClient</code> is registered as a singleton in <code>Program.cs</code>:</p>
+<pre><code>services.AddSingleton&lt;IChatClient&gt;(
+    new OllamaApiClient(new Uri("http://localhost:11434"), "llama3.2"));</code></pre>
+<h3>Grade-Ladder Context: Quality Without Bloating the Prompt</h3>
+<p>When you have 100 IT Specialist positions at grades GS-07 through GS-14, which ones should inform the draft for a GS-12? The answer is at most three — and selecting the wrong ones wastes token budget.</p>
+<p><code>BuildGradeLadderAsync</code> implements a three-slot selection strategy:</p>
+<pre><code>private async Task&lt;string&gt; BuildGradeLadderAsync(Position target, CancellationToken ct)
+{
+    var siblings = (await positions.GetPositionsBySeriesAsync(target.OccupationalSeries, ct))
+        .Where(p =&gt; p.Id != target.Id &amp;&amp; !string.IsNullOrWhiteSpace(p.PayGradeMin))
+        .ToList();
+
+    var byGrade = siblings
+        .GroupBy(p =&gt; ParseGradeNumber(p.PayGradeMin))
+        .Where(g =&gt; g.Key is not null)
+        .ToDictionary(
+            g =&gt; g.Key!.Value,
+            g =&gt; g.OrderByDescending(p =&gt; Richness(p)).First()); // richest wins
+
+    // Slot 1: next lower grade — the experience baseline
+    var lowerKeys = byGrade.Keys.Where(g =&gt; g &lt; targetGrade).ToList();
+    var lowerGrade = lowerKeys.Count &gt; 0 ? lowerKeys.Max() : 0;
+
+    // Slot 2: next higher grade — the scope ceiling
+    var higherKeys = byGrade.Keys.Where(g =&gt; g &gt; targetGrade).ToList();
+    var higherGrade = higherKeys.Count &gt; 0 ? higherKeys.Min() : 0;
+
+    // Slot 3: same-grade peer — only when target's own text is sparse
+    var isTargetSparse = Richness(target) &lt; SparseThreshold;
+    ...
+}</code></pre>
+<p>"Richness" is the combined character count of <code>Duties + Qualifications</code>. Among all GS-11 positions in the series, the one with the most content wins the slot. Each slot's text is then truncated to a fixed character limit before entering the prompt. The result: 100 sibling positions contribute at most three carefully chosen excerpts — predictable token budget regardless of database size.</p>
+<h3>OIDC Feature Flag</h3>
+<p>The server supports two modes controlled by <code>appsettings.json</code>:</p>
+<pre><code>{
+  "Features": { "EnableOidc": false }
+}</code></pre>
+<p>When <code>EnableOidc</code> is false (local development), the MCP endpoint is open. When true (production), JWT Bearer authentication is enforced via a Duende IdentityServer container:</p>
+<pre><code>var enableOidc = builder.Configuration.GetValue&lt;bool&gt;("Features:EnableOidc");
+
+if (enableOidc)
+{
+    builder.Services
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =&gt;
+        {
+            options.Authority = builder.Configuration["Oidc:Authority"];
+            options.Audience  = builder.Configuration["Oidc:Audience"];
+        });
+}
+
+// Later:
+var route = app.MapMcp("/mcp");
+if (enableOidc)
+    route.RequireAuthorization();</code></pre>
+<p>This means you can develop and test locally without a running identity server, and flip one setting to go to a secured production configuration.</p>
+<h3>Testing with MCP Inspector</h3>
+<p>MCP Inspector is a browser-based tool that connects directly to any MCP server and lets you call tools interactively — no agent, no orchestrator, no code.</p>
+<p>Start the HR server with OIDC disabled:</p>
+<pre><code>dotnet run --project src/Hr.Jobs.Mcp</code></pre>
+<p>Open MCP Inspector:</p>
+<pre><code>npx @modelcontextprotocol/inspector http://localhost:5100/mcp</code></pre>
+<p>You will see all 14 tools listed. Test the core workflow:</p>
+<p><strong>1. List open positions</strong></p>
+<p>Select <code>GetOpenPositions</code>, click Run. You get a JSON list of all open positions from the seeded database.</p>
+<p><strong>2. Get a specific position</strong></p>
+<p>Select <code>GetPositionById</code>, enter <code>positionId: 1</code>, click Run. Full detail including duties, qualifications, salary, and hiring organization.</p>
+<p><strong>3. Generate a job description</strong></p>
+<p>Select <code>WriteJobDescription</code>, enter <code>positionId: 1</code>, click Run. Wait 10–30 seconds for Ollama. You get a formatted markdown announcement with Summary, Duties, Qualifications, and How to Apply sections — synthesized from the position's actual data and grade-ladder context from sibling positions.</p>
+<p><strong>4. Save the draft</strong></p>
+<p>Select <code>SaveJobAnnouncement</code>, enter <code>positionId: 1</code> and paste the draft text from step 3, click Run. You get back: <code>Announcement saved. ID: 1 | Status: Draft | Generated: 2026-05-08 05:12 UTC</code>.</p>
+<p>Test each tool before wiring up the orchestrator. Problems caught at this stage are easy to fix. Problems caught inside an agent conversation are much harder to diagnose.</p>
+<h3>stdio Transport for Claude Desktop</h3>
+<p>The server also supports stdio transport, used by Claude Desktop:</p>
+<pre><code>if (isStdio)
+{
+    hostBuilder.Services
+        .AddMcpServer()
+        .WithTools&lt;PositionTools&gt;()
+        .WithTools&lt;HiringOrganizationTools&gt;()
+        .WithTools&lt;JobDescriptionTools&gt;()
+        .WithTools&lt;JobAnnouncementTools&gt;()
+        .WithStdioServerTransport();
+    ...
+}</code></pre>
+<p>The <code>--stdio</code> flag triggers this path. In stdio mode, the Serilog console sink is suppressed (stdout carries only JSON-RPC) and all log output goes to file. Part 7 shows how Claude Desktop uses this mode.</p>
+<h3>What Comes Next</h3>
+<p>The HR Jobs server handles data queries and LLM-powered draft generation. But compliance checking is different — the rules are statutory, the outcomes are pass/fail by law, and a hallucinating LLM is a liability. Part 4 builds a second MCP server whose 7 rules run entirely in deterministic C#, with zero <code>IChatClient</code> dependency.</p>
+<p>← <a href="https://medium.com/scrum-and-coke/part-2-clean-architecture-for-ai-applications-63bac0acdd34">Part 2 — Clean Architecture for AI Applications</a> &nbsp;|&nbsp; <a href="https://medium.com/scrum-and-coke/part-4-the-compliance-mcp-server-deterministic-rules-zero-llm-6fa051cb3f8d">Part 4 — Compliance MCP: Deterministic Rules, Zero LLM →</a></p>
+<h3>References</h3>
+<h4>NuGet Packages</h4>
+<ul><li><a href="https://www.nuget.org/packages/ModelContextProtocol">ModelContextProtocol</a> — <code>[McpServerTool]</code>, <code>[McpServerToolType]</code>, MCP server host integration</li><li><a href="https://www.nuget.org/packages/Microsoft.Extensions.AI">Microsoft.Extensions.AI</a> — <code>IChatClient</code> used by <code>WriteJobDescription</code> for LLM-powered tool</li><li><a href="https://www.nuget.org/packages/OllamaSharp">OllamaSharp</a> — <code>OllamaApiClient</code> backing the in-server <code>WriteJobDescription</code> call</li></ul>
+<h4>Microsoft Documentation</h4>
+<ul><li><a href="https://learn.microsoft.com/en-us/dotnet/ai/model-context-protocol">.NET MCP SDK — Getting Started</a> — <code>[McpServerTool]</code> attribute, DI registration, server hosting</li><li><a href="https://learn.microsoft.com/en-us/dotnet/ai/microsoft-extensions-ai">Microsoft.Extensions.AI overview</a> — IChatClient usage inside MCP tools</li></ul>
+<h4>GitHub</h4>
+<ul><li><a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a> — Full source for all patterns in this series</li><li><a href="https://github.com/modelcontextprotocol/csharp-sdk">modelcontextprotocol/csharp-sdk</a> — Official C# MCP SDK</li><li><a href="https://developer.usajobs.gov/">USAJobs Developer Portal</a> — API used to seed position data</li></ul>
