@@ -39,7 +39,7 @@ All four agents — three reviewers and the moderator — use the same [Reviewer
 
 ```csharp
 // src/Hr.GroupChatOrchestrator/Agents/ReviewerAgent.cs
-public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient chatClient)
+public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient chatClient, int? numCtx = null)
 {
     public string Name { get; } = name;
 
@@ -50,7 +50,7 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
             new(ChatRole.System, systemPrompt),
             new(ChatRole.User, $"Review the following job announcement draft:\n\n{draftText}"),
         };
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         return response.Text ?? string.Empty;
     }
 
@@ -76,7 +76,7 @@ public sealed class ReviewerAgent(string name, string systemPrompt, IChatClient 
                 Return only the revised announcement text — no commentary, no preamble.
                 """),
         };
-        var response = await chatClient.GetResponseAsync(messages, cancellationToken: ct);
+        var response = await chatClient.GetResponseAsync(messages, ChatOptionsFactory.Create(numCtx), ct);
         return response.Text ?? string.Empty;
     }
 }
@@ -90,32 +90,35 @@ The three reviewer system prompts:
 var hrSpecialist = new ReviewerAgent(
     name: "HR Specialist",
     systemPrompt: """
-        You are a federal HR specialist reviewing a job announcement draft.
-        Focus on: correct federal HR terminology, required OPM sections (duties, qualifications,
-        pay, how to apply), proper GS grade language, and clarity for applicants.
-        Be specific. List each issue with a suggested fix. 3-5 bullet points maximum.
+        You are a senior federal HR specialist reviewing a job announcement draft.
+        Focus on: accuracy of position title and series, clarity of duties section,
+        qualification requirements alignment with OPM standards, and overall compliance
+        with federal hiring language. Be specific - cite exact lines that need improvement.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 var legalReviewer = new ReviewerAgent(
     name: "Legal Reviewer",
     systemPrompt: """
-        You are a federal employment law reviewer checking a job announcement draft.
-        Focus on: equal opportunity language, veterans preference statement, reasonable
-        accommodation notice, prohibited questions, and classification accuracy.
-        Be specific. List each issue with a suggested fix. 3-5 bullet points maximum.
+        You are a federal employment law specialist reviewing a job announcement draft.
+        Focus on: EEO statement completeness, non-discriminatory language throughout,
+        reasonable accommodation language, and any phrases that could create legal risk.
+        Flag any missing required legal statements. Be specific and cite exact text.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 
 var budgetAnalyst = new ReviewerAgent(
     name: "Budget Analyst",
     systemPrompt: """
-        You are a federal budget analyst reviewing a job announcement for fiscal accuracy.
-        Focus on: pay range accuracy for the GS grade and locality, grade justification
-        matching stated duties, and whether the announced salary matches OPM pay tables.
-        Be specific. List each issue with a suggested fix. 3-5 bullet points maximum.
+        You are a federal budget and compensation analyst reviewing a job announcement draft.
+        Focus on: pay grade accuracy, salary range correctness for the grade and location,
+        benefits summary completeness, and whether the compensation package is competitive.
+        Note any discrepancies between stated grade and salary figures.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 ```
 
 The moderator system prompt:
@@ -124,13 +127,15 @@ The moderator system prompt:
 var moderator = new ReviewerAgent(
     name: "Moderator",
     systemPrompt: """
-        You are a senior federal HR editor synthesizing expert review feedback.
-        You will receive the original draft and critiques from three specialists.
-        Produce a revised announcement that addresses all valid critique points.
-        Maintain the original structure. Do not add new sections unless a critique explicitly requires it.
-        Return only the revised announcement — no commentary, no preamble.
+        You are a senior HR editor moderating a panel review of a federal job announcement.
+        You will receive the original draft and critiques from three experts: HR Specialist,
+        Legal Reviewer, and Budget Analyst. Your job is to produce a revised announcement
+        that incorporates all valid improvements from each expert. Do not favor any single
+        reviewer - synthesize all perspectives. The output must be a complete, polished
+        job announcement ready for publication.
         """,
-    chatClient: reviewerClient);
+    chatClient: reviewerClient,
+    numCtx: numCtx);
 ```
 
 ---
@@ -151,7 +156,7 @@ public async Task RunAsync(int announcementId, int positionId, CancellationToken
         new(ChatRole.User, $"Get job announcement ID {announcementId}."),
     };
     var loadResponse = await mcpClient.GetResponseAsync(
-        loadMessages, new ChatOptions { Tools = [getAnnouncementTool] }, ct);
+        loadMessages, ChatOptionsFactory.Create([getAnnouncementTool], numCtx), ct);
     var draftText = loadResponse.Text ?? string.Empty;
 
     Console.WriteLine($"\n--- Current Draft ---\n{draftText}\n");
@@ -190,7 +195,7 @@ public async Task RunAsync(int announcementId, int positionId, CancellationToken
         new(ChatRole.User, $"Save this announcement for position ID {positionId}:\n\n{revisedDraft}"),
     };
     var saveResponse = await mcpClient.GetResponseAsync(
-        saveMessages, new ChatOptions { Tools = [saveAnnouncementTool] }, ct);
+        saveMessages, ChatOptionsFactory.Create([saveAnnouncementTool], numCtx), ct);
     Console.WriteLine($"\nGroup chat complete. {saveResponse.Text}");
 }
 ```
@@ -208,10 +213,6 @@ The moderator receives the complete critique text from all three reviewers in a 
 ## A Full Demo Run
 
 ```bash
-# Terminal 1
-dotnet run --project src/Hr.Jobs.Mcp
-
-# Terminal 2
 dotnet run --project src/Hr.GroupChatOrchestrator
 # Enter announcement ID: 5
 # Enter position ID: 7
