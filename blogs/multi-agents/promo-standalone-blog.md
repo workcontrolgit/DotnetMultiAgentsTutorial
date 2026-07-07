@@ -55,7 +55,7 @@ Four patterns cover every multi-agent scenario you will encounter in production:
 - **Group Chat** — runs agents in parallel, a moderator synthesizes their perspectives; best for multi-perspective review and consensus
 - **Evaluator-Optimizer** — a critic scores output and loops until a quality threshold is met; best for generation tasks where consistency matters
 
-All four run on a single `IChatClient` abstraction. No framework lock-in. This abstraction is built on .NET 10 and the semantic kernel model, making it vendor-neutral and portable.
+All four run on a single `IChatClient` abstraction. No framework lock-in.
 
 ---
 
