@@ -54,6 +54,6 @@ OPMCompliance specialist:
 var agent  = SelectAgent(intent);
 var reply  = await agent.HandleAsync(input, ct);</code></pre>
 <p>Same two MCP servers. Same Ollama model running locally. Different architecture. The router is stateless, the agents are focused, and the result is reliable enough for production workflows.</p>
-<h3>If any of that failure log looked familiar, this series is for you.</h3>
+<p>If any of that failure log looked familiar, this series is for you.</p>
 <p><a href="https://medium.com/scrum-and-coke/part-1-the-net-agent-framework-ichatclient-and-mcp-clients-4b52cc179e26">Part 1 — The .NET Agent Framework: IChatClient and MCP Clients</a> covers the <code>IChatClient</code> abstraction and MCP tool setup that make running five specialist agents practical without duplicating infrastructure. It is the foundation the other nine parts build on, walking you through the same federal HR scenario with code, patterns, and a complete working reference.</p>
 <p>The full source — both MCP servers, all four orchestrators — is on GitHub: <a href="https://github.com/workcontrolgit/DotnetMultiAgentsTutorial">DotnetMultiAgentsTutorial</a>.</p>
